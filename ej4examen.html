@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+</head>
+
+<body>
+    <script>
+        let array = []
+        let valor = prompt("dame un valor del 0 al 10, inclusives, cuando pongas -1, te devuelvo todos los números introducidos")
+        valor=parseInt(valor)
+        while (valor <-1 || valor>-1) {
+            if (valor < 0 || valor > 10) {
+                alert("El valor tiene que ser entre 0 y 10!!")
+                
+
+            } else {
+                array.push(valor)
+
+
+            }
+            valor=prompt("dime un número del 0 al 10")
+            valor=parseInt(valor)
+
+        }
+        if(valor===-1){
+            let media=0
+            for(let i=0;i<array.length;i++){
+                media=media+array[i]
+            }
+            media=media/array.length
+            console.log(media)
+            alert("la media es "+media)
+
+        }
+    </script>
+
+    <div id="arrayNumeros"></div>
+</body>
+
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+</head>
+
+<body>
+    <script>
+        function unionString(string1, string2) {
+
+            if (string1 < string2) {
+                alert("La cadena " + string2 + " es la más larga.")
+
+            } else {
+                alert("La cadena " + string1 + " es la más larga.")
+            }
+
+            alert("La cadena " + string1 + " tiene " + string1.length + " caracteres.")
+            alert("La cadena " + string2 + " tiene " + string2.length + " caracteres.")
+            alert("Entre ambas cadenas, la longitud total es de: " + (string1.length + string2.length))
+            return string1 + " " + string2
+        }
+
+        console.log(unionString("Hola", "caracola"))
+    </script>
+</body>
+
+</html>
