@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 6 en JavaScript</title>
+</head>
+
+<body>
+    <div id="resultado"></div>
+    <script>
+        const resultadoDiv = document.getElementById('resultado');
+
+        let i = 2
+        while (i <= 20) {
+           
+            let totalDivisiones = 0
+            
+            for (let j = 1; j <= i; j++) {
+
+                if (i % j === 0) {
+                    totalDivisiones++
+                }
+
+
+            }
+            if(totalDivisiones === 2){
+                resultadoDiv.innerHTML += i + "<br>";
+                console.log(i)
+            }
+            totalDivisiones=0
+            i++
+
+        }
+    </script>
+</body>
+
+</html>

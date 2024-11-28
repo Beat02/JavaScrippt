@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 6 en JavaScript</title>
+</head>
+
+<body>
+    <div id="resultado"></div>
+    <script>
+        const resultadoDiv = document.getElementById('resultado');
+        let inicio = parseInt(prompt("Introduce el número inicial:"));// cambio 1
+        let fin = parseInt(prompt("Introduce el número final:")); //cambio 2
+
+        let i = inicio; //cambio 3
+        while (i <= fin) { //cambio 4
+
+            let totalDivisiones = 0
+
+            for (let j = 1; j <= i; j++) {
+
+                if (i % j === 0) {
+                    totalDivisiones++
+                }
+
+
+            }
+            if (totalDivisiones === 2) {
+                resultadoDiv.innerHTML += i + "<br>";
+                console.log(i)
+            }
+            totalDivisiones = 0
+            i++
+
+        }
+    </script>
+</body>
+
+</html>

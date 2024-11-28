@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 1 en JavaScript</title>
+</head>
+
+<body>
+    <div id="resultado"></div>
+    <script>
+        const resultadoDiv = document.getElementById('resultado');
+       
+        let i = 1
+        while(i<6){
+            for(let j=1;j<=i;j++){
+                resultadoDiv.innerHTML += '*';
+            }
+            
+            resultadoDiv.innerHTML += "<br>"; // Cambié '=' por '+='
+            i++
+        }
+        
+    </script>
+</body>
+
+</html>
