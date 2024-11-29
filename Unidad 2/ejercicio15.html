@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 1 en JavaScript</title>
+</head>
+
+<body>
+    <h2> Realiza un programa para una tienda de coches: Si el coche
+        a la venta es un Ford Fiesta, el descuento es de un 5%. Si el
+        coche a la venta es un Ford Focus, el descuento es del 10%. El
+        usuario introduce el artículo (o su código) y el programa saca el
+        descuento correspondiente por pantalla</h2>
+    <div id="resultado"></div>
+    <script>
+        let modelo = parseInt(prompt('Si deseas compar un Ford fiesta introduce 1, si desdeas un Ford Focus, introduce 2'))
+        if (modelo === 1) {
+            alert('Tienes un descuento del 5% sobre el precio final')
+        } else if (modelo === 2) {
+            alert('Tienes un descuento del 10% sobre el precio final')
+        } else {
+            alert('El modelo escogido no tiene ninguna promoción es`pecial en estos momentos')
+        }
+    </script>
+</body>
+
+</html>

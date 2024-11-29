@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 16 en JavaScript</title>
+</head>
+
+<body>
+    <div id="resultado"></div>
+    <h2>Pide 2 números por pantalla, después pedir que operación
+        se quiere hacer con ellos (sumar, restar,…) Utilizar “switch” para
+        verificar el código de operación. Si la operación no está entre las
+        disponibles mandar un mensaje de error al usuario y pedir la
+        operación nuevamente.</h2>
+    <script>
+        let num1 = parseInt(prompt('Dime un número'))
+        let num2 = parseInt(prompt('Dime otro número'))
+        let resultado = 0
+        let operacionAceptada=false
+        let operacion = parseInt(prompt('Indica con números si quieres 1.sumar, 2.restar, 3.dividir o 4.multiplicar'))
+        if(operacion>0 && operacion<5){
+            operacionAceptada=true
+        }else{
+            operacionAceptada=false
+            while(!operacionAceptada){
+                alert('Esa operación no es correcta, introduce un número entre 1 y 4')
+                operacion = parseInt(prompt('Indica con números si quieres 1.sumar, 2.restar, 3.dividir o 4.multiplicar'))
+                if(operacion>0 && operacion<5){
+            operacionAceptada=true
+        }else{
+            operacionAceptada=false}
+            }
+        }
+        
+        switch (operacion) {
+            case 1:
+                resultado = num1 + num2
+                break;
+            case 2:
+                resultado = num1 - num2
+                break;
+            case 3:
+                resultado = num1 / num2
+                break;
+            case 4:
+                resultado = num1 * num2
+                break;
+
+        }
+        alert('El resultado es: '+resultado)
+    </script>
+</body>
+
+</html>
