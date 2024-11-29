@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 10 en JavaScript</title>
+</head>
+
+<body>
+
+    <h2> Crea la figura del ejercicio 10, pero cambiando los * centrales por espacios</h2>
+    <p>-----------</p>
+    <div id="resultado"></div>
+    <script>
+
+        const resultadoDiv = document.getElementById('resultado');
+
+        let i = 1; // Comienza con 1 asterisco
+        let incremento = 2; // Crece en saltos impares (1, 3, 5), luego decrece
+        const maxLineas = 5; // Máximo de asteriscos en la fila central
+
+        while (i > 0) {
+            // Calcular los espacios a cada lado para centrar la línea
+            let espacios = (maxLineas - i) / 2;
+
+            // Imprimir espacios iniciales
+            for (let s = 0; s < espacios; s++) {
+                resultadoDiv.innerHTML += "&nbsp;";
+                //Bucle for para los espacios: Añade espacios no rompibles (&nbsp;).
+            }
+
+            // Imprimir asteriscos
+            for (let j = 0; j < i; j++) {
+                resultadoDiv.innerHTML += '*';
+            }
+
+            // Salto de línea
+            resultadoDiv.innerHTML += "<br>";
+
+            // Cambiar dirección al llegar a la línea más ancha
+            if (i === maxLineas) {
+                incremento = -2; // Ahora empieza a decrecer
+                //Cambio de dirección: Cuando i === maxLineas, se cambia incremento a -2 para comenzar la fase decreciente.
+            }
+
+            // Ajustar la cantidad de asteriscos para la siguiente línea
+            i += incremento;
+        }
+    </script>
+</body>
+
+</html>

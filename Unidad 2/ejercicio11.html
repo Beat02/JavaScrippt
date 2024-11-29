@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 11 en JavaScript</title>
+</head>
+
+<body>
+
+    <h2>Crea la anterior figura, pero preguntando al usuario sobre
+        la longitud máxima, comprobar que dicho número es un
+        número impar
+    </h2>
+    <p>-----------</p>
+
+    <div id="resultado"></div>
+    <script>
+        const resultadoDiv = document.getElementById('resultado');
+        let par = false
+        let fin = parseInt(prompt('Dime la longitud máxima: '))
+        if (fin % 2 === 0) {
+            par = true
+        }
+        while (par) {
+            alert('El numero tiene que ser impar: ')
+            fin = parseInt(prompt('Dime la longitud máxima: '))
+            if (fin % 2 === 0) {
+                par = true
+            } else {
+                par = false
+            }
+        }
+
+        let i = 1
+        let incrememnto = 2
+        let crecimiento = true
+        while (i <= fin) {
+            if (crecimiento) {
+                for (let j = 1; j <= i; j++) {
+
+                    resultadoDiv.innerHTML += '*';
+
+                }
+
+
+                resultadoDiv.innerHTML += "<br>";
+                i+=2
+                if (i >= fin) {
+                crecimiento = false
+
+            }
+            }else{
+                for (let j = 1; j <= i; j++) {
+                resultadoDiv.innerHTML += '*';
+            }
+            resultadoDiv.innerHTML += "<br>";
+            i -= 2;
+
+            }if(i<1){
+                break;
+            }
+
+            
+            
+
+
+        }
+    </script>
+</body>
+
+</html>

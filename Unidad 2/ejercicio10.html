@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 10 en JavaScript</title>
+</head>
+
+<body>
+
+    <h2>Crea la siguiente figura usando bucles<br>
+        *<br>
+        ***<br>
+        *****<br>
+        ***<br>
+        *</h2>
+    <p>-----------</p>
+    <div id="resultado"></div>
+    <script>
+        const resultadoDiv = document.getElementById('resultado');
+
+        let i = 1
+        let j = 1
+        while (i < 6) {
+            for (let j = 1; j <= i; j++) {
+
+                resultadoDiv.innerHTML += '*';
+
+            }
+
+
+            resultadoDiv.innerHTML += "<br>"; // Cambié '=' por '+='
+            i += 2
+            console.log(i)
+        }
+        i = 3
+        while (i > 0) {
+            for (let j = 1; j <= i; j++) {
+                resultadoDiv.innerHTML += '*';
+            }
+            resultadoDiv.innerHTML += "<br>";
+            i -= 2;
+        }
+
+    </script>
+</body>
+
+</html>

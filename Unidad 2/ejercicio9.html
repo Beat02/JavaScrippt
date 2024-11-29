@@ -4,16 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ejercicio 8 en JavaScript</title>
+    <title>Ejercicio 9 en JavaScript</title>
 </head>
 
 <body>
     <div id="resultado"></div>
     <script>
         const resultadoDiv = document.getElementById('resultado');
+        
+        let fin = parseInt(prompt("Introduce la longitud máxima")); 
        
         let i = 1
-        while(i<6){
+        while(i<=fin){
             for(let j=1;j<=i;j++){
                 resultadoDiv.innerHTML += '*';
             }
