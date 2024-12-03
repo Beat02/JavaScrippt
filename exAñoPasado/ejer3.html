@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 1 en JavaScript</title>
+</head>
+
+<body>
+    <div id="resultado"></div>
+    <p>Crea un programa que a partir de dos días del año actual
+        introducidos con el formato dia:mes mediante dos prompt o dos
+        etiquetas tipo <input> muestre por pantalla el número de días que
+        hay entre ellos. El resultado debe ser siempre positivo sin importar
+        el orden de los días.</p>
+    <script>
+        // console.log(dia1)
+        let input1 = prompt('Dime un día y mes en el siguiente formato: dia:mes')
+        let input2 = prompt('Dime un día y mes en el siguiente formato: dia:mes')
+
+        let dia1 = input1[0] + input1[1];
+        let mes1 = input1[3] + input1[4]
+
+        let dia2 = input2[0] + input2[1];
+        let mes2 = input2[3] + input2[4];
+
+        let fechaActual = new Date;
+        let anho = fechaActual.getFullYear()
+
+        dia1 = parseInt(dia1)
+        dia2 = parseInt(dia2)
+        mes1 = parseInt(mes1)-1
+        mes2 = parseInt(mes2)-1
+        let mesesInter=(Math.abs(mes1-mes2))-1
+        let diasExtra1=30-dia1
+        let diasExtra2=30-dia2
+
+        let fecha1=new Date(anho,mes1,dia1)
+        let fecha2=new Date(anho,mes2,dia2)
+        console.log(fecha1)
+        console.log(fecha2)
+
+        let tottalDias=(30*mesesInter)+diasExtra1+diasExtra2
+        alert('Quedan un total de '+tottalDias+' días')
+
+    </script>
+</body>
+
+</html>

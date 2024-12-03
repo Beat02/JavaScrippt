@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 1 en JavaScript</title>
+</head>
+
+<body>
+    <p>Utiliza un condicional tipo switch de manera que al
+        introducir un mes del año nos diga el número de días que
+        tiene.</p>
+    <div id="resultado"></div>
+    <script>
+        let mes = prompt('Introduce un mes del año y te diré cuántos día tiene')
+        mes = mes.toLowerCase()
+        let dias = 0
+        switch (mes) {
+            case 'enero':
+                dia = 31
+                break;
+            case 'febrero':
+                dia = 28
+                break;
+            case 'marzo':
+                dia = 31
+                break;
+            case 'abril':
+                dia = 30
+                break;
+            case 'mayo':
+                dia = 31
+                break;
+            case 'junio':
+                dia = 30
+                break;
+            case 'julio':
+                dia = 31
+                break;
+            case 'agosto':
+                dia = 31
+                break;
+            case 'septiembre':
+                dia = 30
+                break;
+            case 'octubre':
+                dia = 31
+                break;
+            case 'noviembre':
+                dia = 30
+                break;
+            case 'diciembre':
+                dia = 31
+                break;
+            default:
+                dia = 'El mes introducido no es correcto'
+                break;
+
+        }
+        alert(dia)
+    </script>
+</body>
+
+</html>

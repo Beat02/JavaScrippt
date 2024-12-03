@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 1 en JavaScript</title>
+</head>
+
+<body>
+    <div id="resultado"></div>
+    <script>
+        // Escribe una función que encuentre el número más grande en una matriz
+        // y devuelva su posición (fila y columna)
+        function mayorFila(matriz) {
+            let mayor = 0
+            let ind=0
+            let indDos=0
+            for(let i=0;i<matriz.length;i++){
+                for(let j=0;j<matriz[i].length;j++){
+                    if (matriz[i][j]>mayor){
+                        mayor=matriz[i][j]
+                        ind=i
+                        indDos=j
+
+                    }
+                }
+            }
+            
+            console.log(mayor)
+            console.log('La fila es '+ind+" y la columna es "+indDos)
+
+            return ('La fila es '+ind+" y la columna es "+indDos)
+        }
+        let arrCuatra = [[1, 2, 3], [9, 8, 7], [4, 6, 5]];
+        alert(mayorFila(arrCuatra));
+    </script>
+</body>
+
+</html>

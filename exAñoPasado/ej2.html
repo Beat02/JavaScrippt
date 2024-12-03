@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 1 en JavaScript</title>
+</head>
+
+<body>
+    <div id="resultado"></div>
+    <p>En una panadería cada tipo de pan se representa mediante
+        su peso, tipo de cereal, si es integral o no y su precio. Crea un objeto,
+        no una clase, llamado hogaza en el que aparezcan representados los
+        elementos (atributos o propiedades) anteriores (inventa sus valores).
+        Crea un método dentro del objeto que al ser invocado devuelva una
+        cadena que sea del estilo: “Este pan tiene un peso de 350g, es de
+        trigo no integral y vale 1.20€” donde el peso, si es o no integral y el
+        precio los recoja del propio objeto. </p>
+
+
+    <script>
+        let hogaza = {
+            peso: 400,
+            cereal: 'avena',
+            integral: true,
+            precio: 0.85,
+
+            informacion: function () {
+                let infoIntegral = ''
+                if (this.integral) {
+                    infoIntegral = 'es integral'
+                } else {
+                    infoIntegral = 'no es integral'
+                }
+
+                console.log('Este pan tiene un peso de ' + this.peso + ' gramos, es de ' + this.cereal + ', ' + infoIntegral + ' y vale ' + this.precio + ' euros')
+            }
+
+        }
+        hogaza.informacion()
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 1 en JavaScript</title>
+</head>
+
+<body>
+    <div id="resultado"></div>
+    <p>Crea un programa que a partir de dos días del año actual
+        introducidos con el formato dia:mes mediante dos prompt o dos
+        etiquetas tipo <input> muestre por pantalla el número de días que
+        hay entre ellos. El resultado debe ser siempre positivo sin importar
+        el orden de los días.</p>
+    <script>
+       // Pedimos las fechas al usuario
+let fecha1 = prompt('Introduce la primera fecha (dia:mes)');
+let fecha2 = prompt('Introduce la segunda fecha (dia:mes)');
+
+// Separamos día y mes de cada fecha
+let [dia1, mes1] = fecha1.split(':');
+let [dia2, mes2] = fecha2.split(':');
+
+// Creamos objetos Date con el año actual
+let fechaActual = new Date();
+let año = fechaActual.getFullYear();
+
+// Creamos objetos Date completos
+let date1 = new Date(año, mes1 - 1, dia1); // mes - 1 porque en JS los meses van de 0-11
+let date2 = new Date(año, mes2 - 1, dia2);
+
+// Calculamos la diferencia en milisegundos y la convertimos a días
+let diferencia = Math.abs(date2 - date1);
+let diasTotales = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+
+alert('La diferencia es de ' + diasTotales + ' días');
+
+    </script>
+</body>
+
+</html>

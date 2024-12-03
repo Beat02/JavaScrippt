@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 1 en JavaScript</title>
+</head>
+
+<body>
+    <div id="resultado"></div>
+    <script>
+        // creacion de este objeto
+        let person = {
+            name: 'Bea',
+            age: 32,
+            catLady: true
+        }
+        //acceso a los datos
+        console.log(person.age)
+        console.log(person['name'])
+        //modificar datos o propiedades
+        person.name = 'Bea Ruiz'
+        console.log(person.name)
+
+        //eliminar propiedades
+        delete person.catLady
+        console.log(person)
+
+        //agregar propiedades
+        person.email = 'beatriz@gmail.com'
+        console.log(person)
+
+        //metodos(funciones)
+        
+        let person2={
+            name: 'Bea',
+            age: 32,
+            email :'beatriz@gmail.com',
+            walk: function(){
+                console.log('La persona camina')
+            }
+        }
+        console.log(person2.walk())
+
+        //anidar objetos
+
+        let persona3={
+            name: 'Bea',
+            age: 32,
+            email :'beatriz@gmail.com',
+            walk: function(){
+                console.log('La persona camina')
+            },
+            job:{
+                name:'estudiante',
+                exp:15,
+                work:function(){
+                    console.log("La persona trabaja")
+                }
+            }
+        }
+        console.log(persona3)
+        console.log(persona3.job.work())
+
+        //iteración
+        for(let valor in persona3){
+            console.log(valor +': '+persona3[valor])
+        }
+
+        //funciones como objetos
+        //no es lo más usado, no es una buena práctica
+        //debería ser una clase
+        function Person(name, age){
+            this.name=name
+            this.age=age
+        }
+
+        let persona5=new Person('Edu',25)
+        console.log(typeof persona5)
+    </script>
+</body>
+
+</html>

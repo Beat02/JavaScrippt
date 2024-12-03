@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 1 en JavaScript</title>
+</head>
+
+<body>
+    <div id="resultado"></div>
+    <p>Crea un programa que mediante prompts recoja valores
+        numéricos entre 0 y 10 (comprobar que así sea y devuelva un alert
+        indicando en caso de que el valor sea incorrecto), los introduzca en
+        un array y cuando se teclee el valor -1 devuelva la media de los
+        valores anteriores.</p>
+    <script>
+        let valor=parseInt(prompt('Dame un valor entre 0 y 10. Si pones -1 te daré la media'))
+        let matriz=[]
+        while(valor!==-1){
+            if(valor>10 || valor<0){
+                alert('El valor introducido es erróneo')
+                valor=parseInt(prompt('Dame un valor entre 0 y 10. Si pones -1 te daré la media'))
+            }else{
+                matriz.push(valor)
+                valor=parseInt(prompt('Dame un valor entre 0 y 10. Si pones -1 te daré la media'))
+            }
+        }
+        if(valor===-1){
+            let sumaValores=0
+            let media=0
+            for(let i=0;i<matriz.length;i++){
+                sumaValores+=matriz[i]
+            }
+            media=sumaValores/matriz.length
+            alert('La media es: '+media)
+        }
+    </script>
+</body>
+
+</html>

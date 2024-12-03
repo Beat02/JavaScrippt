@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 1 en JavaScript</title>
+</head>
+
+<body>
+    <div id="resultado"></div>
+    <script>
+        /*Crea un objeto en el que aparezcan tu nombre, primer apellido, segundo apellido y tu
+  fecha de nacimiento. Crea un método en dicho objeto que te diga cuantos años tienes cuando 
+  sea invocado.*/
+  let bea={
+    name:'Beatriz',
+    surname:'Ruiz',
+    surname2:'de Aguiar',
+    birthday:"03/12/1992",
+    
+    edad:function(){
+        let dia=this.birthday[0]+this.birthday[1];
+        console.log(dia)
+        let mes=this.birthday[3]+this.birthday[4];
+        console.log(mes)
+        let anho=this.birthday[6]+this.birthday[7]+this.birthday[8]+this.birthday[9];
+        console.log(anho)
+        let cumple=new Date(anho,(mes-1),dia);
+
+        const fechaActual=new Date();
+        const diaHoy=fechaActual.getDate()
+        console.log(diaHoy)
+        const mesHoy=(fechaActual.getMonth()+1)
+        const anhoHoy=fechaActual.getFullYear()
+
+
+        let edad=anhoHoy-anho
+        let diferenciaMes=mes-mesHoy
+        let diferenciaDias=dia-diaHoy
+        console.log(diferenciaDias)
+        if(diferenciaMes>0 && diferenciaDias>0){
+            edad--
+        }if(diferenciaMes===0){
+            if(diferenciaDias>0){
+                edad--
+            }
+        }
+        return edad;
+
+
+        //return dia+' '+mes+' ' +anho;
+    }
+  }
+  
+console.log(bea.edad())
+
+    </script>
+</body>
+
+</html>

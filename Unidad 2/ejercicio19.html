@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 19 en JavaScript</title>
+</head>
+
+<body>
+    <div id="resultado"></div>
+    <script>
+        let codigoModelo = parseInt(prompt('Introduzca el codigo de su modelo: 1.Ford Fiesta. 2.Ford Focus. 3.Ford Puma. 4.Ford Mustang'))
+        descuentoAplicado(modelo(codigoModelo));
+        function modelo(input) {
+
+            let descuento = 0
+            switch (input) {
+                case 1:
+                    descuento = 5
+                    break;
+                case 2:
+                    descuento = 10
+                    break;
+                default:
+                    descuento = 0
+                    break;
+            }
+            return descuento
+        }
+        function descuentoAplicado(descuentoFinal) {
+            if (descuentoFinal > 0) {
+                alert('¡Enhorabuena! Su vehículo tiene un descuento del ' + descuentoFinal + '%')
+            } else {
+                alert('No hay ningún descuento aplicable en estos momentos')
+            }
+        }
+    </script>
+</body>
+
+</html>

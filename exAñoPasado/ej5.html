@@ -1,0 +1,40 @@
+
+    <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 1 en JavaScript</title>
+</head>
+
+<body>
+    <div id="resultado"></div>
+    <p>Diseña una clase llamada alumno en la que aparezcan como 
+        atributos cada una de las asignaturas siguientes: matemáticas, 
+        lengua, inglés y tecnología. Crea un constructor que pueda recoger 
+        las notas de las asignaturas anteriores en ese orden y un método 
+        que devuelva la nota media de todas ellas. Crea un objeto con tu 
+        nombre en el para demostrar su funcionamiento.</p>
+
+    <script>
+        class Alumno{
+            constructor(matematicas,lengua,ingles,tecno){
+                this.matematicas=matematicas
+                this.lengua=lengua
+                this.ingles=ingles
+                this.tecno=tecno
+
+            }
+            media(){
+                let sumaNotas=this.matematicas+this.lengua+this.ingles+this.tecno
+                let mediaNotas=sumaNotas/4
+                return mediaNotas;
+            }
+        }
+        let bea=new Alumno(5,7,9,4);
+        console.log(bea.media())
+    </script>
+</body>
+
+</html>

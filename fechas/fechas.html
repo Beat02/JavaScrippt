@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 1 en JavaScript</title>
+</head>
+
+<body>
+    <div id="resultado"></div>
+    <h1>Trabajo con fechas</h1>
+    <script>
+        //Construir fechas
+        let fecha = new Date();
+        //esto coge la fecha en el momento actual
+        alert('La fecha de hoy es: ' + fecha)
+
+        //crear una fecha en particular
+        let fecha2 = new Date(1992, 11, 2);//hora, minutos, segundos, milisegundos
+        alert(fecha2)
+        let fecha3 = new Date("12/02/1992")
+        alert(fecha3)
+
+        //funciones especiales
+        alert("Día: " + fecha.getDay() + " Mes: " + (fecha.getMonth() + 1) + " Año: " + fecha.getFullYear())
+
+        /*getDay() devuelve el día de la semana, donde:
+
+        0 = Domingo
+        1 = Lunes
+        2 = Martes
+        3 = Miércoles
+        4 = Jueves
+        5 = Viernes
+        6 = Sábado*/
+        
+        //getDate() devuelve el día del mes (1-31)
+    </script>
+</body>
+
+</html>

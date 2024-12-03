@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 20 en JavaScript</title>
+</head>
+
+<body>
+    <div id="resultado"></div>
+    <script>
+        let tipoCambio = parseInt(prompt('Si quieres pasar de ºC a ºF, introduce 1. Si quieres pasar de ºF a ºC introduce 2'))
+        let temperaturaInicial = parseFloat(prompt('Introduce la temperatura que deseas convertir'))
+        let tipoConvFinal = tipoTemp(tipoCambio)
+        alert('Al convertirlo se queda en ' + conversion(tipoConvFinal, temperaturaInicial) + 'º')
+        function tipoTemp(tipo) {
+            let celAFar = true
+            if (tipo === 1) {
+                celAFar = true
+            } else {
+                celAFar = false
+            }
+            return celAFar
+        }
+        function conversion(tipo, input) {
+            let tempFinal = 0
+            if (tipo) {
+                tempFinal = ((input * 9 / 5) + 32)
+            } else {
+                tempFinal = ((input - 32) * 5 / 9)
+            }
+            return tempFinal;
+
+        }
+    </script>
+</body>
+
+</html>

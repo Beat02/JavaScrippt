@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 1 en JavaScript</title>
+</head>
+
+<body>
+    <div id="resultado"></div>
+    <script>
+        //constructor clases
+      class Person{
+        constructor(name,age,alias){
+            this.name=name
+            this.age=age
+            this.alias=alias
+        }
+      }
+
+      //sintaxis
+      let person=new Person('bea',32,'beiwi');
+      console.log(person)
+
+      //valores por defecto
+      class PersonAl{
+        constructor(name='bea',edad=12){
+            this.name=name
+            this.edad=edad
+        }
+      }
+      let personAlias=new PersonAl;
+      console.log(personAlias)
+
+      //nuevo valor
+      personAlias.edad=32
+
+      //funciones
+      class Persona2{
+        constructor(name,age,alias){
+            this.name=name
+            this.age=age
+            this.alias=alias
+        }
+        walk(){
+            console.log('La persona camina')
+        }
+      }
+      let personaCamina=new Persona2('Taiga',7,'bollito');
+      console.log(personaCamina.walk())
+    </script>
+</body>
+
+</html>

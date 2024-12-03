@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 1 en JavaScript</title>
+</head>
+
+<body>
+    <p>Crea un programa usando funciones que pida notas de un
+        alumno por pantalla hasta que se introduzca la palabra “fin”,
+        después calcule la media y nos indique si está aprobado o
+        suspendido</p>
+    <div id="resultado"></div>
+    <script>
+        let nota = 0
+        let cont = 0
+        let media = 0
+
+        let seguir = ""
+        while (seguir !== 'fin') {
+            nota = parseFloat(prompt('Dime una nota'))
+            media += nota
+            cont++
+            seguir = prompt('Si quieres parar escribe fin')
+            if (seguir) {
+                seguir = seguir.toLowerCase()
+            }
+
+        }
+        let mediaFinal = media / cont
+        alert('La media es: ' + mediaFinal)
+    </script>
+</body>
+
+</html>
