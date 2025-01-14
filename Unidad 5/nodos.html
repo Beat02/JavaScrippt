@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="div1">
+        <button type="button" onclick="validar()">Púlsame</button>
+
+    </div>
+    <script>
+        let contador=0;
+        function validar(){
+            const divNode=document.getElementById('div1');
+            const newNode=document.createElement('p');
+            newNode.innerHTML=contador;
+            divNode.appendChild(newNode);
+            contador++;
+
+        }
+    </script>
+</body>
+</html>
