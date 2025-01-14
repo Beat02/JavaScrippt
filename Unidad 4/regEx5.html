@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+</head>
+
+<body>
+    <p id="p01">hel!!o</p>
+    <p id="demo"></p>
+    <script>
+        //una palabra que contenga como mucho un signo, entre alguna de sus letras
+        let text = document.getElementById('p01').innerHTML;
+
+        const pattern = /^[a-zA-ZñÑ]+(\W?[a-zA-ZñÑ]+)*$/; 
+
+        let respuestas = pattern.test(text)
+        alert(respuestas)
+        //^[a-zA-ZñÑ]+ que empiece con una letra y pueden ser 1 o más
+        //\W? 
+        ///^[^-]+-{0,2}[^-]+$ -> corregido
+        
+       
+
+
+    </script>
+</body>
+
+</html>

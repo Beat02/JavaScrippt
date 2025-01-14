@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+</head>
+
+<body>
+    <p id="p01">HOLa</p>
+    <p id="demo"></p>
+    <script>
+        //Palabra de 4 letras,la 1ª mayúscula y el resto minúsculas
+        let text = document.getElementById('p01').innerHTML;
+
+        const pattern = /^[A-ZÑÁÉÍÓÚ][a-zñáéíóú]{3}$/; //OJO con mayúsculas y minúsculas, tildes y ñ
+        let respuestas = pattern.test(text)
+        alert(respuestas)
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+</head>
+
+<body>
+    <p id="p01">ñoala</p>
+    <p id="demo"></p>
+    <script>
+        //una palabra en la que la tercera letra sea una vocal
+        let text = document.getElementById('p01').innerHTML;
+
+        const pattern = /^.{2}[aeiouAEIOU]/; //OJO con mayúsculas y minúsculas
+        let respuestas = pattern.test(text)
+        alert(respuestas)
+            // mejor opción -> /^[^-]+-?[^-]+$
+
+    </script>
+</body>
+
+</html>

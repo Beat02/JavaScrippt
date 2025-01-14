@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+</head>
+
+<body>
+    <p id="p01">HoLass</p>
+    <p id="demo"></p>
+    <script>
+        //Palabra de 4 letras,
+        let text = document.getElementById('p01').innerHTML;
+
+        const pattern = /^[a-zA-Z]{4}$/; //OJO con mayúsculas y minúsculas
+        //mejor /^.{4}/
+        let respuestas = pattern.test(text)
+        alert(respuestas)
+
+
+    </script>
+</body>
+
+</html>

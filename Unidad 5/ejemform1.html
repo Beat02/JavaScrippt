@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validación</title>
+</head>
+<body>
+    <form>
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre"><br><br>
+
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" name="password"><br><br>
+
+        <button type="button" onclick="validar()">Validar</button>
+    </form>
+
+    <script>
+        function validar() {
+            // Obtiene los valores de los campos
+            let nombre = document.getElementById('nombre').value;
+            let password = document.getElementById('password').value;
+
+            // Expresiones regulares
+            const pattern1 = /^[a-zA-ZñÑ]{3,12}$/;
+            const pattern2 = /^(?=.*[A-ZÑ])(?=.*\d)(?=.*[@#$!%&*?])[A-Za-zñÑ\d@#$!%&*?]{8,}$/;
+
+            // Validaciones
+            let respuesta1 = pattern1.test(nombre);
+            let respuesta2 = pattern2.test(password);
+
+            // Mostrar resultados
+            if (respuesta1) {
+                alert("El nombre es válido.");
+            } else {
+                alert("El nombre no es válido.");
+            }
+
+            if (respuesta2) {
+                alert("La contraseña es válida.");
+            } else {
+                alert("La contraseña no es válida.");
+            }
+        }
+    </script>
+</body>
+</html>

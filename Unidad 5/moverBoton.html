@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mover botón</title>
+    <style>
+        div{
+            width: 1000px;
+            height: 1000px;
+        }
+        button{
+            background-color: lightblue;
+            width: 100px;
+            height: 50px;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        const element = document.getElementsByTagName("button");
+        //element.addEventListener('onC',)
+        
+        function pulsaname(boton){
+            let coordenadas=element.getBoundingClientRect();//devuelve el tamaño de un elemento y su posición relativa respecto a la ventana de visualización
+            let newY=coordenadas+200;
+            boton.style="color:pink;position:absolute;"+newY;
+        }
+    </script>
+    <div>
+        <button name="boton" onclick="pulsaname(this)">Atrápame</button>
+
+        </button>
+    </div>
+
+</body>
+</html>

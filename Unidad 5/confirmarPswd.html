@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmar contraseña</title>
+
+</head>
+
+<body>
+    <!--Las contraseñas no coinciden
+    Tiene entre 8 y 12 caractéres
+    NO contiene un número
+    No contiene un símbolo
+    No contiene al menos una mayúscula y una minúscula
+    Si está todo bien, se pone verde, sino se queda rojo-->
+    <form id="formularioID" method="post">
+        <h2>Confirmar contraseña</h2>
+        <label for="password">Contraseña:</label>
+        <input id="password" type="password" name="password" placeholder="Introduce tu contraseña" required>
+        <label for="confPassword">Confirmar Contraseña:</label>
+        <input id="confPassword" type="password" name="confPassword" placeholder="Confirmar contraseña" required>
+        <button type="submit">Enviar</button>
+    </form>
+    <script>
+        const form = document.getElementById('formularioID');
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault(); // Evita que el formulario se envíe automáticamente
+
+            const password = document.getElementById('password').value;//Tiene que estar dentro para que lo recoja en el evento
+            const confPassword = document.getElementById('confPassword').value;
+
+            console.log('Contraseña:', password);//Esto confirma que el evento funciona
+            console.log('Confirmación:', confPassword);
+
+
+        });
+    </script>
+
+</body>
+
+</html>
