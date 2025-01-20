@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        table {
+            border: 2px solid black;
+        }
+    </style>
+    <title>Calendario</title>
+</head>
+
+<body>
+    <h2>Calendario</h2>
+
+    <!-- Un contenedor para el calendario.
+            Un encabezado para mostrar el mes y el año actual.
+            Botones para navegar entre meses.
+            Una tabla (o divs) para representar los días del calendario.-->
+    <div id="calendario">
+        <table>
+            <tr>
+                <th colspan="2"><button type="button" onclick="atras()">-</button></th>
+                <th colspan="3" id="encabezadoMes"></th>
+                <th colspan="2"><button type="button" onclick="adelante()" id="add">+</button></th>
+            </tr>
+            <tr>
+                <th>Lunes</th>
+                <th>Martes</th>
+                <th>Miércoles</th>
+                <th>Jueves</th>
+                <th>Viernes</th>
+                <th>Sábado</th>
+                <th>Domingo</th>
+            </tr>
+            <tr id="calendarioDias">
+                <td id="lunes"></td>
+                <td id="martes"></td>
+                <td id="mier"></td>
+                <td id="jueves"></td>
+                <td id="viernes"></td>
+                <td id="sabado"></td>
+                <td id="domingo"></td>
+
+            </tr>
+
+        </table>
+
+        <!--<button type="button" onclick="atras()">-</button>
+    <button type="button" onclick="adelante()" id="add">+</button>-->
+
+    </div>
+    <script>
+        const encabezado = document.getElementById('encabezadoMes');
+        let fechaActual = new Date();
+        let mesActual = fechaActual.getMonth();
+        let nombreMesActual = '-'
+        function nombreMes() {
+            if (mesActual === 0) {
+                nombreMesActual = 'Enero'
+            }
+            else if (mesActual === 1) {
+                nombreMesActual = 'Febrero'
+            } else if (mesActual === 2) {
+                nombreMesActual = 'Marzo'
+            } else if (mesActual === 3) {
+                nombreMesActual = 'Abril'
+            } else if (mesActual === 4) {
+                nombreMesActual = 'Mayo'
+            } else if (mesActual === 5) {
+                nombreMesActual = 'Junio'
+            } else if (mesActual === 6) {
+                nombreMesActual = 'Julio'
+            } else if (mesActual === 7) {
+                nombreMesActual = 'Agosto'
+            } else if (mesActual === 8) {
+                nombreMesActual = 'Septiembre'
+            } else if (mesActual === 9) {
+                nombreMesActual = 'Octubre'
+            } else if (mesActual === 10) {
+                nombreMesActual = 'Noviembre'
+            } else {
+                nombreMesActual = 'Diciembre'
+            }
+            return nombreMesActual
+        }
+
+        let anhoHoy = fechaActual.getFullYear();
+
+        encabezado.innerText = nombreMes() + ' ' + anhoHoy
+        actualizarCalendario();
+
+        function atras() {
+
+            if (mesActual === 0) {
+                mesActual = 11
+                anhoHoy--
+            } else {
+                mesActual--
+            }
+            encabezado.innerText = nombreMes() + ' ' + anhoHoy
+            actualizarCalendario()
+
+        }
+        function adelante() {
+            if (mesActual === 11) {
+                mesActual = 0
+                anhoHoy++
+            } else {
+                mesActual++
+
+            }
+            encabezado.innerText = nombreMes() + ' ' + anhoHoy
+            actualizarCalendario()
+
+        }
+        function limpiarCalendario() {
+            const celdas = document.querySelectorAll('#calendarioDias td');
+            celdas.forEach(celda => {
+                celda.innerText = ''; // Limpia cada celda
+            });
+        }
+        function actualizarCalendario() {
+            limpiarCalendario();
+            // Crea una copia de fechaActual para evitar modificar el original
+            let primerDia = new Date(anhoHoy, mesActual, 1);
+
+            // Obtén el día de la semana 
+            let diaSemana1 = primerDia.getDay();
+
+            // Array de IDs para simplificar la lógica
+            const diasSemana = ['domingo', 'lunes', 'martes', 'mier', 'jueves', 'viernes', 'sabado'];
+            const largo = diasSemana.length
+            // Encuentra el elemento correspondiente al primer día
+            let dia = document.getElementById(diasSemana[diaSemana1]);
+
+            for (let i = 0; i < largo; i++) {
+                if (dia) {
+                    dia.innerText = '1'; // Asigna el valor "1" al primer día
+                } else {
+                    dia.innerText = ''
+                }
+            }
+            return diaSemana1;
+
+        }
+        function rellenarCalendario() {
+            const mesLargo = [0, 2, 4, 6, 7, 9, 11]
+            const mesCorto = [3, 5, 8, 10]
+            const febrero = 1
+            let diasTotales = 0
+            let anhoBisiesto = false
+            if (mesActual === febrero) {
+                if (anhoHoy % 4 === 0) {
+                    if (anhoHoy % 100 === 0) {
+                        if (anhoHoy % 400 === 0) {
+                            anhoBisiesto = true
+                        }
+                    } else {
+                        anhoBisiesto = true
+                    }
+                }
+                if (anhoBisiesto) {
+                    diasTotales = 29
+                } else {
+                    diasTotales = 28
+                }
+            } else {
+                for (let x = 0; x < 12; x++) {
+                    if (mesActual === mesLargo[x]) {
+                        diasTotales = 31
+                        break;
+
+                    } else if (mesActual === mesCorto[x]) {
+                        diasTotales = 30
+                        break;
+                    }
+                }
+            }
+            let empezar=actualizarCalendario()
+            
+
+
+        }
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>
