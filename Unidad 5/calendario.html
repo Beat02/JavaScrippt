@@ -24,7 +24,8 @@
 
             <label for="anho">Año:</label>
             <input type="number" id="anho" name="anho"><br><br>
-            <button type="button" onclick="valoresIntro();encabezado();actualizarCalendario()">Buscar
+            <button type="button"
+                onclick="valoresIntro();encabezado();actualizarCalendario();rellenarCalendario();">Buscar
                 Fecha</button><br><br>
             <!--OJO con el orden en onclick!!-->
         </form>
@@ -52,14 +53,13 @@
                 <th>Domingo</th>
             </tr>
             <tr id="calendarioDias">
-                <td id="lunes"></td>
-                <td id="martes"></td>
-                <td id="mier"></td>
-                <td id="jueves"></td>
-                <td id="viernes"></td>
-                <td id="sabado"></td>
-                <td id="domingo"></td>
-
+                <td id="0"></td>
+                <td id="1"></td>
+                <td id="2"></td>
+                <td id="3"></td>
+                <td id="4"></td>
+                <td id="5"></td>
+                <td id="6"></td>
             </tr>
 
         </table>
@@ -122,6 +122,7 @@
             }
             encabezado();
             actualizarCalendario();
+            rellenarCalendario()
 
         }
 
@@ -137,6 +138,7 @@
 
             encabezado();
             actualizarCalendario();
+            rellenarCalendario()
 
         }
 
@@ -149,22 +151,17 @@
         function actualizarCalendario() {
             limpiarCalendario();
             // Crea una copia de fechaActual para evitar modificar el original
-            let primerDia = fechaGlobal;
+            let primerDia = new Date(fechaGlobal.getFullYear(), fechaGlobal.getMonth(), 1);
 
             // Obtén el día de la semana 
             let diaSemana1 = primerDia.getDay();
 
-            // Array de IDs para simplificar la lógica
-            const diasSemana = ['domingo', 'lunes', 'martes', 'mier', 'jueves', 'viernes', 'sabado'];
-            const largo = diasSemana.length
-            // Encuentra el elemento correspondiente al primer día
-            let dia = document.getElementById(diasSemana[diaSemana1]);
+            diaSemana1 = diaSemana1 === 0 ? 6 : diaSemana1 - 1;
 
-            for (let i = 0; i < largo; i++) {
-                if (dia) {
-                    dia.innerText = '1';
-                }
-            }
+            // Encontrar la celda correspondiente y poner el día 1
+            let dia = document.getElementById(diaSemana1.toString());
+            dia.innerText = '1';
+
             return diaSemana1;
 
         }
@@ -201,7 +198,21 @@
                 - Necesitarás crear más filas en la tabla
                 - Tendrás que ir contando los días
                 - Necesitarás saber cuándo pasar a la siguiente fila*/
-            let empezar = actualizarCalendario()
+            let primerDiaCal = actualizarCalendario()
+            let contador = 1
+            let diasEnSemana = 7
+            let semanasRestantes=1
+            let semanas = Math.ceil(diasTotales / 7)
+            for (let dia = primerDiaCal; dia < diasEnSemana; dia++) {
+                let celda = document.getElementById(dia.toString());
+                celda.innerText = contador.toString();
+                contador++;
+            }
+            //SOLO TENGO HECHA LA PRIMERA SEMANA
+            /* while (semanasRestantes < semanas) {
+                 
+ 
+             }*/
 
 
 
