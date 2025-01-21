@@ -16,7 +16,7 @@
     <h2>Calendario</h2>
     <p>Introduce qué fecha buscas:</p>
     <div id="pedirFecha">
-        <form action=""> <label for="dia">Día:</label>
+        <form method="post"> <label for="dia">Día:</label>
             <input type="number" id="dia" name="dia"><br><br>
 
             <label for="mes">Mes:</label>
@@ -24,7 +24,8 @@
 
             <label for="anho">Año:</label>
             <input type="number" id="anho" name="anho"><br><br>
-            <button type="button" onclick="valoresIntro();mostrarCalendario();encabezado()">Buscar Fecha</button><br><br>
+            <button type="button" onclick="valoresIntro();encabezado();actualizarCalendario()">Buscar
+                Fecha</button><br><br>
             <!--OJO con el orden en onclick!!-->
         </form>
 
@@ -119,9 +120,9 @@
             } else {
                 fechaGlobal = new Date(anhoActual, mesActual - 1, 1);
             }
-            encabezadoDoc.innerText = nombreMes() + ' ' + anhoEncabezado();
+            encabezado();
             actualizarCalendario();
-            
+
         }
 
         function adelante() {
@@ -134,9 +135,9 @@
                 fechaGlobal = new Date(anhoActual, mesActual + 1, 1);
             }
 
-            encabezadoDoc.innerText = nombreMes() + ' ' + anhoEncabezado();
+            encabezado();
             actualizarCalendario();
-            
+
         }
 
         function limpiarCalendario() {
@@ -161,47 +162,45 @@
 
             for (let i = 0; i < largo; i++) {
                 if (dia) {
-                    dia.innerText = '1'; // Asigna el valor "1" al primer día
-                } else {
-                    dia.innerText = ''
+                    dia.innerText = '1';
                 }
             }
             return diaSemana1;
 
         }
         function rellenarCalendario() {
+            let mesActual = fechaGlobal.getMonth();
+            let anhoHoy = fechaGlobal.getFullYear();
             const mesLargo = [0, 2, 4, 6, 7, 9, 11]
-            const mesCorto = [3, 5, 8, 10]
+
             const febrero = 1
             let diasTotales = 0
             let anhoBisiesto = false
             if (mesActual === febrero) {
-                if (anhoHoy % 4 === 0) {
-                    if (anhoHoy % 100 === 0) {
-                        if (anhoHoy % 400 === 0) {
-                            anhoBisiesto = true
-                        }
-                    } else {
-                        anhoBisiesto = true
-                    }
+                if (anhoHoy % 4 === 0 && (anhoHoy % 100 !== 0 || anhoHoy % 400 === 0)) {
+                    anhoBisiesto = true
                 }
                 if (anhoBisiesto) {
                     diasTotales = 29
                 } else {
                     diasTotales = 28
                 }
-            } else {
-                for (let x = 0; x < 12; x++) {
-                    if (mesActual === mesLargo[x]) {
-                        diasTotales = 31
-                        break;
-
-                    } else if (mesActual === mesCorto[x]) {
-                        diasTotales = 30
-                        break;
-                    }
-                }
             }
+            else if (mesLargo.includes(mesActual)) {
+                diasTotales = 31
+            } else {
+                diasTotales = 30
+            }
+            /*¿Qué información necesitarías para empezar a rellenar la tabla?
+
+                - El día de la semana donde empezar (lo tienes con actualizarCalendario())
+                - Cuántos días tiene el mes (lo tienes con rellenarCalendario())
+
+                ¿Se te ocurre cómo podrías usar un bucle para ir rellenando los días? Piensa que:
+
+                - Necesitarás crear más filas en la tabla
+                - Tendrás que ir contando los días
+                - Necesitarás saber cuándo pasar a la siguiente fila*/
             let empezar = actualizarCalendario()
 
 
