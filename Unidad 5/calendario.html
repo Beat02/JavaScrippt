@@ -14,6 +14,21 @@
 
 <body>
     <h2>Calendario</h2>
+    <p>Introduce qué fecha buscas:</p>
+    <div id="pedirFecha">
+        <form action=""> <label for="dia">Día:</label>
+            <input type="number" id="dia" name="dia"><br><br>
+
+            <label for="mes">Mes:</label>
+            <input type="number" id="mes" name="mes"><br><br>
+
+            <label for="anho">Año:</label>
+            <input type="number" id="anho" name="anho"><br><br>
+            <button type="button" onclick="valoresIntro();mostrarCalendario();encabezado()">Buscar Fecha</button><br><br>
+            <!--OJO con el orden en onclick!!-->
+        </form>
+
+    </div>
 
     <!-- Un contenedor para el calendario.
             Un encabezado para mostrar el mes y el año actual.
@@ -48,74 +63,82 @@
 
         </table>
 
-        <!--<button type="button" onclick="atras()">-</button>
-    <button type="button" onclick="adelante()" id="add">+</button>-->
-
     </div>
     <script>
-        const encabezado = document.getElementById('encabezadoMes');
-        let fechaActual = new Date();
-        let mesActual = fechaActual.getMonth();
-        let nombreMesActual = '-'
-        function nombreMes() {
-            if (mesActual === 0) {
-                nombreMesActual = 'Enero'
-            }
-            else if (mesActual === 1) {
-                nombreMesActual = 'Febrero'
-            } else if (mesActual === 2) {
-                nombreMesActual = 'Marzo'
-            } else if (mesActual === 3) {
-                nombreMesActual = 'Abril'
-            } else if (mesActual === 4) {
-                nombreMesActual = 'Mayo'
-            } else if (mesActual === 5) {
-                nombreMesActual = 'Junio'
-            } else if (mesActual === 6) {
-                nombreMesActual = 'Julio'
-            } else if (mesActual === 7) {
-                nombreMesActual = 'Agosto'
-            } else if (mesActual === 8) {
-                nombreMesActual = 'Septiembre'
-            } else if (mesActual === 9) {
-                nombreMesActual = 'Octubre'
-            } else if (mesActual === 10) {
-                nombreMesActual = 'Noviembre'
-            } else {
-                nombreMesActual = 'Diciembre'
-            }
-            return nombreMesActual
+        let fechaGlobal;
+        const encabezadoDoc = document.getElementById('encabezadoMes');
+        //Variables fecha introducida
+        function valoresIntro() {
+            let diaIntru = parseInt(document.getElementById('dia').value)
+            let mesIntru = parseInt(document.getElementById('mes').value)
+            let anhoIntru = parseInt(document.getElementById('anho').value)
+            console.log(mesIntru)
+            fechaGlobal = new Date(anhoIntru, (mesIntru - 1), diaIntru);
+            return fechaGlobal;
         }
 
-        let anhoHoy = fechaActual.getFullYear();
+        //array meses
+        const nombresMeses = [
+            'Enero',
+            'Febrero',
+            'Marzo',
+            'Abril',
+            'Mayo',
+            'Junio',
+            'Julio',
+            'Agosto',
+            'Septiembre',
+            'Octubre',
+            'Noviembre',
+            'Diciembre'
+        ];
 
-        encabezado.innerText = nombreMes() + ' ' + anhoHoy
+        // encabezado calendario
+        function nombreMes() {
+            return nombresMeses[fechaGlobal.getMonth()];
+        }
+
+        function anhoEncabezado() {
+            return fechaGlobal.getFullYear();
+        }
+
+        function mesEncabezado() {
+            return fechaGlobal.getMonth();
+        }
+        function encabezado() {
+            encabezadoDoc.innerText = nombreMes() + ' ' + anhoEncabezado();
+        }
+
         actualizarCalendario();
 
         function atras() {
-
+            let mesActual = fechaGlobal.getMonth();
+            let anhoActual = fechaGlobal.getFullYear();
             if (mesActual === 0) {
-                mesActual = 11
-                anhoHoy--
+                fechaGlobal = new Date(anhoActual - 1, 11, 1);
             } else {
-                mesActual--
+                fechaGlobal = new Date(anhoActual, mesActual - 1, 1);
             }
-            encabezado.innerText = nombreMes() + ' ' + anhoHoy
-            actualizarCalendario()
-
+            encabezadoDoc.innerText = nombreMes() + ' ' + anhoEncabezado();
+            actualizarCalendario();
+            
         }
+
         function adelante() {
+            let mesActual = fechaGlobal.getMonth();
+            let anhoActual = fechaGlobal.getFullYear();
+
             if (mesActual === 11) {
-                mesActual = 0
-                anhoHoy++
+                fechaGlobal = new Date(anhoActual + 1, 0, 1);
             } else {
-                mesActual++
-
+                fechaGlobal = new Date(anhoActual, mesActual + 1, 1);
             }
-            encabezado.innerText = nombreMes() + ' ' + anhoHoy
-            actualizarCalendario()
 
+            encabezadoDoc.innerText = nombreMes() + ' ' + anhoEncabezado();
+            actualizarCalendario();
+            
         }
+
         function limpiarCalendario() {
             const celdas = document.querySelectorAll('#calendarioDias td');
             celdas.forEach(celda => {
@@ -125,7 +148,7 @@
         function actualizarCalendario() {
             limpiarCalendario();
             // Crea una copia de fechaActual para evitar modificar el original
-            let primerDia = new Date(anhoHoy, mesActual, 1);
+            let primerDia = fechaGlobal;
 
             // Obtén el día de la semana 
             let diaSemana1 = primerDia.getDay();
@@ -179,9 +202,12 @@
                     }
                 }
             }
-            let empezar=actualizarCalendario()
-            
+            let empezar = actualizarCalendario()
 
+
+
+        }
+        function mostrarCalendario() {
 
         }
 
