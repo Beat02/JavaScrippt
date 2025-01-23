@@ -158,7 +158,7 @@
         actualizarCalendario();
 
         function atras() {
-            
+
             let mesActual = fechaGlobal.getMonth();
             let anhoActual = fechaGlobal.getFullYear();
             if (mesActual === 0) {
@@ -207,7 +207,7 @@
         function actualizarCalendario() {
             limpiarCalendario();
             // Creo una copia de fechaActual para evitar cambiar el original
-            let fechaPrevia=valoresIntro()
+            let fechaPrevia = valoresIntro()
             let primerDia = new Date(fechaPrevia.getFullYear(), fechaPrevia.getMonth(), 1);
 
             // Obtengo el día de la semana 
@@ -317,7 +317,7 @@
                 }
             }
             const datos = arrayCalendario("tablaCalendario");
-        console.log(datos);
+            console.log(datos);
 
 
         }
@@ -334,26 +334,21 @@
 
             // FILAS
             for (let i = 0; i < tabla.rows.length; i++) {
-                const fila = tabla.rows[i]; 
-                const datosFila = []; 
+                const fila = tabla.rows[i];
+                const datosFila = [];
 
                 // CELDAS
                 for (let j = 0; j < fila.cells.length; j++) {
-                    const celda = fila.cells[j]; 
-                    datosFila.push(celda.textContent); 
+                    const celda = fila.cells[j];
+                    datosFila.push(celda.textContent);
                 }
 
-                // Añadimos la fila al array bidimensional
+                // Añadimos la fila al array
                 arrayTabla.push(datosFila);
             }
-
-            // Retornamos el array con los datos de la tabla
             return arrayTabla;
         }
 
-        // Ejemplo de uso: Llamar a la función y mostrar el resultado
-        const datos = arrayCalendario("tablaCalendario");
-        console.log(datos);
 
     </script>
 </body>
