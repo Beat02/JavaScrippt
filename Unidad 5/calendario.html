@@ -52,7 +52,7 @@
                 <th>Sábado</th>
                 <th>Domingo</th>
             </tr>
-            <tr id="calendarioDias">
+            <tr class="calendarioDias primero">
                 <td id="0"></td>
                 <td id="1"></td>
                 <td id="2"></td>
@@ -143,7 +143,7 @@
         }
 
         function limpiarCalendario() {
-            const celdas = document.querySelectorAll('#calendarioDias td');
+            const celdas = document.querySelectorAll('.calendarioDias primero td');
             celdas.forEach(celda => {
                 celda.innerText = ''; // Limpia cada celda
             });
@@ -201,20 +201,37 @@
             let primerDiaCal = actualizarCalendario()
             let contador = 1
             let diasEnSemana = 7
-            let semanasRestantes=1
+
             let semanas = Math.ceil(diasTotales / 7)
+            let semanasRestantes = semanas - 1
             for (let dia = primerDiaCal; dia < diasEnSemana; dia++) {
                 let celda = document.getElementById(dia.toString());
                 celda.innerText = contador.toString();
                 contador++;
             }
             //SOLO TENGO HECHA LA PRIMERA SEMANA
-            /* while (semanasRestantes < semanas) {
-                 
- 
-             }*/
+
+            while (semanasRestantes > 0) {
+                let tabla = document.querySelector('table')
+                let semanaNueva = document.createElement('tr');
+                semanaNueva.classList.add('calendarioDias');
+
+                for (let i = 0; i < 7; i++) {
+                    if (contador <= diasTotales) {
+                        const celdaDia = document.createElement('td');
+                        celdaDia.id = contador.toString
+                        celdaDia.innerText = contador;
+                        semanaNueva.appendChild(celdaDia)
+                        contador++
+                    }
 
 
+                }
+                tabla.appendChild(semanaNueva);
+
+
+                semanasRestantes--;
+            }
 
         }
         function mostrarCalendario() {
