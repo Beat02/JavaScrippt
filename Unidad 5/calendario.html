@@ -5,12 +5,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body {
-            font-family: Arial, Helvetica, sans-serif;
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
         }
 
+        body {
+            height: 100vh;
+            background-color: #deb3fe;
+            text-align: center;
+        }
+
+        form {
+            align-items: center;
+            align-content: center;
+        }
+
+
         table {
-            border: 2px solid black;
+            border: 2px solid #707070;
+            border-radius: 5px;
+            margin: auto;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 5px;
+        }
+
+        .flecha {
+            font-size: 15px;
+            color: white;
+            border-radius: 10px;
+            background-color: #707070;
+            margin: 15px;
+            padding: 10px 20px;
+            border: 3px solid #707070;
+            user-select: none;
+            cursor: pointer;
+            font-weight: 900;
         }
 
         .bold {
@@ -21,17 +56,19 @@
 </head>
 
 <body>
-    <h2>Calendario</h2>
+    <h1>Calendario</h1>
+    <br><br>
     <p>Introduce qué fecha buscas:</p>
+    <br>
     <div id="pedirFecha">
         <form method="post"> <label for="dia">Día:</label>
-            <input type="number" id="dia" name="dia"><br><br>
+            <input type="number" id="dia" name="dia" min="1" max="31" required><br><br>
 
             <label for="mes">Mes:</label>
-            <input type="number" id="mes" name="mes"><br><br>
+            <input type="number" id="mes" name="mes" min="1" max="12" required><br><br>
 
             <label for="anho">Año:</label>
-            <input type="number" id="anho" name="anho"><br><br>
+            <input type="number" id="anho" name="anho" required><br><br>
             <button type="button"
                 onclick="valoresIntro();encabezado();actualizarCalendario();rellenarCalendario();">Buscar
                 Fecha</button><br><br>
@@ -45,11 +82,11 @@
             Botones para navegar entre meses.
             Una tabla (o divs) para representar los días del calendario.-->
     <div id="calendario">
-        <table>
+        <table id="tablaCalendario">
             <tr>
-                <th colspan="2"><button type="button" onclick="atras()">-</button></th>
+                <th colspan="2"><button type="button" class="flecha" onclick="atras()">-</button></th>
                 <th colspan="3" id="encabezadoMes"></th>
-                <th colspan="2"><button type="button" onclick="adelante()" id="add">+</button></th>
+                <th colspan="2"><button type="button" class="flecha" onclick="adelante()" id="add">+</button></th>
             </tr>
             <tr>
                 <th>Lunes</th>
@@ -75,13 +112,13 @@
     </div>
     <script>
         let fechaGlobal;
+        let arrayMesGlobal;
         const encabezadoDoc = document.getElementById('encabezadoMes');
         //Variables fecha introducida
         function valoresIntro() {
             let diaIntru = parseInt(document.getElementById('dia').value)
             let mesIntru = parseInt(document.getElementById('mes').value)
             let anhoIntru = parseInt(document.getElementById('anho').value)
-            console.log(mesIntru)
             fechaGlobal = new Date(anhoIntru, (mesIntru - 1), diaIntru);
             return fechaGlobal;
         }
@@ -121,7 +158,7 @@
         actualizarCalendario();
 
         function atras() {
-
+            
             let mesActual = fechaGlobal.getMonth();
             let anhoActual = fechaGlobal.getFullYear();
             if (mesActual === 0) {
@@ -170,7 +207,8 @@
         function actualizarCalendario() {
             limpiarCalendario();
             // Creo una copia de fechaActual para evitar cambiar el original
-            let primerDia = new Date(fechaGlobal.getFullYear(), fechaGlobal.getMonth(), 1);
+            let fechaPrevia=valoresIntro()
+            let primerDia = new Date(fechaPrevia.getFullYear(), fechaPrevia.getMonth(), 1);
 
             // Obtengo el día de la semana 
             let diaSemana1 = primerDia.getDay();
@@ -179,8 +217,9 @@
 
             // Encontrar la celda correspondiente y poner el día 1
             let dia = document.getElementById(diaSemana1.toString());
-            dia.classList.add('bold')
+            dia.classList.add('bold');
             dia.innerText = '1';
+            arrayMesGlobal = []
 
             return diaSemana1;
 
@@ -277,9 +316,44 @@
                     diasPrevios--
                 }
             }
+            const datos = arrayCalendario("tablaCalendario");
+        console.log(datos);
 
 
         }
+
+        //array bidimensional con calendario
+        function arrayCalendario(idTabla) {
+            const tabla = document.getElementById(idTabla);
+
+            if (!tabla) {
+                console.log("Error al buscar el calendario");
+                return [];
+            }
+            const arrayTabla = [];
+
+            // FILAS
+            for (let i = 0; i < tabla.rows.length; i++) {
+                const fila = tabla.rows[i]; 
+                const datosFila = []; 
+
+                // CELDAS
+                for (let j = 0; j < fila.cells.length; j++) {
+                    const celda = fila.cells[j]; 
+                    datosFila.push(celda.textContent); 
+                }
+
+                // Añadimos la fila al array bidimensional
+                arrayTabla.push(datosFila);
+            }
+
+            // Retornamos el array con los datos de la tabla
+            return arrayTabla;
+        }
+
+        // Ejemplo de uso: Llamar a la función y mostrar el resultado
+        const datos = arrayCalendario("tablaCalendario");
+        console.log(datos);
 
     </script>
 </body>
