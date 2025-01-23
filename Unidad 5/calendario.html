@@ -5,8 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
         table {
             border: 2px solid black;
+        }
+
+        .bold {
+            font-weight: bold;
         }
     </style>
     <title>Calendario</title>
@@ -113,6 +121,7 @@
         actualizarCalendario();
 
         function atras() {
+
             let mesActual = fechaGlobal.getMonth();
             let anhoActual = fechaGlobal.getFullYear();
             if (mesActual === 0) {
@@ -120,9 +129,11 @@
             } else {
                 fechaGlobal = new Date(anhoActual, mesActual - 1, 1);
             }
+            limpiarYRellenar();
+            // actualizar fecha
             encabezado();
             actualizarCalendario();
-            rellenarCalendario()
+            rellenarCalendario();
 
         }
 
@@ -135,39 +146,46 @@
             } else {
                 fechaGlobal = new Date(anhoActual, mesActual + 1, 1);
             }
-
+            limpiarYRellenar();
             encabezado();
             actualizarCalendario();
-            rellenarCalendario()
-
+            rellenarCalendario();
         }
 
         function limpiarCalendario() {
+            // Limpiar la primera semana!!
             const celdas = document.querySelectorAll('.calendarioDias primero td');
             celdas.forEach(celda => {
-                celda.innerText = ''; // Limpia cada celda
+                celda.innerText = ''; // Limpia cada celda!!!
             });
         }
+
+        function limpiarYRellenar() {
+            let tabla = document.querySelector('table');
+            while (tabla.rows.length > 3) { //OJO tenemos que mantener las primeras tres filas!!!
+                tabla.deleteRow(3);
+            }
+        }
+
         function actualizarCalendario() {
             limpiarCalendario();
-            // Crea una copia de fechaActual para evitar modificar el original
+            // Creo una copia de fechaActual para evitar cambiar el original
             let primerDia = new Date(fechaGlobal.getFullYear(), fechaGlobal.getMonth(), 1);
 
-            // Obtén el día de la semana 
+            // Obtengo el día de la semana 
             let diaSemana1 = primerDia.getDay();
 
             diaSemana1 = diaSemana1 === 0 ? 6 : diaSemana1 - 1;
 
             // Encontrar la celda correspondiente y poner el día 1
             let dia = document.getElementById(diaSemana1.toString());
+            dia.classList.add('bold')
             dia.innerText = '1';
 
             return diaSemana1;
 
         }
-        function rellenarCalendario() {
-            let mesActual = fechaGlobal.getMonth();
-            let anhoHoy = fechaGlobal.getFullYear();
+        function diasTotalesMes(mesActual, anhoHoy) {
             const mesLargo = [0, 2, 4, 6, 7, 9, 11]
 
             const febrero = 1
@@ -188,60 +206,80 @@
             } else {
                 diasTotales = 30
             }
-            /*¿Qué información necesitarías para empezar a rellenar la tabla?
+            return diasTotales;
+        }
 
-                - El día de la semana donde empezar (lo tienes con actualizarCalendario())
-                - Cuántos días tiene el mes (lo tienes con rellenarCalendario())
+        function rellenarCalendario() {
 
-                ¿Se te ocurre cómo podrías usar un bucle para ir rellenando los días? Piensa que:
-
-                - Necesitarás crear más filas en la tabla
-                - Tendrás que ir contando los días
-                - Necesitarás saber cuándo pasar a la siguiente fila*/
+            let mesActual = fechaGlobal.getMonth();
+            let anhoHoy = fechaGlobal.getFullYear();
+            let diasTotales = diasTotalesMes(mesActual, anhoHoy);
             let primerDiaCal = actualizarCalendario()
             let contador = 1
             let diasEnSemana = 7
+            let semanasRestantes = 0
 
-            let semanas = Math.ceil(diasTotales / 7)
-            let semanasRestantes = semanas - 1
+            let semanas = Math.ceil((diasTotales + primerDiaCal) / 7)
+            semanasRestantes = semanas - 1
+            //Rrellenar primera semana
             for (let dia = primerDiaCal; dia < diasEnSemana; dia++) {
                 let celda = document.getElementById(dia.toString());
+                celda.classList.add('bold')
                 celda.innerText = contador.toString();
                 contador++;
             }
-            //SOLO TENGO HECHA LA PRIMERA SEMANA
-
+            //Relleno el resto de la semana
             while (semanasRestantes > 0) {
                 let tabla = document.querySelector('table')
                 let semanaNueva = document.createElement('tr');
                 semanaNueva.classList.add('calendarioDias');
-
+                //en que día nos hemos quedado?
+                let diasNuevoMes = 1
                 for (let i = 0; i < 7; i++) {
+
                     if (contador <= diasTotales) {
                         const celdaDia = document.createElement('td');
-                        celdaDia.id = contador.toString
+                        celdaDia.id = contador.toString()
+                        celdaDia.classList.add('bold')
                         celdaDia.innerText = contador;
                         semanaNueva.appendChild(celdaDia)
                         contador++
-                    }
 
+                    } else {
+                        const celdaDia = document.createElement('td');
+                        celdaDia.id = contador.toString()
+                        celdaDia.innerText = diasNuevoMes
+                        semanaNueva.appendChild(celdaDia)
+                        contador++
+                        diasNuevoMes++;
+
+                    }
 
                 }
                 tabla.appendChild(semanaNueva);
 
-
                 semanasRestantes--;
             }
+            //dias del mes anterior
+
+            let diasPrevios = 0
+            let cuentaAtras = primerDiaCal
+            if (mesActual === 0 || mesActual === 11) {
+                diasPrevios = 31
+            } else {
+                diasPrevios = diasTotalesMes((mesActual - 1), anhoHoy);
+            }
+            if (cuentaAtras !== 0) {
+                cuentaAtras--;
+                for (cuentaAtras; cuentaAtras >= 0; cuentaAtras--) {
+                    let celdasPrevias = document.getElementById(cuentaAtras.toString())
+                    celdasPrevias.innerText = diasPrevios.toString()
+                    diasPrevios--
+                }
+            }
+
 
         }
-        function mostrarCalendario() {
-
-        }
-
-
-
-
-
 
     </script>
 </body>
