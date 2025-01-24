@@ -259,6 +259,7 @@
 
             let semanas = Math.ceil((diasTotales + primerDiaCal) / 7)
             semanasRestantes = semanas - 1
+
             //Rellenar primera semana
             for (let dia = primerDiaCal; dia < diasEnSemana; dia++) {
                 let celda = document.getElementById(dia.toString());
@@ -266,6 +267,7 @@
                 celda.innerText = contador.toString();
                 contador++;
             }
+
             //Relleno el resto de la semana
             while (semanasRestantes > 0) {
                 let tabla = document.querySelector('table')
@@ -298,8 +300,8 @@
 
                 semanasRestantes--;
             }
-            //dias del mes anterior
 
+            //dias del mes anterior
             let diasPrevios = 0
             let cuentaAtras = primerDiaCal
             if (mesActual === 0 || mesActual === 11) {
