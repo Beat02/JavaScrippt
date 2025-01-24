@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!--<button onclick="setInterval(eje2, 20000)">Pruébame</button>-->
+    <p>Si quieres terminar escribe "fin"</p>
+    <script>
+        /*Realiza un programa que cada 20 segundos (mediante setInterval) solicite un número hasta que alguien le escriba la cadena “fin”.
+        En ese momento, el programa debe mostrar la suma de todos los números.*/
+
+        let numeroGlobal;
+        let arrayNumGlobal=[]
+        let intervalo=window.setInterval(eje2, 5000);
+        function eje2() {
+            numeroGlobal = prompt("Escribe un número. Si quieres terminar escribe 'fin'");
+            if (numeroGlobal !== 'fin') {
+                arrayNumGlobal.push(parseInt(numeroGlobal))
+            }
+            if (numeroGlobal === 'fin') {
+                window.clearInterval(intervalo)
+                console.log(arrayNumGlobal)
+            }
+
+        }
+
+
+
+
+    </script>
+</body>
+
+</html>

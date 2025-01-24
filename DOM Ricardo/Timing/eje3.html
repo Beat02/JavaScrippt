@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!--Realiza un programa que pasados 20 segundos, nos muestre una sola vez la fecha actual del sistema.-->
+    <h2>Fecha del sistema:</h2>
+    <h3 id="fecha"></h3>
+    <script>
+        const nodoFecha=document.getElementById('fecha');
+        let fechaFinal=setTimeout(fecha, 2000)
+        //no me está saliendo bien por pantalla!!
+        nodoFecha.innerText=fechaFinal
+        function fecha(){
+            let fechaSistema=new Date();
+            console.log(fechaSistema)
+            return fechaSistema;
+        }
+        
+    </script>
+</body>
+
+</html>
