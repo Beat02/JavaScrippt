@@ -70,7 +70,7 @@
             <label for="anho">Año:</label>
             <input type="number" id="anho" name="anho" required><br><br>
             <button type="button"
-                onclick="valoresIntro();encabezado();actualizarCalendario();rellenarCalendario();">Buscar
+                onclick="valoresIntro();limpiarYRellenar();encabezado();actualizarCalendario();rellenarCalendario();">Buscar
                 Fecha</button><br><br>
             <!--OJO con el orden en onclick!!-->
         </form>
@@ -207,8 +207,7 @@
         function actualizarCalendario() {
             limpiarCalendario();
             // Creo una copia de fechaActual para evitar cambiar el original
-            let fechaPrevia = valoresIntro()
-            let primerDia = new Date(fechaPrevia.getFullYear(), fechaPrevia.getMonth(), 1);
+            let primerDia = new Date(fechaGlobal.getFullYear(), fechaGlobal.getMonth(), 1);
 
             // Obtengo el día de la semana 
             let diaSemana1 = primerDia.getDay();
@@ -260,7 +259,7 @@
 
             let semanas = Math.ceil((diasTotales + primerDiaCal) / 7)
             semanasRestantes = semanas - 1
-            //Rrellenar primera semana
+            //Rellenar primera semana
             for (let dia = primerDiaCal; dia < diasEnSemana; dia++) {
                 let celda = document.getElementById(dia.toString());
                 celda.classList.add('bold')
@@ -312,6 +311,7 @@
                 cuentaAtras--;
                 for (cuentaAtras; cuentaAtras >= 0; cuentaAtras--) {
                     let celdasPrevias = document.getElementById(cuentaAtras.toString())
+                    celdasPrevias.classList.remove('bold')
                     celdasPrevias.innerText = diasPrevios.toString()
                     diasPrevios--
                 }
