@@ -106,20 +106,26 @@
         let jugadorGlobal;
         let ordenadorGlobal;
         let iaGlobal;
+
         //Modos de juego
-        function juegoAleatorio(tablero) {
-            let casillaVacia = false;
-            let randomUno, randomDos, posibleFicha;
+        function juegoAleatorio(tablero, tipoFicha) {
 
-            do {
+            let randomUno, randomDos;
+            let posibleFicha = " ";
+
+            while (posibleFicha === " ") {
                 randomUno = Math.floor(Math.random() * 3);
+                console.log(randomUno)
                 randomDos = Math.floor(Math.random() * 3);
+                console.log(randomDos)
                 posibleFicha = tablero[randomUno][randomDos];
-            } while (posibleFicha !== ''); // Sigue buscando mientras la casilla no esté vacía
+                console.log(posibleFicha)
+            }
 
-            casillaVacia = true;
 
+            tablero[randomUno][randomDos] = tipoFicha
 
+            return tablero;
         }
         function juegoIa() {
 
@@ -195,7 +201,13 @@
             } else {
                 console.log('Podemos seguir jugando')
             }
+
+            //juego aleatorio
+            console.log(juegoAleatorio(tablero, 'O'));
         });
+
+
+
         //Condición ganadora FILA
         function hayGanadorFila(arrayTab) {
             let xSeguidas = 0;
