@@ -74,7 +74,7 @@
                 <tr id="fila3">
                     <td id="6"><button type="button">O</button></td>
                     <td id="7"><button type="button">O</button></td>
-                    <td id="8"><button type="button">X</button></td>
+                    <td id="8"><button type="button">&nbsp;</button></td>
                 </tr>
 
             </table>
@@ -109,24 +109,26 @@
 
         //Modos de juego
         function juegoAleatorio(tablero, tipoFicha) {
-
+            let casillaVacia = false;
             let randomUno, randomDos;
             let posibleFicha = " ";
 
-            while (posibleFicha === " ") {
+            while (!casillaVacia) {
                 randomUno = Math.floor(Math.random() * 3);
                 console.log(randomUno)
                 randomDos = Math.floor(Math.random() * 3);
                 console.log(randomDos)
                 posibleFicha = tablero[randomUno][randomDos];
                 console.log(posibleFicha)
+                if (posibleFicha !== 'X' && posibleFicha !== 'O') {
+                    tablero[randomUno][randomDos] = tipoFicha;
+                    casillaVacia = true;
+                    return tablero;
+                }
+                //la función nos devuelve el array con la ficha en el tablero ya incluida! ^^
             }
-
-
-            tablero[randomUno][randomDos] = tipoFicha
-
-            return tablero;
         }
+
         function juegoIa() {
 
         }
