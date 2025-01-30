@@ -142,11 +142,42 @@
             return arrayTablero;
         }
         document.addEventListener('DOMContentLoaded', function () {
-           
+
             let tablero = obtenerTablero();
             console.log(tablero.join("\n"));
         });
+        function hayGanador(arrayTab) {
+            let xSeguidas = 0;
+            let oSeguidas = 0;
+            for (let i = 0; i < 3; i++) {
+                arrayTablero[i] = [];
+                for (let j = 0; j < 3; j++) {
+                    let tipoCasilla = arrayTablero[i][j];
+                    if (xSeguidas > 0 || oSeguidas > 0) {
+                        if (tipoCasilla === 'X') {
+                            oSeguidas=0
+                            xSeguidas++;
+                        } else if (tipoCasilla === 'O') {
+                            xSeguidas=0
+                            oSeguidas++;
+                        }
+                    } else {
+                        if (tipoCasilla === 'X') {
+                            xSeguidas++;
+                        } else if (tipoCasilla === 'O') {
+                            oSeguidas++;
+                        }
+                    }
+                    
 
+
+                }
+                if(xSeguidas ===3 || oSeguidas ===3){
+                    hayGanador=true
+                    break;
+                }
+            }
+        }
 
     </script>
 </body>
