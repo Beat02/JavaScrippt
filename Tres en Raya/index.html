@@ -61,19 +61,20 @@
         <div id="tablaJuego">
             <table>
                 <tr id="fila1">
-                    <td id="0"><button type="button">-</button></td>
-                    <td id="1"><button type="button">X</button></td>
+                    <td id="0"><button type="button">X</button></td>
+                    <td id="1"><button type="button">&nbsp;</button></td>
                     <td id="2"><button type="button">O</button></td>
                 </tr>
                 <tr id="fila2">
-                    <td id="3"><button type="button">X</button></td>
-                    <td id="4"><button type="button">O</button></td>
-                    <td id="5"><button type="button">-</button></td>
+                    <td id="3"><button type="button">&nbsp;</button></td>
+                    <!--Esto se recoje como un "", espacio en blanco-->
+                    <td id="4"><button type="button">X</button></td>
+                    <td id="5"><button type="button">&nbsp;</button></td>
                 </tr>
                 <tr id="fila3">
                     <td id="6"><button type="button">O</button></td>
-                    <td id="7"><button type="button">X</button></td>
-                    <td id="8"><button type="button">-</button></td>
+                    <td id="7"><button type="button">O</button></td>
+                    <td id="8"><button type="button">X</button></td>
                 </tr>
 
             </table>
@@ -106,7 +107,18 @@
         let ordenadorGlobal;
         let iaGlobal;
         //Modos de juego
-        function juegoAleatorio() {
+        function juegoAleatorio(tablero) {
+            let casillaVacia = false;
+            let randomUno, randomDos, posibleFicha;
+
+            do {
+                randomUno = Math.floor(Math.random() * 3);
+                randomDos = Math.floor(Math.random() * 3);
+                posibleFicha = tablero[randomUno][randomDos];
+            } while (posibleFicha !== ''); // Sigue buscando mientras la casilla no esté vacía
+
+            casillaVacia = true;
+
 
         }
         function juegoIa() {
@@ -116,6 +128,21 @@
 
         }
         //Tipo de juego
+
+        function nueveFichas(tablero) {
+            //con esto puedo controlar el total de fichas
+            //falta integrarlo para que finalice la partida
+            let matriz = tablero.flat();
+            let totalFichas = matriz.filter(n => n === 'X' || n === 'O');
+            console.log(totalFichas.length);
+            if (totalFichas.length === 9) {
+                console.log('Aquí debería terminar la partida')
+            } else {
+                console.log('Podemos seguir jugando')
+            }
+            return totalFichas.length;
+
+        }
 
         //Obtener tablero actual en formato aray
         function obtenerTablero() {
@@ -141,24 +168,50 @@
             }
             return arrayTablero;
         }
+
+        //PRUEBA DE LO QUE VOY HACIENDO!!
         document.addEventListener('DOMContentLoaded', function () {
 
             let tablero = obtenerTablero();
             console.log(tablero.join("\n"));
+
+            let ganadorFila = hayGanadorFila(tablero);
+            let ganadorCol = hayGanadorColumna(tablero);
+            let ganadorDiag = hayGanadorDiagonal(tablero);
+            if (ganadorFila !== null) {
+                console.log('Ha ganado: ' + ganadorFila)
+            } else if (ganadorCol !== null) {
+                console.log('Ha ganado: ' + ganadorCol)
+            } else if (ganadorDiag !== null) {
+                console.log('Ha ganado: ' + ganadorDiag)
+            }
+
+            //tablero de nueve:
+            let matriz = tablero.flat();
+            let totalFichas = matriz.filter(n => n === 'X' || n === 'O');
+            console.log(totalFichas.length);
+            if (totalFichas.length === 9) {
+                console.log('Aquí debería terminar la partida')
+            } else {
+                console.log('Podemos seguir jugando')
+            }
         });
-        function hayGanador(arrayTab) {
+        //Condición ganadora FILA
+        function hayGanadorFila(arrayTab) {
             let xSeguidas = 0;
             let oSeguidas = 0;
+            let ganador = null;
             for (let i = 0; i < 3; i++) {
-                arrayTablero[i] = [];
+                //arrayTablero[i] = [];
+
                 for (let j = 0; j < 3; j++) {
-                    let tipoCasilla = arrayTablero[i][j];
+                    let tipoCasilla = arrayTab[i][j];
                     if (xSeguidas > 0 || oSeguidas > 0) {
                         if (tipoCasilla === 'X') {
-                            oSeguidas=0
+                            oSeguidas = 0
                             xSeguidas++;
                         } else if (tipoCasilla === 'O') {
-                            xSeguidas=0
+                            xSeguidas = 0
                             oSeguidas++;
                         }
                     } else {
@@ -168,14 +221,98 @@
                             oSeguidas++;
                         }
                     }
-                    
+                    if (xSeguidas === 3) {
+                        ganador = 'X';
+                        return ganador;
+                    } else if (oSeguidas === 3) {
+                        ganador = 'O';
+                        return ganador;
+                    }
+                    if (j === 2) {
+                        oSeguidas = 0;
+                        xSeguidas = 0;
+                    }
+
+                }
+
+            }
+            return ganador;
+        }
+
+        //Condición ganadora COLUMNA
+        function hayGanadorColumna(arrayTab) {
+            let xSeguidas = 0;
+            let oSeguidas = 0;
+            let ganador = null;
+            for (let i = 0; i < 3; i++) {
+                //aquí la i es el segundo imput del array
+
+                for (let j = 0; j < 3; j++) {
+                    let tipoCasilla = arrayTab[j][i];
+                    if (xSeguidas > 0 || oSeguidas > 0) {
+                        if (tipoCasilla === 'X') {
+                            oSeguidas = 0
+                            xSeguidas++;
+                        } else if (tipoCasilla === 'O') {
+                            xSeguidas = 0
+                            oSeguidas++;
+                        }
+                    } else {
+                        if (tipoCasilla === 'X') {
+                            xSeguidas++;
+                        } else if (tipoCasilla === 'O') {
+                            oSeguidas++;
+                        }
+                    }
+                    if (xSeguidas === 3) {
+                        ganador = 'X';
+                        return ganador;
+                    } else if (oSeguidas === 3) {
+                        ganador = 'O';
+                        return ganador;
+                    }
+                    if (j === 2) {
+                        oSeguidas = 0;
+                        xSeguidas = 0;
+                    }
 
 
                 }
-                if(xSeguidas ===3 || oSeguidas ===3){
-                    hayGanador=true
-                    break;
+            }
+            return ganador;
+        }
+
+        //Condición ganadora DIAGONAL
+        function hayGanadorDiagonal(arrayTab) {
+            let xSeguidas = 0;
+            let oSeguidas = 0;
+            let tresSeguidos = false;
+            let ganador = null;
+            let casillaCentral = arrayTab[1][1];
+
+            if (casillaCentral !== null) {
+                let casillaArIz = arrayTab[0][0];
+                let casillaArDch = arrayTab[0][2];
+
+                if (casillaCentral == casillaArIz) {
+                    let casillaAbDch = arrayTab[2][2];
+                    if (casillaCentral == casillaAbDch) {
+                        tresSeguidos = true;
+                    }
+                } else if (casillaCentral == casillaArDch) {
+
+                    if (casillaCentral == casillaArDch) {
+                        let casillaAbIz = arrayTab[2][0];
+                        if (casillaCentral == casillaAbIz) {
+                            tresSeguidos = true;
+                        }
+                    }
                 }
+                if (tresSeguidos) {
+                    ganador = casillaCentral;
+                }
+                return ganador;
+
             }
         }
 
