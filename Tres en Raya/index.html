@@ -108,6 +108,7 @@
         let iaGlobal;
 
         //Modos de juego
+
         function juegoAleatorio(tablero, tipoFicha) {
             let casillaVacia = false;
             let randomUno, randomDos;
@@ -216,7 +217,6 @@
             let oSeguidas = 0;
             let ganador = null;
             for (let i = 0; i < 3; i++) {
-                //arrayTablero[i] = [];
 
                 for (let j = 0; j < 3; j++) {
                     let tipoCasilla = arrayTab[i][j];
@@ -259,7 +259,7 @@
             let oSeguidas = 0;
             let ganador = null;
             for (let i = 0; i < 3; i++) {
-                //aquí la i es el segundo imput del array
+                //aquí la i es el segundo input del array
 
                 for (let j = 0; j < 3; j++) {
                     let tipoCasilla = arrayTab[j][i];
@@ -298,6 +298,7 @@
 
         //Condición ganadora DIAGONAL
         function hayGanadorDiagonal(arrayTab) {
+            
             let xSeguidas = 0;
             let oSeguidas = 0;
             let tresSeguidos = false;
