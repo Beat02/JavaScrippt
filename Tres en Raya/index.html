@@ -106,6 +106,7 @@
         let jugadorGlobal;
         let ordenadorGlobal;
         let iaGlobal;
+        let contadorTurnoGlobal = 1;
 
         //Modos de juego
 
@@ -126,12 +127,159 @@
                     casillaVacia = true;
                     return tablero;
                 }
-                //la función nos devuelve el array con la ficha en el tablero ya incluida! ^^
+                //la función nos devuelve el array con la ficha en el tablero ya incluida
             }
         }
 
-        function juegoIa() {
+        function juegoIa(tablero, tipoFicha) {
+            /*En el modo de 1 jugador vs IA, la primera casilla del ordenador será aleatoria, las siguientes intentará bloquear al
+            jugador humano y si puede intentar ganarle.*/
+            let fichaContraria;
+            let totalContrarias;
+            let fichaPropia;
+            let posibleCasilla;
+            let sinOpciones = false;
+            //saber qué buscamos, podría organizar esto de otra manera pero por ahora lo dejo así que funciona
+            if (tipoFicha === 'X') {
+                fichaContraria = 'O';
+            } else {
+                fichaContraria = 'X';
+            }
+            if (contadorTurnoGlobal === 0) {
+                //1 turno de la IA controlado
+                return juegoAleatorio(tablero, tipoFicha);
+                //contadorTurnoGlobal++;
+            } else {
+                //control filas
+                for (let i = 0; i < 3; i++) {
 
+                    for (let j = 0; j < 3; j++) {
+                        let tipoCasilla = tablero[i][j];
+                        if (totalContrarias > 0 || fichaPropia > 0) {
+                            if (tipoCasilla === fichaContraria) {
+                                fichaPropia = 0
+                                totalContrarias++;
+                            } else if (tipoCasilla === tipoFicha) {
+                                totalContrarias = 0
+                                fichaPropia++;
+                            }
+                        } else {
+                            if (tipoCasilla === fichaContraria) {
+                                totalContrarias++;
+                            } else if (tipoCasilla === tipoCasilla) {
+                                fichaPropia++;
+                            }
+
+                        } if (totalContrarias === 2) {
+                            if (j === 1) {
+                                posibleCasilla = tablero[i][(j + 1)];
+                                if (posibleCasilla !== 'X' && posibleCasilla !== 'O') {
+                                    tablero[i][(j + 1)] = tipoFicha;
+                                    sinOpciones = true;
+                                    return tablero;
+                                }
+                            } else if (j === 2) {
+                                posibleCasilla = tablero[i][(j - 2)];
+                                if (posibleCasilla !== 'X' && posibleCasilla !== 'O') {
+                                    tablero[i][(j - 2)] = tipoFicha;
+                                    sinOpciones = true;
+                                    return tablero;
+                                }
+                            }
+                        } if (posibleCasilla !== 'X' && posibleCasilla !== 'O') {
+                            return posibleCasilla;
+                        }
+
+                    }
+                }//fin control filas
+
+                //Inicio control columnas:
+                for (let i = 0; i < 3; i++) {
+
+                    for (let j = 0; j < 3; j++) {
+                        let tipoCasilla = tablero[j][i];
+                        if (totalContrarias > 0 || fichaPropia > 0) {
+                            if (tipoCasilla === fichaContraria) {
+                                fichaPropia = 0
+                                totalContrarias++;
+                            } else if (tipoCasilla === tipoFicha) {
+                                totalContrarias = 0
+                                fichaPropia++;
+                            }
+                        } else {
+                            if (tipoCasilla === fichaContraria) {
+                                totalContrarias++;
+                            } else if (tipoCasilla === tipoCasilla) {
+                                fichaPropia++;
+                            }
+
+                        } if (totalContrarias === 2) {
+                            if (j === 1) {
+                                posibleCasilla = tablero[2][i];
+                                if (posibleCasilla !== 'X' && posibleCasilla !== 'O') {
+                                    tablero[2][i] = tipoFicha;
+                                    sinOpciones = true;
+                                    return tablero;
+                                }
+                            } else if (j === 2) {
+                                posibleCasilla = tablero[0][i];
+                                if (posibleCasilla !== 'X' && posibleCasilla !== 'O') {
+                                    tablero[0][i] = tipoFicha;
+                                    sinOpciones = true;
+                                    return tablero;
+                                }
+                            }
+
+                        }
+
+
+                    }
+                }//Fin control columnas
+
+                //Control Diagonal:
+                let casillaCentral = tablero[1][1];
+                //casiilas izquierda
+                let casillaArIz = tablero[0][0];
+                let casillaAbIz = tablero[2][0];
+                //casillas derecha
+                let casillaArDch = tablero[0][2];
+                let casillaAbDch = tablero[2][2];
+
+                if (casillaCentral === fichaContraria) {
+
+
+                    if (casillaCentral == casillaArIz) {
+
+                        //cambios. Revisar que devuelve lo correcto!!
+                        if (casillaAbDch !== tipoFicha && casillaAbDch !== fichaContraria) {
+                            tablero[2][2] = tipoFicha;
+                            sinOpciones = true;
+                            return tablero;
+                        }
+                    } else if (casillaCentral == casillaArDch) {
+
+                        if (casillaAbIz !== tipoFicha && casillaAbIz !== fichaContraria) {
+                            tablero[2][0] = tipoFicha;
+                            sinOpciones = true;
+                            return tablero;
+                        }
+                    }
+
+                } else if (casillaCentral !== tipoFicha) {
+                    if (fichaContraria === (casillaArIz && casillaAbDch) || fichaContraria === (casillaArDch && casillaAbIz)) {
+                        tablero[1][1] = tipoFicha;
+                        sinOpciones = true;
+                        return tablero;
+                    }
+                }//Fin control diagonal
+                //Si no hemos conseguido ninguna casilla en estas condiciones:
+                if(!sinOpciones){
+                   return juegoAleatorio(tablero, tipoFicha);
+                }
+
+            }
+
+            contadorTurnoGlobal++;
         }
         function dosJugadores() {
 
@@ -207,6 +355,10 @@
 
             //juego aleatorio
             console.log(juegoAleatorio(tablero, 'O'));
+            //juego con IA
+            console.log(juegoIa(tablero,'O'));
+            console.log(juegoIa(tablero,'O'));
+
         });
 
 
@@ -298,7 +450,7 @@
 
         //Condición ganadora DIAGONAL
         function hayGanadorDiagonal(arrayTab) {
-            
+
             let xSeguidas = 0;
             let oSeguidas = 0;
             let tresSeguidos = false;
