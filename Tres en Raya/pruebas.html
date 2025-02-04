@@ -38,10 +38,17 @@
 
     </form>
     <script>
+        
+        
         function empezarPartida(){
-            
+            event.preventDefault();
+            let tipoJuego=document.querySelector("select[name='opcionesJugadores']").value;
+            let tipoTablero=document.querySelector("select[name='opcionesTablero']").value;
+           console.log(tipoJuego);
+           console.log(tipoTablero);
 
         }
+        
     </script>
 </body>
 

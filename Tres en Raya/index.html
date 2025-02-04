@@ -27,6 +27,14 @@
             padding: 5px;
 
         }
+
+        #juegoMarcha {
+            display: none;
+        }
+
+        #contadorPartidas {
+            display: none;
+        }
     </style>
 </head>
 
@@ -35,20 +43,39 @@
         <h1>Tres en raya</h1>
         <h2>Modos de juego:</h2>
         <form action="">
-            <button buttontype="button" id="botonAleatorio">1 vs Random</button>
-            <button buttontype="button" id="botonIa">1 vs IA</button>
-            <button buttontype="button" id="botonDosJug">1 vs 1</button>
+            <select name="opcionesJugadores">
+
+                <option value="0">Jugador VS. Aleatorio</option>
+
+                <option value="1">Jugador VS. IA</option>
+
+                <option value="2">Jugador VS. Jugador</option>
+
+            </select>
             <h2>Tipo de juego:</h2>
-            <button buttontype="button" id="boton6Fichas">Juego de 6 fichas</button>
-            <button buttontype="button" id="boton9Fichas">Juego de 9 fichas</button>
+            <select name="opcionesTablero">
+                <option value="6">6 fichas máximo</option>
+
+                <option value="9">9 fichas máximo</option>
+            </select>
             <br><br>
-            <button type="button">¡Empezar!</button>
+            <button type="submit" id="gameOn"
+                onclick="valoresPartida();mostarTablero();iniciarCronometro();">¡Empezar!</button>
+
         </form>
+
     </div>
 
     <!--ESCONDER HASTA QUE LE DEN AL BOTÓN EN LA CABECERA-->
     <div id="juegoMarcha">
-        <h3 id="cuentaTotal"></h3>
+        <div id="cuentaTotal">
+            <div class="reloj">
+                <span id="Horas">00</span>:
+                <span id="Minutos">00</span>:
+                <span id="Segundos">00</span>
+            </div>
+        </div>
+
         <h3 id="cuentaRegresiva"></h3>
 
         <!--
@@ -108,6 +135,29 @@
         let iaGlobal;
         let contadorTurnoGlobal = 1;
 
+        //Mostrar tablero y contadores
+        function mostarTablero() {
+            const tableroPantalla = document.getElementById('juegoMarcha');
+            console.log(tableroPantalla.style.display);
+            tableroPantalla.style.display = 'block';
+            console.log(tableroPantalla.style.display);
+            const contadorPantalla = document.getElementById('contadorPartidas');
+            console.log(contadorPantalla.style.display);
+            contadorPantalla.style.display = 'block';
+            console.log(contadorPantalla.style.display);
+        }
+        //Recoger valores de la partida del formulario, devolvemos array
+        function valoresPartida() {
+            event.preventDefault();
+            let tipoJuego = document.querySelector("select[name='opcionesJugadores']").value;
+            let tipoTablero = document.querySelector("select[name='opcionesTablero']").value;
+            let valoresJuego = [tipoJuego, tipoTablero];
+            console.log(tipoJuego);
+            console.log(tipoTablero);
+            return valoresJuego;
+        }
+        //TODO: Turnos de juego
+        //TODO :Cambio 1er jugador en cada partida
         //Modos de juego
 
         function juegoAleatorio(tablero, tipoFicha) {
@@ -134,6 +184,7 @@
         function juegoIa(tablero, tipoFicha) {
             /*En el modo de 1 jugador vs IA, la primera casilla del ordenador será aleatoria, las siguientes intentará bloquear al
             jugador humano y si puede intentar ganarle.*/
+            //TODO: necesito trabajr en que la IA moleste al jugador, por ahora solo va a ganar, pero no defiende
             let fichaContraria;
             let totalContrarias = 0
             let fichaPropia = 0
@@ -189,7 +240,7 @@
                                 }
                             } else if (j === 2) {
                                 posibleCasilla = tablero[i][0];
-                                let otraPosible=tablero[i][1];
+                                let otraPosible = tablero[i][1];
                                 if (posibleCasilla !== 'X' && posibleCasilla !== 'O') {
                                     tablero[i][0] = tipoFicha;
                                     sinOpciones = true;
@@ -244,7 +295,7 @@
                                 }
                             } else if (j === 2) {
                                 posibleCasilla = tablero[0][i];
-                                let otraPosible=tablero[1][i];
+                                let otraPosible = tablero[1][i];
                                 if (posibleCasilla !== 'X' && posibleCasilla !== 'O') {
                                     tablero[0][i] = tipoFicha;
                                     sinOpciones = true;
@@ -317,7 +368,7 @@
 
         function nueveFichas(tablero) {
             //con esto puedo controlar el total de fichas
-            //falta integrarlo para que finalice la partida
+            //TODO: falta integrarlo para que finalice la partida
             let matriz = tablero.flat();
             let totalFichas = matriz.filter(n => n === 'X' || n === 'O');
             console.log(totalFichas.length);
@@ -327,6 +378,10 @@
                 console.log('Podemos seguir jugando')
             }
             return totalFichas.length;
+
+        }
+        //TODO: Funcion de partida de 6 fichas
+        function seisFichas(tablero) {
 
         }
 
@@ -510,6 +565,50 @@
 
             }
         }
+        //TODO: id="cuentaTotal"Contador total partida.
+        //toppingNuevo.addEventListener('click',mostraClick);
+        let momentoInicio;
+        let intervalo;
+        const botonEmpezar = document.getElementById('gameOn');
+        botonEmpezar.addEventListener('click', relojCuentaTotal);
+        function iniciarCronometro() {
+            if (!momentoInicio) {
+                momentoInicio = new Date();
+            }
+            intervalo = setInterval(actualizarCronometro, 1000);
+            const reloj = document.getElementById('gameOn').disabled = true;
+            //disabled=true con esto evito que se pulse más de una vez!!
+
+        }
+
+        function actualizarCronometro() {
+            const ahora = new Date();
+            const diferencia = ahora - momentoInicio;//MILISEGUNDOS!!
+
+            //Convertir la diferencia de fechas a horas, minutos y segundos
+            const horas = Math.floor(diferencia / 3600000);
+            const minutos = Math.floor((diferencia % 3600000) / 60000);
+            const segundos = Math.floor((diferencia % 60000) / 1000);
+
+            const formato = function (valor) {
+                if (valor < 10) {
+                    return "0" + valor;
+                } else {
+                    return valor;
+                }
+            };
+
+            //Llevamos los valores a la pantalla
+            document.getElementById("Horas").textContent = formato(horas);
+            document.getElementById("Minutos").textContent = formato(minutos);
+            document.getElementById("Segundos").textContent = formato(segundos);
+        }
+        function detenerCronometro() {
+            clearInterval(intervalo);
+        }
+
+
+        //TODO: <h3 id="cuentaRegresiva"></h3> tiempo total partida. Contador regresivo 30" por turno.
 
     </script>
 </body>
