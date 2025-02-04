@@ -61,20 +61,20 @@
         <div id="tablaJuego">
             <table>
                 <tr id="fila1">
-                    <td id="0"><button type="button">X</button></td>
+                    <td id="0"><button type="button">O</button></td>
                     <td id="1"><button type="button">&nbsp;</button></td>
-                    <td id="2"><button type="button">O</button></td>
+                    <td id="2"><button type="button">X</button></td>
                 </tr>
                 <tr id="fila2">
                     <td id="3"><button type="button">&nbsp;</button></td>
                     <!--Esto se recoje como un "", espacio en blanco-->
-                    <td id="4"><button type="button">X</button></td>
+                    <td id="4"><button type="button">&nbsp;</button></td>
                     <td id="5"><button type="button">&nbsp;</button></td>
                 </tr>
                 <tr id="fila3">
-                    <td id="6"><button type="button">O</button></td>
-                    <td id="7"><button type="button">O</button></td>
-                    <td id="8"><button type="button">&nbsp;</button></td>
+                    <td id="6"><button type="button">X</button></td>
+                    <td id="7"><button type="button">&nbsp;</button></td>
+                    <td id="8"><button type="button">O</button></td>
                 </tr>
 
             </table>
@@ -135,68 +135,86 @@
             /*En el modo de 1 jugador vs IA, la primera casilla del ordenador será aleatoria, las siguientes intentará bloquear al
             jugador humano y si puede intentar ganarle.*/
             let fichaContraria;
-            let totalContrarias;
-            let fichaPropia;
-            let posibleCasilla;
+            let totalContrarias = 0
+            let fichaPropia = 0
+            let posibleCasilla = 0
             let sinOpciones = false;
-            //saber qué buscamos, podría organizar esto de otra manera pero por ahora lo dejo así que funciona
+            //Averiguar ficha contraria, podría organizar esto de otra manera pero por ahora lo dejo así que funciona
             if (tipoFicha === 'X') {
                 fichaContraria = 'O';
+                console.log(tipoFicha + " " + fichaContraria)
             } else {
                 fichaContraria = 'X';
+                console.log(tipoFicha + " " + fichaContraria)
             }
             if (contadorTurnoGlobal === 0) {
                 //1 turno de la IA controlado
+                console.log('Turno 0')
                 return juegoAleatorio(tablero, tipoFicha);
                 //contadorTurnoGlobal++;
             } else {
                 //control filas
                 for (let i = 0; i < 3; i++) {
-
+                    console.log('Control filas')
+                    totalContrarias = 0
+                    fichaPropia = 0
                     for (let j = 0; j < 3; j++) {
                         let tipoCasilla = tablero[i][j];
+                        console.log('Fila ' + i + ' ' + 'Columna ' + j)
                         if (totalContrarias > 0 || fichaPropia > 0) {
-                            if (tipoCasilla === fichaContraria) {
+                            if (tipoCasilla == fichaContraria) {
                                 fichaPropia = 0
                                 totalContrarias++;
-                            } else if (tipoCasilla === tipoFicha) {
+                            } else if (tipoCasilla == tipoFicha) {
                                 totalContrarias = 0
                                 fichaPropia++;
                             }
                         } else {
                             if (tipoCasilla === fichaContraria) {
                                 totalContrarias++;
-                            } else if (tipoCasilla === tipoCasilla) {
+                                console.log(totalContrarias)
+                            } else if (tipoCasilla === tipoFicha) {
                                 fichaPropia++;
+                                console.log(fichaPropia)
                             }
 
-                        } if (totalContrarias === 2) {
+                        } if (fichaPropia === 2) {
                             if (j === 1) {
-                                posibleCasilla = tablero[i][(j + 1)];
+                                posibleCasilla = tablero[i][2];
                                 if (posibleCasilla !== 'X' && posibleCasilla !== 'O') {
-                                    tablero[i][(j + 1)] = tipoFicha;
+                                    tablero[i][2] = tipoFicha;
+                                    sinOpciones = true;
+                                    return tablero;
+
+                                }
+                            } else if (j === 2) {
+                                posibleCasilla = tablero[i][0];
+                                let otraPosible=tablero[i][1];
+                                if (posibleCasilla !== 'X' && posibleCasilla !== 'O') {
+                                    tablero[i][0] = tipoFicha;
                                     sinOpciones = true;
                                     return tablero;
                                 }
-                            } else if (j === 2) {
-                                posibleCasilla = tablero[i][(j - 2)];
-                                if (posibleCasilla !== 'X' && posibleCasilla !== 'O') {
-                                    tablero[i][(j - 2)] = tipoFicha;
+                                if (otraPosible !== 'X' && otraPosible !== 'O') {
+                                    tablero[i][1] = tipoFicha;
                                     sinOpciones = true;
                                     return tablero;
                                 }
                             }
-                        } if (posibleCasilla !== 'X' && posibleCasilla !== 'O') {
+                        } /*if (posibleCasilla !== 'X' && posibleCasilla !== 'O') {
                             return posibleCasilla;
-                        }
+                        }*/
 
                     }
                 }//fin control filas
 
                 //Inicio control columnas:
                 for (let i = 0; i < 3; i++) {
-
+                    console.log('Control columnas')
+                    totalContrarias = 0
+                    fichaPropia = 0
                     for (let j = 0; j < 3; j++) {
+                        console.log('Fila ' + j + ' ' + 'Columna ' + i)
                         let tipoCasilla = tablero[j][i];
                         if (totalContrarias > 0 || fichaPropia > 0) {
                             if (tipoCasilla === fichaContraria) {
@@ -209,22 +227,31 @@
                         } else {
                             if (tipoCasilla === fichaContraria) {
                                 totalContrarias++;
-                            } else if (tipoCasilla === tipoCasilla) {
+                                console.log(totalContrarias)
+                            } else if (tipoCasilla === tipoFicha) {
                                 fichaPropia++;
+                                console.log(fichaPropia)
                             }
 
-                        } if (totalContrarias === 2) {
+                        } if (fichaPropia === 2) {
                             if (j === 1) {
                                 posibleCasilla = tablero[2][i];
                                 if (posibleCasilla !== 'X' && posibleCasilla !== 'O') {
                                     tablero[2][i] = tipoFicha;
                                     sinOpciones = true;
                                     return tablero;
+
                                 }
                             } else if (j === 2) {
                                 posibleCasilla = tablero[0][i];
+                                let otraPosible=tablero[1][i];
                                 if (posibleCasilla !== 'X' && posibleCasilla !== 'O') {
                                     tablero[0][i] = tipoFicha;
+                                    sinOpciones = true;
+                                    return tablero;
+                                }
+                                if (otraPosible !== 'X' && otraPosible !== 'O') {
+                                    tablero[1][i] = tipoFicha;
                                     sinOpciones = true;
                                     return tablero;
                                 }
@@ -255,6 +282,7 @@
                             tablero[2][2] = tipoFicha;
                             sinOpciones = true;
                             return tablero;
+
                         }
                     } else if (casillaCentral == casillaArDch) {
 
@@ -273,8 +301,9 @@
                     }
                 }//Fin control diagonal
                 //Si no hemos conseguido ninguna casilla en estas condiciones:
-                if(!sinOpciones){
-                   return juegoAleatorio(tablero, tipoFicha);
+                if (!sinOpciones) {
+                    console.log('No hay opción buena, lo hacemos aleatorio')
+                    return juegoAleatorio(tablero, tipoFicha);
                 }
 
             }
@@ -356,8 +385,7 @@
             //juego aleatorio
             console.log(juegoAleatorio(tablero, 'O'));
             //juego con IA
-            console.log(juegoIa(tablero,'O'));
-            console.log(juegoIa(tablero,'O'));
+            console.log(juegoIa(tablero, 'O'));
 
         });
 
