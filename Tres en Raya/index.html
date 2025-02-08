@@ -118,6 +118,9 @@
     </div>
     <button type="button">Reiniciar</button>
     <script>
+        // ==========================================
+        // VARIABLES GLOBALES
+        // ==========================================
         let jugadorGlobal;
         let ordenadorGlobal;
         let iaGlobal;
@@ -127,7 +130,14 @@
         let numeroRonda = 1;
         let jugador1;
         let jugador2;
+        let momentoInicio;
+        let intervalo;
+        let intervaloCuAtras;
+        let segundosGlobal = 30;
 
+        // ==========================================
+        // FUNCIONES DE INICIO Y CONFIGURACIÓN
+        // ==========================================
 
         //Mostrar tablero y contadores
         function mostarTablero() {
@@ -161,7 +171,11 @@
             }
 
         }
-        //Mostramos información actualizada de la partida
+        
+        // ==========================================
+        // INFORMACIÓN PARTIDA
+        // ==========================================
+        
         function informacionPartida() {
             //partida
             const numPartidaInfo = document.getElementById("partidasJugadas");
@@ -183,19 +197,47 @@
             informacionPartida();
             informacionJugadorRonda();
         }
-        /* GESTIÓN TABLERO */
+        //TODO:informacion tabla partidas ganadas
+
+        // ==========================================
+        // FUNCIONES DEL TABLERO
+        // ==========================================
+        //Obtener tablero actual en formato aray
+        function obtenerTablero() {
+            let contador = 0;
+            let arrayTablero = [];
+
+            // Inicializar el array
+            for (let i = 0; i < 3; i++) {
+                arrayTablero[i] = [];
+            }
+
+            for (let i = 0; i < 3; i++) {
+                for (let j = 0; j < 3; j++) {
+                    let casilla = document.getElementById(contador.toString());
+                    if (casilla) {
+                        let interior = casilla.innerText.toString();
+                        arrayTablero[i][j] = interior;
+                    } else {
+                        console.error(`No se encontró el elemento con ID: ${contador}`);
+                    }
+                    contador++;
+                }
+            }
+            return arrayTablero;
+        }
 
         // Selecciona todos los botones dentro de la tabla
         const botones = document.querySelectorAll("#tablaJuego button");
 
         // Función que maneja el clic
         function manejarClic(evento) {
-            const botonClicado = evento.target; 
-            const idBoton = botonClicado.id; 
+            const botonClicado = evento.target;
+            const idBoton = botonClicado.id;
             console.log("Botón clicado:", botonClicado);
             console.log("ID del botón:", idBoton);
 
-            // Aquí podrías llamar a otras funciones, como actualizar el tablero o cambiar de turno
+            // TODO:Aquí podrías llamar a otras funciones, como actualizar el tablero o cambiar de turno
         }
 
         // Asignar el evento de clic a cada botón
@@ -226,7 +268,9 @@
         function seisFichas(tablero) {
 
         }
-        //Modos de juego
+        // ==========================================
+        // FUNCIÓN ALEATORIO
+        // ==========================================
 
         function juegoAleatorio(tablero, tipoFicha) {
             let casillaVacia = false;
@@ -248,10 +292,10 @@
                 //la función nos devuelve el array con la ficha en el tablero ya incluida
             }
         }
-
+        // ==========================================
+        // FUNCIÓN IA
+        // ==========================================
         function juegoIa(tablero, tipoFicha) {
-            /*En el modo de 1 jugador vs IA, la primera casilla del ordenador será aleatoria, las siguientes intentará bloquear al
-            jugador humano y si puede intentar ganarle.*/
             //TODO: necesito trabajr en que la IA moleste al jugador, por ahora solo va a ganar, pero no defiende
             let fichaContraria;
             let totalContrarias = 0
@@ -429,71 +473,17 @@
 
             contadorTurnoGlobal++;
         }
+        // ==========================================
+        // FUNCIÓN 2 JUGADORES
+        // ==========================================
+
         function dosJugadores() {
             //TODO: falta
         }
 
-
-        //Obtener tablero actual en formato aray
-        function obtenerTablero() {
-            let contador = 0;
-            let arrayTablero = [];
-
-            // Inicializar el array
-            for (let i = 0; i < 3; i++) {
-                arrayTablero[i] = [];
-            }
-
-            for (let i = 0; i < 3; i++) {
-                for (let j = 0; j < 3; j++) {
-                    let casilla = document.getElementById(contador.toString());
-                    if (casilla) {
-                        let interior = casilla.innerText.toString();
-                        arrayTablero[i][j] = interior;
-                    } else {
-                        console.error(`No se encontró el elemento con ID: ${contador}`);
-                    }
-                    contador++;
-                }
-            }
-            return arrayTablero;
-        }
-
-        //PRUEBA DE LO QUE VOY HACIENDO!!
-        document.addEventListener('DOMContentLoaded', function () {
-
-            let tablero = obtenerTablero();
-            console.log(tablero.join("\n"));
-
-            let ganadorFila = hayGanadorFila(tablero);
-            let ganadorCol = hayGanadorColumna(tablero);
-            let ganadorDiag = hayGanadorDiagonal(tablero);
-            if (ganadorFila !== null) {
-                console.log('Ha ganado: ' + ganadorFila)
-            } else if (ganadorCol !== null) {
-                console.log('Ha ganado: ' + ganadorCol)
-            } else if (ganadorDiag !== null) {
-                console.log('Ha ganado: ' + ganadorDiag)
-            }
-
-            //tablero de nueve:
-            let matriz = tablero.flat();
-            let totalFichas = matriz.filter(n => n === 'X' || n === 'O');
-            console.log(totalFichas.length);
-            if (totalFichas.length === 9) {
-                console.log('Aquí debería terminar la partida')
-            } else {
-                console.log('Podemos seguir jugando')
-            }
-
-            //juego aleatorio
-            console.log(juegoAleatorio(tablero, 'O'));
-            //juego con IA
-            console.log(juegoIa(tablero, 'O'));
-
-        });
-
-
+        // ==========================================
+        // FUNCIONES DETERMINAR GANADORES
+        // ==========================================
 
         //Condición ganadora FILA
         function hayGanadorFila(arrayTab) {
@@ -614,12 +604,12 @@
 
             }
         }
-        /*RELOJES Y CRONÓMETRO*/
+        // ==========================================
+        // FUNCIONES DE TIEMPO
+        // ==========================================
 
         //TODO: id="cuentaTotal"Contador total partida.
         //toppingNuevo.addEventListener('click',mostraClick);
-        let momentoInicio;
-        let intervalo;
         const botonEmpezar = document.getElementById('gameOn');
         botonEmpezar.addEventListener('click', iniciarCronometro);
         function iniciarCronometro() {
@@ -650,11 +640,10 @@
             clearInterval(intervalo);
         }
 
-
         //Contador regresivo 30" por turno.
         //lo vamos a meter dentro de cada turno
         //TODO: parar cuando han realizado el movimeinto y reiniciarlo
-        let intervaloCuAtras;
+
         function cuentaAtras() {
             document.getElementById("segundosReverso").textContent = formato(segundosGlobal);
             intervaloCuAtras = setInterval(restarSegundos, 1000);
@@ -664,7 +653,7 @@
             }
 
         }
-        let segundosGlobal = 30;
+
         function restarSegundos() {
             segundosGlobal--;
             document.getElementById("segundosReverso").textContent = formato(segundosGlobal);
@@ -686,6 +675,42 @@
             segundosGlobal = 30;
         }
 
+
+        // ==========================================
+        // PRUEBAS!!
+        // ==========================================
+        document.addEventListener('DOMContentLoaded', function () {
+
+            let tablero = obtenerTablero();
+            console.log(tablero.join("\n"));
+
+            let ganadorFila = hayGanadorFila(tablero);
+            let ganadorCol = hayGanadorColumna(tablero);
+            let ganadorDiag = hayGanadorDiagonal(tablero);
+            if (ganadorFila !== null) {
+                console.log('Ha ganado: ' + ganadorFila)
+            } else if (ganadorCol !== null) {
+                console.log('Ha ganado: ' + ganadorCol)
+            } else if (ganadorDiag !== null) {
+                console.log('Ha ganado: ' + ganadorDiag)
+            }
+
+            //tablero de nueve:
+            let matriz = tablero.flat();
+            let totalFichas = matriz.filter(n => n === 'X' || n === 'O');
+            console.log(totalFichas.length);
+            if (totalFichas.length === 9) {
+                console.log('Aquí debería terminar la partida')
+            } else {
+                console.log('Podemos seguir jugando')
+            }
+
+            //juego aleatorio
+            console.log(juegoAleatorio(tablero, 'O'));
+            //juego con IA
+            console.log(juegoIa(tablero, 'O'));
+
+        });
     </script>
 </body>
 
