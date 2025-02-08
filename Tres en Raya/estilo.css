@@ -1,0 +1,62 @@
+* {
+    /*margin: 0;
+    padding: 0;*/
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+
+table button {
+    width: 60px;
+    height: 60px;
+}
+
+table {
+    margin: 10px auto;
+
+}
+
+#contadorGeneral {
+    border: 2px solid black;
+
+}
+
+#contadorGeneral td {
+    border: 1px solid black;
+    padding: 5px;
+
+}
+
+#juegoMarcha {
+    display: none;
+}
+
+#contadorPartidas {
+    display: none;
+}
+#contadorPartidas td{
+    padding: 5px 15px;
+}
+
+
+#tablaInfoPartida {
+    border: 1px solid black;
+    border-radius: 10px;
+
+}
+
+#tablaInfoPartida th {
+    padding: 15px;
+
+}

@@ -5,37 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tres en raya</title>
-    <style>
-        * {
-            /*margin: 0;
-            padding: 0;*/
-            font-family: Verdana, Geneva, Tahoma, sans-serif;
-        }
-
-        table button {
-            width: 60px;
-            height: 60px;
-        }
-
-        #contadorGeneral {
-            border: 2px solid black;
-
-        }
-
-        #contadorGeneral td {
-            border: 1px solid black;
-            padding: 5px;
-
-        }
-
-        #juegoMarcha {
-            display: none;
-        }
-
-        #contadorPartidas {
-            display: none;
-        }
-    </style>
+    <link rel="stylesheet" href="estilo.css">
 </head>
 
 <body>
@@ -60,14 +30,27 @@
             </select>
             <br><br>
             <button type="submit" id="gameOn"
-                onclick="valoresPartida();mostarTablero();iniciarCronometro();">¡Empezar!</button>
+                onclick="valoresPartida();mostarTablero();iniciarCronometro();infoTotal();">¡Empezar!</button>
 
         </form>
 
     </div>
+    <br>
 
-    <!--ESCONDER HASTA QUE LE DEN AL BOTÓN EN LA CABECERA-->
+    <!-- TABLERO -->
     <div id="juegoMarcha">
+        <!--Jugador, ronda, partidas jugadas-->
+        <!--TODO: implementar-->
+        <div id="infoPartida">
+            <table id="tablaInfoPartida">
+                <tr>
+                    <th id="jugadorRotulo"></th>
+                    <th id="numeroRondas"></th>
+                    <th id="partidasJugadas"></th>
+                </tr>
+            </table>
+            <br>
+        </div>
         <div id="cuentaTotal">
             <div class="reloj">
                 <span id="Horas">00</span>:
@@ -120,7 +103,7 @@
             </tr>
             <tr>
                 <th colspan="3">Jugador 1</th>
-                <th id="tipoJugador" colspan="3">Otro</th>
+                <th id="tipoJugador" colspan="3">Jugador 2</th>
             </tr>
             <tr>
                 <td id="jugadorWin">Ganadas</td>
@@ -139,6 +122,12 @@
         let ordenadorGlobal;
         let iaGlobal;
         let contadorTurnoGlobal = 1;
+        let valoresJuego;
+        let numeroPartida = 1;
+        let numeroRonda = 1;
+        let jugador1;
+        let jugador2;
+
 
         //Mostrar tablero y contadores
         function mostarTablero() {
@@ -156,13 +145,87 @@
             event.preventDefault();
             let tipoJuego = document.querySelector("select[name='opcionesJugadores']").value;
             let tipoTablero = document.querySelector("select[name='opcionesTablero']").value;
-            let valoresJuego = [tipoJuego, tipoTablero];
+            valoresJuego = [tipoJuego, tipoTablero];
             console.log(tipoJuego);
             console.log(tipoTablero);
             return valoresJuego;
         }
         //TODO: Turnos de juego
-        //TODO :Cambio 1er jugador en cada partida
+        function turnoPorPartida() {
+            if (numeroPartida % 2 === 0) {
+                jugador1 = "O";
+                jugador2 = "X";
+            } else {
+                jugador1 = "X";
+                jugador2 = "O";
+            }
+
+        }
+        //Mostramos información actualizada de la partida
+        function informacionPartida() {
+            //partida
+            const numPartidaInfo = document.getElementById("partidasJugadas");
+            numPartidaInfo.innerText = "PARTIDA: " + numeroPartida;
+            //rondas
+            const numRondasInfo = document.getElementById("numeroRondas");
+            numRondasInfo.innerText = "RONDA: " + numeroRonda;
+
+        }
+        function informacionJugadorRonda() {
+            const turnoJugador = document.getElementById("jugadorRotulo");
+            if (((numeroPartida % 2 === 0) && (numeroRonda % 2 === 0)) || (numeroPartida % 2 !== 0) && (numeroRonda % 2 !== 0)) {
+                turnoJugador.innerText = "TURNO: Jugador 1";
+            } else {
+                turnoJugador.innerText = "TURNO: Jugador 2";
+            }
+        }
+        function infoTotal() {
+            informacionPartida();
+            informacionJugadorRonda();
+        }
+        /* GESTIÓN TABLERO */
+
+        // Selecciona todos los botones dentro de la tabla
+        const botones = document.querySelectorAll("#tablaJuego button");
+
+        // Función que maneja el clic
+        function manejarClic(evento) {
+            const botonClicado = evento.target; 
+            const idBoton = botonClicado.id; 
+            console.log("Botón clicado:", botonClicado);
+            console.log("ID del botón:", idBoton);
+
+            // Aquí podrías llamar a otras funciones, como actualizar el tablero o cambiar de turno
+        }
+
+        // Asignar el evento de clic a cada botón
+        botones.forEach((boton) => {
+            boton.addEventListener("click", manejarClic);
+        });
+
+        //Tipo de juego
+        function totalFichasTablero(tablero) {
+            let matriz = tablero.flat();
+            let totalFichas = matriz.filter(n => n === 'X' || n === 'O');
+            console.log(totalFichas.length);
+            return totalFichas.length;
+        }
+        function nueveFichas(tablero) {
+            //con esto puedo controlar el total de fichas
+            //TODO: falta integrarlo para que finalice la partida
+            let totalFichas = totalFichasTablero(tablero);
+            if (totalFichas.length === 9) {
+                console.log('Aquí debería terminar la partida')
+            } else {
+                console.log('Podemos seguir jugando')
+            }
+
+
+        }
+        //TODO: Funcion de partida de 6 fichas
+        function seisFichas(tablero) {
+
+        }
         //Modos de juego
 
         function juegoAleatorio(tablero, tipoFicha) {
@@ -367,28 +430,9 @@
             contadorTurnoGlobal++;
         }
         function dosJugadores() {
-
+            //TODO: falta
         }
-        //Tipo de juego
 
-        function nueveFichas(tablero) {
-            //con esto puedo controlar el total de fichas
-            //TODO: falta integrarlo para que finalice la partida
-            let matriz = tablero.flat();
-            let totalFichas = matriz.filter(n => n === 'X' || n === 'O');
-            console.log(totalFichas.length);
-            if (totalFichas.length === 9) {
-                console.log('Aquí debería terminar la partida')
-            } else {
-                console.log('Podemos seguir jugando')
-            }
-            return totalFichas.length;
-
-        }
-        //TODO: Funcion de partida de 6 fichas
-        function seisFichas(tablero) {
-
-        }
 
         //Obtener tablero actual en formato aray
         function obtenerTablero() {
@@ -609,7 +653,7 @@
 
         //Contador regresivo 30" por turno.
         //lo vamos a meter dentro de cada turno
-        //TODO: parar cuando han realizado el movimeinto
+        //TODO: parar cuando han realizado el movimeinto y reiniciarlo
         let intervaloCuAtras;
         function cuentaAtras() {
             document.getElementById("segundosReverso").textContent = formato(segundosGlobal);
@@ -622,11 +666,11 @@
         }
         let segundosGlobal = 30;
         function restarSegundos() {
-                segundosGlobal--;
-                document.getElementById("segundosReverso").textContent = formato(segundosGlobal);
-                if(segundosGlobal===0){
-                    clearInterval(intervaloCuAtras);
-                }
+            segundosGlobal--;
+            document.getElementById("segundosReverso").textContent = formato(segundosGlobal);
+            if (segundosGlobal === 0) {
+                clearInterval(intervaloCuAtras);
+            }
         }
 
         function formato(valor) {
@@ -638,6 +682,9 @@
         }
         botonEmpezar.addEventListener('click', cuentaAtras);
 
+        function reiniciarSegundosGlobal() {
+            segundosGlobal = 30;
+        }
 
     </script>
 </body>
