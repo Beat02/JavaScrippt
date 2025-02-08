@@ -75,6 +75,11 @@
                 <span id="Segundos">00</span>
             </div>
         </div>
+        <div id="cuentaAtras">
+            <div class="reloj">
+                <span id="segundosReverso">00</span>
+            </div>
+        </div>
 
         <h3 id="cuentaRegresiva"></h3>
 
@@ -565,12 +570,14 @@
 
             }
         }
+        /*RELOJES Y CRONÓMETRO*/
+
         //TODO: id="cuentaTotal"Contador total partida.
         //toppingNuevo.addEventListener('click',mostraClick);
         let momentoInicio;
         let intervalo;
         const botonEmpezar = document.getElementById('gameOn');
-        botonEmpezar.addEventListener('click', relojCuentaTotal);
+        botonEmpezar.addEventListener('click', iniciarCronometro);
         function iniciarCronometro() {
             if (!momentoInicio) {
                 momentoInicio = new Date();
@@ -590,25 +597,47 @@
             const minutos = Math.floor((diferencia % 3600000) / 60000);
             const segundos = Math.floor((diferencia % 60000) / 1000);
 
-            const formato = function (valor) {
-                if (valor < 10) {
-                    return "0" + valor;
-                } else {
-                    return valor;
-                }
-            };
-
-            //Llevamos los valores a la pantalla
             document.getElementById("Horas").textContent = formato(horas);
             document.getElementById("Minutos").textContent = formato(minutos);
             document.getElementById("Segundos").textContent = formato(segundos);
         }
+        //TODO: falta poner cuando se para!!
         function detenerCronometro() {
             clearInterval(intervalo);
         }
 
 
-        //TODO: <h3 id="cuentaRegresiva"></h3> tiempo total partida. Contador regresivo 30" por turno.
+        //Contador regresivo 30" por turno.
+        //lo vamos a meter dentro de cada turno
+        //TODO: parar cuando han realizado el movimeinto
+        let intervaloCuAtras;
+        function cuentaAtras() {
+            document.getElementById("segundosReverso").textContent = formato(segundosGlobal);
+            intervaloCuAtras = setInterval(restarSegundos, 1000);
+            if (segundosGlobal === 0) {
+                //TODO: FIN PARTIDA
+                clearInterval(intervaloCuAtras);
+            }
+
+        }
+        let segundosGlobal = 30;
+        function restarSegundos() {
+                segundosGlobal--;
+                document.getElementById("segundosReverso").textContent = formato(segundosGlobal);
+                if(segundosGlobal===0){
+                    clearInterval(intervaloCuAtras);
+                }
+        }
+
+        function formato(valor) {
+            if (valor < 10) {
+                return "0" + valor;
+            } else {
+                return valor;
+            }
+        }
+        botonEmpezar.addEventListener('click', cuentaAtras);
+
 
     </script>
 </body>
