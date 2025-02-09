@@ -1,4 +1,6 @@
 * {
+    /*margin: 0;
+    padding: 0;*/
     font-family: "Arial", sans-serif;
 
 }
@@ -16,28 +18,10 @@ body {
     color: #4a4a4a;
 }
 
-#cabecera {
-    margin-top: 50px;
-    width: 400px;
-    background: rgba(255, 255, 255, 0.8);
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-}
-
 
 table button {
     width: 60px;
     height: 60px;
-    font-size: 20px;
-    background: #f8bbd0;
-    border-radius: 10px;
-    border: 2px solid #f48fb1;
-    color: #4a4a4a;
-    font-weight: bold;
-}
-table button:hover {
-    background: #f48fb1;
 }
 
 table {
@@ -47,28 +31,22 @@ table {
     border-radius: 15px;
     overflow: hidden;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    margin: 10px auto;
 
 }
 
-td,
-th {
+td,th {
     padding: 10px;
     border: 1px solid #ddd;
 }
-
 th {
-    background: #f8bbd0;
-    /* Rosa pastel más oscuro */
+    background: #f8bbd0; 
     color: white;
 }
-
 button {
-    background: #f8bbd0;
-    /* Rosa pastel */
+    background: #f8bbd0; /* Rosa pastel */
     border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
+    padding: 10px 15px;
+    border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
     transition: 0.3s;
@@ -78,13 +56,28 @@ button {
 
 button:hover {
     background: #f48fb1;
-    /* Un poco más oscuro al pasar el cursor */
+}
+
+button:disabled {
+    background: #f8bbd0;
+    opacity: 0.7;
+    cursor: not-allowed;
+    color: white;
+}
+
+#cabecera {
+    width: 400px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 #contadorGeneral {
     border: 2px solid black;
 
 }
+
 
 #juegoMarcha {
     display: none;
@@ -94,4 +87,12 @@ button:hover {
     display: none;
 }
 
+
+
+
+#tablaInfoPartida {
+    border: 1px solid black;
+    border-radius: 10px;
+
+}
 

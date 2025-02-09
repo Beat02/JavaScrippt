@@ -10,6 +10,7 @@
 
 <body>
     <div id="cabecera">
+        <!-- OPCIONES PARTIDA -->
         <h1>Tres en raya</h1>
         <h2>Modos de juego:</h2>
         <form action="">
@@ -36,7 +37,6 @@
     </div>
     <br>
 
-    <!-- TABLERO -->
     <div id="juegoMarcha">
         <!--Jugador, ronda, partidas jugadas-->
         <div id="infoPartida">
@@ -72,6 +72,7 @@
         5. Tablero
         6. Alert reglas-->
         <div id="tablaJuego">
+            <!-- TABLERO 3 EN RAYA -->
             <table>
                 <tr id="fila1">
                     <td><button id="0" type="button">&nbsp;</button></td>
@@ -94,6 +95,7 @@
         </div>
     </div>
     <div id="contadorPartidas">
+        <!-- TABLA INFORMACIÓN PARTIDAS GANADAS -->
         <h3></h3>
         <table id="contadorGeneral">
             <tr>
@@ -300,20 +302,22 @@
         function informacionPartida() {
             // Actualizar número de partida
             const numPartidaInfo = document.getElementById("partidasJugadas");
-            numPartidaInfo.innerText = "PARTIDA: " + numeroPartida;
+            numPartidaInfo.innerText = "Partida: " + numeroPartida;
 
             // Actualizar número de ronda
             const numRondasInfo = document.getElementById("numeroRondas");
-            numRondasInfo.innerText = "RONDA: " + numeroRonda;
+            numRondasInfo.innerText = "Ronda: " + numeroRonda;
 
         }
         function informacionJugadorRonda() {
             const turnoJugador = document.getElementById("jugadorRotulo");
             if (((numeroPartida % 2 === 0) && (numeroRonda % 2 === 0)) || (numeroPartida % 2 !== 0) && (numeroRonda % 2 !== 0)) {
-                turnoJugador.innerText = "TURNO: Jugador 1";
+                turnoJugador.innerText = "Turno: Jugador 1";
             } else {
-                turnoJugador.innerText = "TURNO: Jugador 2";
+                turnoJugador.innerText = "Turno: Jugador 2";
             }
+            const numRondasInfo = document.getElementById("numeroRondas");
+            numRondasInfo.innerText = "Ronda: " + numeroRonda;
         }
 
         function infoTotal() {
@@ -327,16 +331,16 @@
             if (valoresJuego[0] === '2') {
                 // En modo 2 jugadores
                 if (turnoJugadorUno) {
-                    turnoJugador.innerText = `TURNO: Jugador 1 (${jugadorUnoEsX ? 'X' : 'O'})`;
+                    turnoJugador.innerText = `Turno: Jugador 1 (${jugadorUnoEsX ? 'X' : 'O'})`;
                 } else {
-                    turnoJugador.innerText = `TURNO: Jugador 2 (${jugadorUnoEsX ? 'O' : 'X'})`;
+                    turnoJugador.innerText = `Turno: Jugador 2 (${jugadorUnoEsX ? 'O' : 'X'})`;
                 }
             } else {
                 // En modo vs IA
                 if (esTurnoHumano) {
-                    turnoJugador.innerText = `TURNO: Jugador (${jugadorUnoEsX ? 'X' : 'O'})`;
+                    turnoJugador.innerText = `Turno: Jugador (${jugadorUnoEsX ? 'X' : 'O'})`;
                 } else {
-                    turnoJugador.innerText = `TURNO: ${valoresJuego[0] === '0' ? 'IA' : 'IA'} (${jugadorUnoEsX ? 'O' : 'X'})`;
+                    turnoJugador.innerText = `Turno: ${valoresJuego[0] === '0' ? 'IA' : 'IA'} (${jugadorUnoEsX ? 'O' : 'X'})`;
                 }
             }
         }
