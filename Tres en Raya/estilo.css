@@ -1,7 +1,5 @@
 * {
-    /*margin: 0;
-    padding: 0;*/
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: "Arial", sans-serif;
 
 }
 
@@ -14,27 +12,77 @@ body {
     align-items: center;
     justify-content: center;
     text-align: center;
+    background-color: #fce4ec;
+    color: #4a4a4a;
+}
+
+#cabecera {
+    margin-top: 50px;
+    width: 400px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 
 table button {
     width: 60px;
     height: 60px;
+    font-size: 20px;
+    background: #f8bbd0;
+    border-radius: 10px;
+    border: 2px solid #f48fb1;
+    color: #4a4a4a;
+    font-weight: bold;
+}
+table button:hover {
+    background: #f48fb1;
 }
 
 table {
+    margin: 20px auto;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     margin: 10px auto;
 
 }
 
-#contadorGeneral {
-    border: 2px solid black;
-
+td,
+th {
+    padding: 10px;
+    border: 1px solid #ddd;
 }
 
-#contadorGeneral td {
-    border: 1px solid black;
-    padding: 5px;
+th {
+    background: #f8bbd0;
+    /* Rosa pastel más oscuro */
+    color: white;
+}
+
+button {
+    background: #f8bbd0;
+    /* Rosa pastel */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+    color: white;
+    font-weight: bold;
+}
+
+button:hover {
+    background: #f48fb1;
+    /* Un poco más oscuro al pasar el cursor */
+}
+
+#contadorGeneral {
+    border: 2px solid black;
 
 }
 
@@ -45,18 +93,5 @@ table {
 #contadorPartidas {
     display: none;
 }
-#contadorPartidas td{
-    padding: 5px 15px;
-}
 
 
-#tablaInfoPartida {
-    border: 1px solid black;
-    border-radius: 10px;
-
-}
-
-#tablaInfoPartida th {
-    padding: 15px;
-
-}
