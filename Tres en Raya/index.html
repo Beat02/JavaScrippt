@@ -29,8 +29,7 @@
                 <option value="9">9 fichas máximo</option>
             </select>
             <br><br>
-            <button type="submit" id="gameOn"
-                onclick="valoresPartida();mostarTablero();iniciarCronometro();infoTotal();">¡Empezar!</button>
+            <button type="submit" id="gameOn" onclick="iniciarPartida();">¡Empezar!</button>
 
         </form>
 
@@ -76,20 +75,20 @@
         <div id="tablaJuego">
             <table>
                 <tr id="fila1">
-                    <td id="0"><button type="button">O</button></td>
-                    <td id="1"><button type="button">&nbsp;</button></td>
-                    <td id="2"><button type="button">X</button></td>
+                    <td><button id="0" type="button">&nbsp;</button></td>
+                    <td><button id="1" type="button">&nbsp;</button></td>
+                    <td><button id="2" type="button">&nbsp;</button></td>
                 </tr>
                 <tr id="fila2">
-                    <td id="3"><button type="button">&nbsp;</button></td>
+                    <td><button id="3" type="button">&nbsp;</button></td>
                     <!--Esto se recoje como un "", espacio en blanco-->
-                    <td id="4"><button type="button">&nbsp;</button></td>
-                    <td id="5"><button type="button">&nbsp;</button></td>
+                    <td><button id="4" type="button">&nbsp;</button></td>
+                    <td><button id="5" type="button">&nbsp;</button></td>
                 </tr>
                 <tr id="fila3">
-                    <td id="6"><button type="button">X</button></td>
-                    <td id="7"><button type="button">&nbsp;</button></td>
-                    <td id="8"><button type="button">O</button></td>
+                    <td><button id="6" type="button">&nbsp;</button></td>
+                    <td><button id="7" type="button">&nbsp;</button></td>
+                    <td><button id="8" type="button">&nbsp;</button></td>
                 </tr>
 
             </table>
@@ -134,11 +133,26 @@
         let intervalo;
         let intervaloCuAtras;
         let segundosGlobal = 30;
+        let tableroGlobal;
+        let esCruz = true;
+        let esTurnoHumano = true;
+
 
         // ==========================================
         // FUNCIONES DE INICIO Y CONFIGURACIÓN
         // ==========================================
 
+        function iniciarPartida() {
+            tableroGlobal = obtenerTablero();
+            actualizarTableroVista();
+            valoresPartida();
+            mostarTablero();
+            iniciarCronometro();
+            infoTotal();
+            turnoIa();//
+            determinarPrimerTurno();
+            gestionarTurnoAutomatico();
+        }
         //Mostrar tablero y contadores
         function mostarTablero() {
             const tableroPantalla = document.getElementById('juegoMarcha');
@@ -171,11 +185,49 @@
             }
 
         }
-        
+        function turnoIa() {
+            if (valoresJuego[0] === 0 || valoresJuego[0] === 1) {
+
+            }
+        }
+        // Determina quién inicia según el número de partida
+        function determinarPrimerTurno() {
+            // Partidas pares: inicia IA/Jugador2 (O)
+            // Partidas impares: inicia Jugador1 (X)
+            esCruz = numeroPartida % 2 !== 0;
+            esTurnoHumano = numeroPartida % 2 !== 0; // Solo humano inicia en partidas impares
+            console.log(`Partida ${numeroPartida}: Inicia ${esCruz ? 'Jugador1 (X)' : 'IA/Jugador2 (O)'}`);
+        }
+
+        // Gestiona turnos automáticos 
+        function gestionarTurnoAutomatico() {
+            if (!esTurnoHumano) {
+                const tipoFicha = esCruz ? 'X' : 'O';
+
+                // Modo aleatorio
+                if (valoresJuego[0] === 0) {
+                    juegoAleatorio(tipoFicha);
+                }
+                // Modo IA
+                else if (valoresJuego[0] === 1) {
+                    juegoIa(tipoFicha);
+                }
+
+                actualizarTableroVista();
+                const hayGanador = comprobarGanador();
+
+                if (!hayGanador) {
+                    esTurnoHumano = true; // Vuelve el turno al humano
+                    numeroRonda++; // <-- Ronda completa cuando ambos jugaron
+                    reiniciarSegundosGlobal();
+                }
+            }
+        }
+
         // ==========================================
         // INFORMACIÓN PARTIDA
         // ==========================================
-        
+
         function informacionPartida() {
             //partida
             const numPartidaInfo = document.getElementById("partidasJugadas");
@@ -204,7 +256,6 @@
         // ==========================================
         //Obtener tablero actual en formato aray
         function obtenerTablero() {
-            let contador = 0;
             let arrayTablero = [];
 
             // Inicializar el array
@@ -214,48 +265,140 @@
 
             for (let i = 0; i < 3; i++) {
                 for (let j = 0; j < 3; j++) {
-                    let casilla = document.getElementById(contador.toString());
-                    if (casilla) {
-                        let interior = casilla.innerText.toString();
-                        arrayTablero[i][j] = interior;
-                    } else {
-                        console.error(`No se encontró el elemento con ID: ${contador}`);
-                    }
-                    contador++;
+                    arrayTablero[i][j] = "";
                 }
             }
             return arrayTablero;
         }
+        //Actualizar tablero de lógica a vista
+        function actualizarTableroVista() {
+            for (let i = 0; i < 9; i++) {
+                let objetoPosTablero = devolverPosicionTablero(i);
+                let valorCasilla = tableroGlobal[objetoPosTablero.x][objetoPosTablero.y];
+                document.getElementById(i).innerText = valorCasilla;
 
-        // Selecciona todos los botones dentro de la tabla
-        const botones = document.querySelectorAll("#tablaJuego button");
+            }
+        }
 
         // Función que maneja el clic
         function manejarClic(evento) {
+            let ganador = false;
             const botonClicado = evento.target;
             const idBoton = botonClicado.id;
+            const posicionTablero = devolverPosicionTablero(idBoton);
+            const valorCasilla = tableroGlobal[posicionTablero.x][posicionTablero.y];
             console.log("Botón clicado:", botonClicado);
             console.log("ID del botón:", idBoton);
+            console.log("Valor casilla:", valorCasilla);
+            const estadoCasilla = comprobarEstadoCasilla(idBoton);
+            if (estadoCasilla) {
+                colocarFicha(posicionTablero);
+                actualizarTableroVista();
+                ganador = comprobarGanador();
+                if (!ganador) {
 
-            // TODO:Aquí podrías llamar a otras funciones, como actualizar el tablero o cambiar de turno
+                    if (valoresJuego[0] === 2) {
+                        numeroRonda++;
+                    }
+
+                    // Modos con IA/aleatorio
+                    if (valoresJuego[0] === 0 || valoresJuego[0] === 1) {
+                        esTurnoHumano = false; // Bloquea turno humano
+                        setTimeout(gestionarTurnoAutomatico, 1000); // Darle 1 segundo para que pàrezca que "piensa"
+                    }
+                    // Modo 2 jugadores
+                    else {
+                        esCruz = !esCruz; // Alternancia clásica
+                    }
+                } else {
+                    iniciarPartida();
+                }
+            }
+        }
+        //Colocamos ficha en el array
+        function colocarFicha(posicionTablero) {
+            if (esCruz) {
+                tableroGlobal[posicionTablero.x][posicionTablero.y] = 'X';
+            } else {
+                tableroGlobal[posicionTablero.x][posicionTablero.y] = 'O';
+            }
+
+        }
+        //Devuelve bool casilla vacía
+        function comprobarEstadoCasilla(idBoton) {
+            const posicionTablero = devolverPosicionTablero(idBoton);
+            const valorCasilla = tableroGlobal[posicionTablero.x][posicionTablero.y];
+            let casillaVacia = false;
+            if (valorCasilla === '') {
+                casillaVacia = true;
+            }
+            return casillaVacia;
+        }
+        //Devuelve coordenadas del array usando el valor del id de botón
+        function devolverPosicionTablero(valor) {
+            valor = parseInt(valor);
+            let posicionTablero = {
+                x: 0,
+                y: 0
+            }
+
+            switch (valor) {
+                case 0:
+                    posicionTablero.x = 0;
+                    posicionTablero.y = 0;
+                    break;
+                case 1:
+                    posicionTablero.x = 0;
+                    posicionTablero.y = 1;
+                    break;
+                case 2:
+                    posicionTablero.x = 0;
+                    posicionTablero.y = 2;
+                    break;
+                case 3:
+                    posicionTablero.x = 1;
+                    posicionTablero.y = 0;
+                    break;
+                case 4:
+                    posicionTablero.x = 1;
+                    posicionTablero.y = 1;
+                    break;
+                case 5:
+                    posicionTablero.x = 1;
+                    posicionTablero.y = 2;
+                    break;
+                case 6:
+                    posicionTablero.x = 2;
+                    posicionTablero.y = 0;
+                    break;
+                case 7:
+                    posicionTablero.x = 2;
+                    posicionTablero.y = 1;
+                    break;
+                case 8:
+                    posicionTablero.x = 2;
+                    posicionTablero.y = 2;
+                    break;
+                default:
+                    console.log("ID no válido.");
+
+            }
+            console.log(posicionTablero);
+            return posicionTablero;
         }
 
-        // Asignar el evento de clic a cada botón
-        botones.forEach((boton) => {
-            boton.addEventListener("click", manejarClic);
-        });
 
         //Tipo de juego
-        function totalFichasTablero(tablero) {
-            let matriz = tablero.flat();
+        function totalFichasTablero() {
+            let matriz = tableroGlobal.flat();
             let totalFichas = matriz.filter(n => n === 'X' || n === 'O');
             console.log(totalFichas.length);
             return totalFichas.length;
         }
-        function nueveFichas(tablero) {
+        function nueveFichas() {
             //con esto puedo controlar el total de fichas
             //TODO: falta integrarlo para que finalice la partida
-            let totalFichas = totalFichasTablero(tablero);
+            let totalFichas = totalFichasTablero(tableroGlobal);
             if (totalFichas.length === 9) {
                 console.log('Aquí debería terminar la partida')
             } else {
@@ -265,14 +408,14 @@
 
         }
         //TODO: Funcion de partida de 6 fichas
-        function seisFichas(tablero) {
+        function seisFichas() {
 
         }
         // ==========================================
         // FUNCIÓN ALEATORIO
         // ==========================================
 
-        function juegoAleatorio(tablero, tipoFicha) {
+        function juegoAleatorio(tipoFicha) {
             let casillaVacia = false;
             let randomUno, randomDos;
             let posibleFicha = " ";
@@ -282,12 +425,12 @@
                 console.log(randomUno)
                 randomDos = Math.floor(Math.random() * 3);
                 console.log(randomDos)
-                posibleFicha = tablero[randomUno][randomDos];
+                posibleFicha = tableroGlobal[randomUno][randomDos];
                 console.log(posibleFicha)
                 if (posibleFicha !== 'X' && posibleFicha !== 'O') {
-                    tablero[randomUno][randomDos] = tipoFicha;
+                    tableroGlobal[randomUno][randomDos] = tipoFicha;
                     casillaVacia = true;
-                    return tablero;
+                    return tableroGlobal;
                 }
                 //la función nos devuelve el array con la ficha en el tablero ya incluida
             }
@@ -295,7 +438,7 @@
         // ==========================================
         // FUNCIÓN IA
         // ==========================================
-        function juegoIa(tablero, tipoFicha) {
+        function juegoIa(tipoFicha) {
             //TODO: necesito trabajr en que la IA moleste al jugador, por ahora solo va a ganar, pero no defiende
             let fichaContraria;
             let totalContrarias = 0
@@ -313,7 +456,7 @@
             if (contadorTurnoGlobal === 0) {
                 //1 turno de la IA controlado
                 console.log('Turno 0')
-                return juegoAleatorio(tablero, tipoFicha);
+                return juegoAleatorio(tipoFicha);
                 //contadorTurnoGlobal++;
             } else {
                 //control filas
@@ -322,7 +465,7 @@
                     totalContrarias = 0
                     fichaPropia = 0
                     for (let j = 0; j < 3; j++) {
-                        let tipoCasilla = tablero[i][j];
+                        let tipoCasilla = tableroGlobal[i][j];
                         console.log('Fila ' + i + ' ' + 'Columna ' + j)
                         if (totalContrarias > 0 || fichaPropia > 0) {
                             if (tipoCasilla == fichaContraria) {
@@ -343,25 +486,25 @@
 
                         } if (fichaPropia === 2) {
                             if (j === 1) {
-                                posibleCasilla = tablero[i][2];
+                                posibleCasilla = tableroGlobal[i][2];
                                 if (posibleCasilla !== 'X' && posibleCasilla !== 'O') {
-                                    tablero[i][2] = tipoFicha;
+                                    tableroGlobal[i][2] = tipoFicha;
                                     sinOpciones = true;
-                                    return tablero;
+                                    return tableroGlobal;
 
                                 }
                             } else if (j === 2) {
-                                posibleCasilla = tablero[i][0];
-                                let otraPosible = tablero[i][1];
+                                posibleCasilla = tableroGlobal[i][0];
+                                let otraPosible = tableroGlobal[i][1];
                                 if (posibleCasilla !== 'X' && posibleCasilla !== 'O') {
-                                    tablero[i][0] = tipoFicha;
+                                    tableroGlobal[i][0] = tipoFicha;
                                     sinOpciones = true;
-                                    return tablero;
+                                    return tableroGlobal;
                                 }
                                 if (otraPosible !== 'X' && otraPosible !== 'O') {
-                                    tablero[i][1] = tipoFicha;
+                                    tableroGlobal[i][1] = tipoFicha;
                                     sinOpciones = true;
-                                    return tablero;
+                                    return tableroGlobal;
                                 }
                             }
                         } /*if (posibleCasilla !== 'X' && posibleCasilla !== 'O') {
@@ -378,7 +521,7 @@
                     fichaPropia = 0
                     for (let j = 0; j < 3; j++) {
                         console.log('Fila ' + j + ' ' + 'Columna ' + i)
-                        let tipoCasilla = tablero[j][i];
+                        let tipoCasilla = tableroGlobal[j][i];
                         if (totalContrarias > 0 || fichaPropia > 0) {
                             if (tipoCasilla === fichaContraria) {
                                 fichaPropia = 0
@@ -398,25 +541,25 @@
 
                         } if (fichaPropia === 2) {
                             if (j === 1) {
-                                posibleCasilla = tablero[2][i];
+                                posibleCasilla = tableroGlobal[2][i];
                                 if (posibleCasilla !== 'X' && posibleCasilla !== 'O') {
-                                    tablero[2][i] = tipoFicha;
+                                    tableroGlobal[2][i] = tipoFicha;
                                     sinOpciones = true;
-                                    return tablero;
+                                    return tableroGlobal;
 
                                 }
                             } else if (j === 2) {
-                                posibleCasilla = tablero[0][i];
-                                let otraPosible = tablero[1][i];
+                                posibleCasilla = tableroGlobal[0][i];
+                                let otraPosible = tableroGlobal[1][i];
                                 if (posibleCasilla !== 'X' && posibleCasilla !== 'O') {
-                                    tablero[0][i] = tipoFicha;
+                                    tableroGlobal[0][i] = tipoFicha;
                                     sinOpciones = true;
-                                    return tablero;
+                                    return tableroGlobal;
                                 }
                                 if (otraPosible !== 'X' && otraPosible !== 'O') {
-                                    tablero[1][i] = tipoFicha;
+                                    tableroGlobal[1][i] = tipoFicha;
                                     sinOpciones = true;
-                                    return tablero;
+                                    return tableroGlobal;
                                 }
                             }
 
@@ -427,13 +570,13 @@
                 }//Fin control columnas
 
                 //Control Diagonal:
-                let casillaCentral = tablero[1][1];
+                let casillaCentral = tableroGlobal[1][1];
                 //casiilas izquierda
-                let casillaArIz = tablero[0][0];
-                let casillaAbIz = tablero[2][0];
+                let casillaArIz = tableroGlobal[0][0];
+                let casillaAbIz = tableroGlobal[2][0];
                 //casillas derecha
-                let casillaArDch = tablero[0][2];
-                let casillaAbDch = tablero[2][2];
+                let casillaArDch = tableroGlobal[0][2];
+                let casillaAbDch = tableroGlobal[2][2];
 
                 if (casillaCentral === fichaContraria) {
 
@@ -442,31 +585,31 @@
 
                         //cambios. Revisar que devuelve lo correcto!!
                         if (casillaAbDch !== tipoFicha && casillaAbDch !== fichaContraria) {
-                            tablero[2][2] = tipoFicha;
+                            tableroGlobal[2][2] = tipoFicha;
                             sinOpciones = true;
-                            return tablero;
+                            return tableroGlobal;
 
                         }
                     } else if (casillaCentral == casillaArDch) {
 
                         if (casillaAbIz !== tipoFicha && casillaAbIz !== fichaContraria) {
-                            tablero[2][0] = tipoFicha;
+                            tableroGlobal[2][0] = tipoFicha;
                             sinOpciones = true;
-                            return tablero;
+                            return tableroGlobal;
                         }
                     }
 
                 } else if (casillaCentral !== tipoFicha) {
                     if (fichaContraria === (casillaArIz && casillaAbDch) || fichaContraria === (casillaArDch && casillaAbIz)) {
-                        tablero[1][1] = tipoFicha;
+                        tableroGlobal[1][1] = tipoFicha;
                         sinOpciones = true;
-                        return tablero;
+                        return tableroGlobal;
                     }
                 }//Fin control diagonal
                 //Si no hemos conseguido ninguna casilla en estas condiciones:
                 if (!sinOpciones) {
                     console.log('No hay opción buena, lo hacemos aleatorio')
-                    return juegoAleatorio(tablero, tipoFicha);
+                    return juegoAleatorio(tipoFicha);
                 }
 
             }
@@ -579,7 +722,7 @@
             let ganador = null;
             let casillaCentral = arrayTab[1][1];
 
-            if (casillaCentral !== null) {
+            if (casillaCentral !== '') {
                 let casillaArIz = arrayTab[0][0];
                 let casillaArDch = arrayTab[0][2];
 
@@ -603,6 +746,30 @@
                 return ganador;
 
             }
+            return ganador;
+        }
+
+        function comprobarGanador() {
+            let ganadorFila = hayGanadorFila(tableroGlobal);
+            let ganadorCol = hayGanadorColumna(tableroGlobal);
+            let ganadorDiag = hayGanadorDiagonal(tableroGlobal);
+            let hayGanador = false;
+            if (ganadorFila !== null) {
+                console.log('Ha ganado: FILA ' + ganadorFila);
+                hayGanador = true;
+            } else if (ganadorCol !== null) {
+                console.log('Ha ganado: COLUMNA ' + ganadorCol);
+                hayGanador = true;
+            } else if (ganadorDiag !== null) {
+                console.log('Ha ganado: DIAGONAL ' + ganadorDiag);
+                hayGanador = true;
+            }
+            if (hayGanador) {
+                numeroPartida++;
+                numeroRonda = 1;
+            }
+            return hayGanador;
+
         }
         // ==========================================
         // FUNCIONES DE TIEMPO
@@ -681,22 +848,21 @@
         // ==========================================
         document.addEventListener('DOMContentLoaded', function () {
 
-            let tablero = obtenerTablero();
-            console.log(tablero.join("\n"));
+            // Selecciona todos los botones dentro de la tabla
+            const botones = document.querySelectorAll("#tablaJuego button");
+            // Asignar el evento de clic a cada botón
+            botones.forEach((boton) => {
+                boton.addEventListener("click", manejarClic);
+            });
 
-            let ganadorFila = hayGanadorFila(tablero);
-            let ganadorCol = hayGanadorColumna(tablero);
-            let ganadorDiag = hayGanadorDiagonal(tablero);
-            if (ganadorFila !== null) {
-                console.log('Ha ganado: ' + ganadorFila)
-            } else if (ganadorCol !== null) {
-                console.log('Ha ganado: ' + ganadorCol)
-            } else if (ganadorDiag !== null) {
-                console.log('Ha ganado: ' + ganadorDiag)
-            }
+            tableroGlobal = obtenerTablero();
+            actualizarTableroVista();
+            console.log(tableroGlobal.join("\n"));
+
+
 
             //tablero de nueve:
-            let matriz = tablero.flat();
+            let matriz = tableroGlobal.flat();
             let totalFichas = matriz.filter(n => n === 'X' || n === 'O');
             console.log(totalFichas.length);
             if (totalFichas.length === 9) {
@@ -706,9 +872,9 @@
             }
 
             //juego aleatorio
-            console.log(juegoAleatorio(tablero, 'O'));
+            //console.log(juegoAleatorio('O'));
             //juego con IA
-            console.log(juegoIa(tablero, 'O'));
+            //console.log(juegoIa('O'));
 
         });
     </script>
