@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <!--Metadatos-->
+    <meta charset="UTF-8">
+    <meta name="author" content="Beatriz R.">
+    <meta name="description" content="proyecto">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--<link href="estilos.css" rel="stylesheet">-->
+    <!-- Favicono -->
+    <!--<link rel="icon" type="image/x-icon" href="">-->
+    <!-- Título -->
+    <title>Proyecto</title>
+</head>
+
+<body>
+
+    <script>
+        /*Realiza un programa que cada 20 segundos (mediante setInterval) solicite un número hasta que alguien le escriba la cadena “fin”.
+        En ese momento, el programa debe mostrar la suma de todos los números.*/
+
+        let intervalo;
+        let sumaTotal = 0
+        let numero = 0
+        numero = parseInt(prompt("Introduce un número:"));
+        console.log(numero)
+        sumaNumeros();
+
+        intervalo = setInterval(() => {
+            
+            solicitarNumero();
+
+            if (numero === null) {
+            clearInterval(intervalo);
+            alert("La suma total es: " + sumaTotal);
+        }
+
+        }, 10000);
+        
+        function sumaNumeros() {
+            sumaTotal = numero + sumaTotal;
+        }
+
+        function solicitarNumero() {
+            numero = parseInt(prompt("Introduce un número:"));
+            if (isNaN(numero)) {
+                numero = null;
+                console.log(numero)
+            } else {
+                numero = parseInt(numero);
+                console.log(numero)
+                sumaNumeros();
+                console.log(sumaTotal)
+            }
+            return numero;
+        }
+
+    </script>
+
+</body>
+
+</html>
