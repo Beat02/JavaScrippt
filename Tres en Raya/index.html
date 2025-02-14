@@ -9,6 +9,9 @@
 </head>
 
 <body>
+    <!-- TODO: Cambiar caracteres del tablero por imágenes -->
+    <!-- TODO: Hacer el tablero de 6 fichas -->
+
     <div id="cabecera">
         <!-- OPCIONES PARTIDA -->
         <h1>Tres en raya</h1>
@@ -283,7 +286,7 @@
 
                     esTurnoHumano = true;
                     numeroRonda++;
-                    document.getElementById("numeroRondas").innerText='Ronda: '+ numeroRonda;
+                    document.getElementById("numeroRondas").innerText = 'Ronda: ' + numeroRonda;
                     reiniciarSegundosGlobal();
                     actualizarInterfazTurno();
                     habilitarBotones(); // Asegurar que los botones se habiliten después del turno de la IA!!
