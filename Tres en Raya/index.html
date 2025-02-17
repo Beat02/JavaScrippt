@@ -11,7 +11,7 @@
 </head>
 
 <body>
-   
+
     <!-- TODO: Hacer el tablero de 6 fichas -->
     <div id="margin-top">
         <br><br>
@@ -352,7 +352,7 @@
                 contadorPerdidas.textContent = (parseInt(contadorPerdidas.textContent || 0) + 1).toString();
             }
         }
-        
+
         // Actualizar contadores de empate
         function actualizarContadorEmpates() {
             let contadorJugador1 = document.getElementById('jugadorEmpate');
@@ -386,7 +386,7 @@
             for (let i = 0; i < 9; i++) {
                 let objetoPosTablero = devolverPosicionTablero(i);
                 let valorCasilla = tableroGlobal[objetoPosTablero.x][objetoPosTablero.y];
-                
+
                 if (valorCasilla === 'X') {
                     document.getElementById(i).innerHTML = '<span class="bi bi-x-circle"></span>';
                 } else if (valorCasilla === 'O') {
@@ -407,16 +407,25 @@
             const idBoton = botonClicado.id;
             const posicionTablero = devolverPosicionTablero(idBoton);
             const estadoCasilla = comprobarEstadoCasilla(idBoton);
+            const tableroEscogido = valoresJuego[1];
+
 
             if (estadoCasilla) {
                 // El jugador 1 siempre usa X en modo IA
                 // En modo 2 jugadores, Jugador 1 usa X y Jugador 2 usa O
-                const fichaAColocar = valoresJuego[0] === '2' ?
-                    (turnoJugadorUno ? 'X' : 'O') : 'X';
+                if ((contadorMovimientos < 6 && tableroEscogido==='6' ) || tableroEscogido==='9' ) {
+                    const fichaAColocar = valoresJuego[0] === '2' ? (turnoJugadorUno ? 'X' : 'O') : 'X';
 
-                tableroGlobal[posicionTablero.x][posicionTablero.y] = fichaAColocar;
-                actualizarTableroVista();
-                contadorMovimientos++;
+                    tableroGlobal[posicionTablero.x][posicionTablero.y] = fichaAColocar;
+
+                    actualizarTableroVista();
+
+                    contadorMovimientos++;
+                } else{
+                    //Aquí si el tablero tiene más de 6 fichas??
+                    alert("Has llegado al máximo de fichas por tablero");
+                 }
+
 
                 const ganador = obtenerSimboloGanador();
                 if (ganador) {
@@ -533,7 +542,7 @@
             console.log(totalFichas.length);
             return totalFichas.length;
         }*/
-        
+
         //TODO: Funcion de partida de 6 fichas
         function seisFichas() {
 
