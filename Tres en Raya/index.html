@@ -250,6 +250,11 @@
 
         // Gestiona turnos automáticos 
         function gestionarTurnoAutomatico() {
+            const tableroEscogido = valoresJuego[1];
+            let totalFichasActuales = totalFichasTablero();
+            console.log("Total fichas tablero: " + totalFichasActuales);
+            //TODO: totalFichasActuales no está funcionando bien
+
             if ((valoresJuego[0] === '0' || valoresJuego[0] === '1') && !esTurnoHumano) {
                 // Evitar que se haga click en el turno de la IA
                 const botones = document.querySelectorAll("#tablaJuego button");
@@ -289,6 +294,9 @@
                     actualizarInterfazTurno();
                     habilitarBotones(); // Asegurar que los botones se habiliten después del turno de la IA!!
                 }, 1500);
+                if (totalFichasActuales === 6 && tableroEscogido === '6') {
+                    alert("En el siguiente turno deberás escoger una ficha propia y moverla a un espacio libre del tablero")
+                }
             }
         }
         // Función para habilitar todos los botones
@@ -408,12 +416,14 @@
             const posicionTablero = devolverPosicionTablero(idBoton);
             const estadoCasilla = comprobarEstadoCasilla(idBoton);
             const tableroEscogido = valoresJuego[1];
+            let totalFichasActuales = totalFichasTablero();
+            console.log("Total fichas tablero: " + totalFichasActuales);
 
 
             if (estadoCasilla) {
                 // El jugador 1 siempre usa X en modo IA
                 // En modo 2 jugadores, Jugador 1 usa X y Jugador 2 usa O
-                if ((contadorMovimientos < 6 && tableroEscogido==='6' ) || tableroEscogido==='9' ) {
+                if ((contadorMovimientos < 6 && tableroEscogido === '6') || tableroEscogido === '9') {
                     const fichaAColocar = valoresJuego[0] === '2' ? (turnoJugadorUno ? 'X' : 'O') : 'X';
 
                     tableroGlobal[posicionTablero.x][posicionTablero.y] = fichaAColocar;
@@ -421,10 +431,10 @@
                     actualizarTableroVista();
 
                     contadorMovimientos++;
-                } else{
+                } else {
                     //Aquí si el tablero tiene más de 6 fichas??
                     alert("Has llegado al máximo de fichas por tablero");
-                 }
+                }
 
 
                 const ganador = obtenerSimboloGanador();
@@ -459,6 +469,9 @@
                     esTurnoHumano = false;
                     gestionarTurnoAutomatico();
                 }
+            }
+            if (totalFichasActuales === 6 && tableroEscogido === '6') {
+                alert("En el siguiente turno deberás escoger una ficha propia y moverla a un espacio libre del tablero")
             }
         }
         //Colocar ficha en el array
@@ -536,12 +549,12 @@
 
 
         //TODO: Mantener?
-        /*function totalFichasTablero() {
+        function totalFichasTablero() {
             let matriz = tableroGlobal.flat();
             let totalFichas = matriz.filter(n => n === 'X' || n === 'O');
             console.log(totalFichas.length);
             return totalFichas.length;
-        }*/
+        }
 
         //TODO: Funcion de partida de 6 fichas
         function seisFichas() {
