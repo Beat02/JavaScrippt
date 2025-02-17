@@ -142,6 +142,10 @@
         let contadorMovimientos = 0;
         let jugadorUnoEsX;
         let turnoJugadorUno;
+        //Añadidos para gestionar el tablero de 6 fichas
+        let modoMoverFicha = false;
+        let fichaSeleccionada = null;
+
 
 
         // ==========================================
@@ -415,65 +419,57 @@
             const idBoton = botonClicado.id;
             const posicionTablero = devolverPosicionTablero(idBoton);
             const estadoCasilla = comprobarEstadoCasilla(idBoton);
-            const tableroEscogido = valoresJuego[1];
-            let totalFichasActuales = totalFichasTablero();
-            console.log("Total fichas tablero: " + totalFichasActuales);
-
 
             if (estadoCasilla) {
-                // El jugador 1 siempre usa X en modo IA
-                // En modo 2 jugadores, Jugador 1 usa X y Jugador 2 usa O
-                if ((contadorMovimientos < 6 && tableroEscogido === '6') || tableroEscogido === '9') {
-                    const fichaAColocar = valoresJuego[0] === '2' ? (turnoJugadorUno ? 'X' : 'O') : 'X';
+                const tableroEscogido = parseInt(valoresJuego[1]);
 
-                    tableroGlobal[posicionTablero.x][posicionTablero.y] = fichaAColocar;
-
-                    actualizarTableroVista();
-
-                    contadorMovimientos++;
-                } else {
-                    //Aquí si el tablero tiene más de 6 fichas??
-                    alert("Has llegado al máximo de fichas por tablero");
+                // Separar la lógica según el tipo de tablero
+                if (tableroEscogido === 9) {
+                    nueveFichas(posicionTablero);
+                } else if (tableroEscogido === 6) {
+                    seisFichas(posicionTablero);
                 }
-
-
-                const ganador = obtenerSimboloGanador();
-                if (ganador) {
-                    setTimeout(() => {
-                        let mensaje;
-                        if (valoresJuego[0] === '2') {
-                            mensaje = `¡Ha ganado el ${turnoJugadorUno ? 'Jugador 1' : 'Jugador 2'}!`;
-                            actualizarContadorVictorias(turnoJugadorUno ? 'jugador1' : 'jugador2');
-                        } else {
-                            mensaje = '¡Ha ganado el Jugador!';
-                            actualizarContadorVictorias('jugador1');
-                        }
-                        alert(mensaje);
-                        numeroPartida++;
-                        reiniciarJuego();
-                    }, 100);
-                    return;
-                }
-
-                if (verificarEmpate()) {
-                    return;
-                }
-
-                // Cambiar turno
-                if (valoresJuego[0] === '2') {
-                    turnoJugadorUno = !turnoJugadorUno;
-                    numeroRonda++;
-                    reiniciarSegundosGlobal();
-                    actualizarInterfazTurno();
-                } else {
-                    esTurnoHumano = false;
-                    gestionarTurnoAutomatico();
-                }
-            }
-            if (totalFichasActuales === 6 && tableroEscogido === '6') {
-                alert("En el siguiente turno deberás escoger una ficha propia y moverla a un espacio libre del tablero")
             }
         }
+
+
+        const ganador = obtenerSimboloGanador();
+        if (ganador) {
+            setTimeout(() => {
+                let mensaje;
+                if (valoresJuego[0] === '2') {
+                    mensaje = `¡Ha ganado el ${turnoJugadorUno ? 'Jugador 1' : 'Jugador 2'}!`;
+                    actualizarContadorVictorias(turnoJugadorUno ? 'jugador1' : 'jugador2');
+                } else {
+                    mensaje = '¡Ha ganado el Jugador!';
+                    actualizarContadorVictorias('jugador1');
+                }
+                alert(mensaje);
+                numeroPartida++;
+                reiniciarJuego();
+            }, 100);
+            return;
+        }
+
+        if (verificarEmpate()) {
+            return;
+        }
+
+        // Cambiar turno
+        if (valoresJuego[0] === '2') {
+            turnoJugadorUno = !turnoJugadorUno;
+            numeroRonda++;
+            reiniciarSegundosGlobal();
+            actualizarInterfazTurno();
+        } else {
+            esTurnoHumano = false;
+            gestionarTurnoAutomatico();
+        }
+
+        if (totalFichasActuales === 6 && tableroEscogido === '6') {
+            alert("En el siguiente turno deberás escoger una ficha propia y moverla a un espacio libre del tablero")
+        }
+
         //Colocar ficha en el array
         //TODO: Mantener?
         /*function colocarFicha(posicionTablero) {
@@ -558,7 +554,95 @@
 
         //TODO: Funcion de partida de 6 fichas
         function seisFichas() {
+            // Si aún no hemos llegado a 6 fichas, permitir colocar una nueva, código repetido
+            if (contadorMovimientos < 6) {
+                const fichaAColocar = valoresJuego[0] === '2' ?
+                    (turnoJugadorUno ? 'X' : 'O') : 'X';
 
+                tableroGlobal[posicionTablero.x][posicionTablero.y] = fichaAColocar;
+                actualizarTableroVista();
+                contadorMovimientos++;
+
+                const ganador = obtenerSimboloGanador();
+                if (ganador) {
+                    setTimeout(() => {
+                        let mensaje;
+                        if (valoresJuego[0] === '2') {
+                            mensaje = `¡Ha ganado el ${turnoJugadorUno ? 'Jugador 1' : 'Jugador 2'}!`;
+                            actualizarContadorVictorias(turnoJugadorUno ? 'jugador1' : 'jugador2');
+                        } else {
+                            mensaje = '¡Ha ganado el Jugador!';
+                            actualizarContadorVictorias('jugador1');
+                        }
+                        alert(mensaje);
+                        numeroPartida++;
+                        reiniciarJuego();
+                    }, 100);
+                    return;
+                }
+
+                // Cambiar turno
+                if (valoresJuego[0] === '2') {
+                    turnoJugadorUno = !turnoJugadorUno;
+                    numeroRonda++;
+                    reiniciarSegundosGlobal();
+                    actualizarInterfazTurno();
+                } else {
+                    esTurnoHumano = false;
+                    gestionarTurnoAutomatico();
+                }
+            } else {
+                if (!modoMoverFicha) {
+                    // Primera vez que llegamos a 6 fichas, para no repetirnos todo el rato
+                    modoMoverFicha = true;
+                    alert("Has llegado al máximo de fichas. Ahora debes mover una de tus fichas existentes.");
+                } else {
+
+                }
+            }
+        }
+        //Funcion partida de 9 fichas
+        function nueveFichas(posicionTablero) {
+            const fichaAColocar = valoresJuego[0] === '2' ? (turnoJugadorUno ? 'X' : 'O') : 'X';
+
+            //Colocamos la ficha en el tablero
+            tableroGlobal[posicionTablero.x][posicionTablero.y] = fichaAColocar;
+
+            actualizarTableroVista();
+            contadorMovimientos++;
+
+            const ganador = obtenerSimboloGanador();
+            if (ganador) {
+                setTimeout(() => {
+                    let mensaje;
+                    if (valoresJuego[0] === '2') {
+                        mensaje = `¡Ha ganado el ${turnoJugadorUno ? 'Jugador 1' : 'Jugador 2'}!`;
+                        actualizarContadorVictorias(turnoJugadorUno ? 'jugador1' : 'jugador2');
+                    } else {
+                        mensaje = '¡Ha ganado el Jugador!';
+                        actualizarContadorVictorias('jugador1');
+                    }
+                    alert(mensaje);
+                    numeroPartida++;
+                    reiniciarJuego();
+                }, 100);
+                return;
+            }
+
+            if (verificarEmpate()) {
+                return;
+            }
+
+            // Cambiar turno
+            if (valoresJuego[0] === '2') {
+                turnoJugadorUno = !turnoJugadorUno;
+                numeroRonda++;
+                reiniciarSegundosGlobal();
+                actualizarInterfazTurno();
+            } else {
+                esTurnoHumano = false;
+                gestionarTurnoAutomatico();
+            }
         }
         // ==========================================
         // FUNCIÓN ALEATORIO
