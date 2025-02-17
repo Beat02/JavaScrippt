@@ -11,7 +11,9 @@
 <body>
     <!-- TODO: Cambiar caracteres del tablero por imágenes -->
     <!-- TODO: Hacer el tablero de 6 fichas -->
-
+<div id="margin-top">
+    <br><br>
+</div>
     <div id="cabecera">
         <!-- OPCIONES PARTIDA -->
         <h1>Tres en raya</h1>
@@ -229,6 +231,8 @@
             console.log(contadorPantalla.style.display);
             contadorPantalla.style.display = 'block';
             console.log(contadorPantalla.style.display);
+            const margenSuperior = document.getElementById('margin-top');
+            margenSuperior.style.display = 'block';
         }
         //Recoger valores de la partida del formulario, devolvemos array
         function valoresPartida() {
