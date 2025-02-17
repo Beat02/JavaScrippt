@@ -6,14 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tres en raya</title>
     <link rel="stylesheet" href="estilo.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
 </head>
 
 <body>
-    <!-- TODO: Cambiar caracteres del tablero por imágenes -->
+   
     <!-- TODO: Hacer el tablero de 6 fichas -->
-<div id="margin-top">
-    <br><br>
-</div>
+    <div id="margin-top">
+        <br><br>
+    </div>
     <div id="cabecera">
         <!-- OPCIONES PARTIDA -->
         <h1>Tres en raya</h1>
@@ -336,19 +338,20 @@
         // Actualizar vista según el turno
         function actualizarInterfazTurno() {
             const turnoJugador = document.getElementById("jugadorRotulo");
+
             if (valoresJuego[0] === '2') {
                 // En modo 2 jugadores
                 if (turnoJugadorUno) {
-                    turnoJugador.innerText = `Turno: Jugador 1 (${jugadorUnoEsX ? 'X' : 'O'})`;
+                    turnoJugador.innerHTML = `Turno: Jugador 1 <span class="bi ${jugadorUnoEsX ? "bi-x-circle" : "bi-circle"}"></span>`;
                 } else {
-                    turnoJugador.innerText = `Turno: Jugador 2 (${jugadorUnoEsX ? 'O' : 'X'})`;
+                    turnoJugador.innerHTML = `Turno: Jugador 2 <span class="bi ${jugadorUnoEsX ? "bi-circle" : "bi-x-circle"}"></span>`;
                 }
             } else {
                 // En modo vs IA
                 if (esTurnoHumano) {
-                    turnoJugador.innerText = `Turno: Jugador (${jugadorUnoEsX ? 'X' : 'O'})`;
+                    turnoJugador.innerHTML = `Turno: Jugador <span class="bi ${jugadorUnoEsX ? "bi-x-circle" : "bi-circle"}"></span>`;
                 } else {
-                    turnoJugador.innerText = `Turno: ${valoresJuego[0] === '0' ? 'IA' : 'IA'} (${jugadorUnoEsX ? 'O' : 'X'})`;
+                    turnoJugador.innerHTML = `Turno: ${valoresJuego[0] === '0' ? 'IA' : 'IA'} <span class="bi ${jugadorUnoEsX ? "bi-circle" : "bi-x-circle"}"></span>`;
                 }
             }
         }
@@ -400,7 +403,15 @@
             for (let i = 0; i < 9; i++) {
                 let objetoPosTablero = devolverPosicionTablero(i);
                 let valorCasilla = tableroGlobal[objetoPosTablero.x][objetoPosTablero.y];
-                document.getElementById(i).innerText = valorCasilla;
+                //Usar iconos en vez de caracteres
+                if (valorCasilla === 'X') {
+                    document.getElementById(i).innerHTML = '<span class="bi bi-x-circle"></span>';
+                } else if (valorCasilla === 'O') {
+                    document.getElementById(i).innerHTML = '<span class="bi bi-circle"></span>';
+                } else {
+                    // Si la casilla está vacía, lo dejamos vacío o puedes poner otro icono, si quieres
+                    document.getElementById(i).innerHTML = '';
+                }
 
             }
         }
@@ -540,7 +551,7 @@
         }
         function nueveFichas() {
             //con esto puedo controlar el total de fichas
-            //TODO: falta integrarlo para que finalice la partida
+            
             let totalFichas = totalFichasTablero(tableroGlobal);
             if (totalFichas.length === 9) {
                 console.log('Aquí debería terminar la partida')
