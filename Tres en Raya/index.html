@@ -311,23 +311,13 @@
             numRondasInfo.innerText = "Ronda: " + numeroRonda;
 
         }
-        function informacionJugadorRonda() {
-            const turnoJugador = document.getElementById("jugadorRotulo");
-            if (((numeroPartida % 2 === 0) && (numeroRonda % 2 === 0)) || (numeroPartida % 2 !== 0) && (numeroRonda % 2 !== 0)) {
-                turnoJugador.innerText = "Turno: Jugador 1";
-            } else {
-                turnoJugador.innerText = "Turno: Jugador 2";
-            }
-            const numRondasInfo = document.getElementById("numeroRondas");
-            numRondasInfo.innerText = "Ronda: " + numeroRonda;
-        }
 
         function infoTotal() {
             informacionPartida();
             actualizarInterfazTurno();
         }
 
-        // Actualizar vista según el turno
+        // Actualizar vista información partida según el turno
         function actualizarInterfazTurno() {
             const turnoJugador = document.getElementById("jugadorRotulo");
 
@@ -362,6 +352,7 @@
                 contadorPerdidas.textContent = (parseInt(contadorPerdidas.textContent || 0) + 1).toString();
             }
         }
+        
         // Actualizar contadores de empate
         function actualizarContadorEmpates() {
             let contadorJugador1 = document.getElementById('jugadorEmpate');
@@ -395,13 +386,13 @@
             for (let i = 0; i < 9; i++) {
                 let objetoPosTablero = devolverPosicionTablero(i);
                 let valorCasilla = tableroGlobal[objetoPosTablero.x][objetoPosTablero.y];
-                //Usar iconos en vez de caracteres
+                
                 if (valorCasilla === 'X') {
                     document.getElementById(i).innerHTML = '<span class="bi bi-x-circle"></span>';
                 } else if (valorCasilla === 'O') {
                     document.getElementById(i).innerHTML = '<span class="bi bi-circle"></span>';
                 } else {
-                    // Si la casilla está vacía, lo dejamos vacío o puedes poner otro icono, si quieres
+                    // Si la casilla está vacía, lo dejamos vacío
                     document.getElementById(i).innerHTML = '';
                 }
 
@@ -462,14 +453,15 @@
             }
         }
         //Colocar ficha en el array
-        function colocarFicha(posicionTablero) {
+        //TODO: Mantener?
+        /*function colocarFicha(posicionTablero) {
             if (esCruz) {
                 tableroGlobal[posicionTablero.x][posicionTablero.y] = 'X';
             } else {
                 tableroGlobal[posicionTablero.x][posicionTablero.y] = 'O';
             }
 
-        }
+        }*/
         //Devuelve bool casilla vacía
         function comprobarEstadoCasilla(idBoton) {
             const posicionTablero = devolverPosicionTablero(idBoton);
@@ -534,25 +526,14 @@
         }
 
 
-        //Tipo de juego
-        function totalFichasTablero() {
+        //TODO: Mantener?
+        /*function totalFichasTablero() {
             let matriz = tableroGlobal.flat();
             let totalFichas = matriz.filter(n => n === 'X' || n === 'O');
             console.log(totalFichas.length);
             return totalFichas.length;
-        }
-        function nueveFichas() {
-            //con esto puedo controlar el total de fichas
-            
-            let totalFichas = totalFichasTablero(tableroGlobal);
-            if (totalFichas.length === 9) {
-                console.log('Aquí debería terminar la partida')
-            } else {
-                console.log('Podemos seguir jugando')
-            }
-
-
-        }
+        }*/
+        
         //TODO: Funcion de partida de 6 fichas
         function seisFichas() {
 
@@ -841,9 +822,9 @@
         // FUNCIONES DE TIEMPO
         // ==========================================
 
-        //toppingNuevo.addEventListener('click',mostraClick);
         const botonEmpezar = document.getElementById('gameOn');
         botonEmpezar.addEventListener('click', iniciarCronometro);
+
         function iniciarCronometro() {
             if (!momentoInicio) {
                 momentoInicio = new Date();
