@@ -111,7 +111,7 @@ button:disabled {
 .bi-x-circle, .bi-circle {
     font-family: "Bootstrap Icons";
     font-size: 30px;
-   
+   font-weight: bold;
     transition: transform 0.3s ease;
     /* Transición para efectos */
 }
@@ -119,4 +119,11 @@ button:disabled {
 .bi-x-circle :hover, .bi-circle :hover{
     transform: scale(1.2);
     /* Efecto de agrandar el icono al pasar el ratón */
+}
+
+/* Cronometro */
+.reloj{
+    font-size: x-large;
+    font-weight: bold;
+    color: black;
 }
