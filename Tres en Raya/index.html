@@ -11,7 +11,7 @@
 </head>
 
 <body>
-   
+
     <!-- TODO: Hacer el tablero de 6 fichas -->
     <div id="margin-top">
         <br><br>
@@ -422,10 +422,13 @@
                 // En modo 2 jugadores, Jugador 1 usa X y Jugador 2 usa O
                 const fichaAColocar = valoresJuego[0] === '2' ?
                     (turnoJugadorUno ? 'X' : 'O') : 'X';
+                //el valor puede ser 6 ó 9, dependiendo del tablero escogido
+                const tableroEscogido = parseInt(valoresJuego[1]);
 
                 tableroGlobal[posicionTablero.x][posicionTablero.y] = fichaAColocar;
                 actualizarTableroVista();
                 contadorMovimientos++;
+                console.log("Contador: "+contadorMovimientos);
 
                 const ganador = obtenerSimboloGanador();
                 if (ganador) {
@@ -444,9 +447,14 @@
                     }, 100);
                     return;
                 }
+                //verificar según tipo de tablero
+                if (tableroEscogido === 9) {
+                    if (verificarEmpate()) {
+                        return;
+                    }
+                }if(tableroEscogido===6){
+                    seisFichas();
 
-                if (verificarEmpate()) {
-                    return;
                 }
 
                 // Cambiar turno
@@ -455,6 +463,7 @@
                     numeroRonda++;
                     reiniciarSegundosGlobal();
                     actualizarInterfazTurno();
+                    
                 } else {
                     esTurnoHumano = false;
                     gestionarTurnoAutomatico();
@@ -541,22 +550,28 @@
             console.log(totalFichas.length);
             return totalFichas.length;
         }
-        function nueveFichas() {
-            //con esto puedo controlar el total de fichas
-            
-            let totalFichas = totalFichasTablero(tableroGlobal);
-            if (totalFichas.length === 9) {
-                console.log('Aquí debería terminar la partida')
-            } else {
-                console.log('Podemos seguir jugando')
-            }
-
-
-        }
+        
         //TODO: Funcion de partida de 6 fichas
         function seisFichas() {
+            if (contadorMovimientos === 6) {
+                console.log('Máximo de fichas en tablero')
+                alert("¡Has llegado al máximo de fichas en el tablero! Ahora debes mover una de tus propias fichas")
+
+            }
 
         }
+        /* function verificarEmpate() {
+             if (contadorMovimientos === 9) {
+                 setTimeout(() => {
+                     alert('¡Empate!');
+                     actualizarContadorEmpates();
+                     numeroPartida++;
+                     reiniciarJuego();
+                 }, 100);
+                 return true;
+             }
+             return false;
+         }*/
         // ==========================================
         // FUNCIÓN ALEATORIO
         // ==========================================
@@ -829,6 +844,7 @@
             }
             return false;
         }
+
         // Obtener el símbolo ganador 
         function obtenerSimboloGanador() {
             const ganadorFila = hayGanadorFila(tableroGlobal);
