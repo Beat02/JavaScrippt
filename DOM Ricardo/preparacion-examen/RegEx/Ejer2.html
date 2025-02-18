@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <!--Metadatos-->
+    <meta charset="UTF-8">
+    <meta name="author" content="Beatriz R.">
+    <meta name="description" content="Ejercicios-regEx">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 2 - Restringir nombre de usuario</title>
+</head>
+
+<body>
+
+    <body>
+        <form id="formulario">
+            <label for="usuario">Nombre de usuario:</label>
+            <input type="usuario" id="usuario" name="usuario" required>
+            <span id="errorusuario" style="color: red;"></span>
+            <br><br>
+            <label for="telefono">Número de teléfono:</label>
+            <input type="text" id="telefono" name="telefono" required>
+            <span id="errorTelefono" style="color: red;"></span>
+
+            <button type="submit">Enviar</button>
+        </form>
+
+        <p id="resultado"></p>
+
+        <script src="script.js"></script>
+    </body>
+    <script>
+        /*
+        Ejercicio 2 - Restringir nombre de usuario
+        📌 Crea una validación para nombres de usuario en un formulario.
+
+        Solo puede contener letras, números y guion bajo _
+        Debe empezar con una letra
+        Debe tener entre 5 y 15 caracteres
+        🔹 Ejemplo de entradas válidas:
+        ✅ usuario_123
+        ✅ Beatriz2024
+
+        ❌ 123usuario (no empieza con letra)
+        ❌ a (menos de 5 caracteres)*/
+
+        let regEx = /^[A-Za-zñÑ]\w{4,15}$/;
+        //1. Selecciona el campo de nombre de usuario
+        const nombreUsuario = document.getElementById("usuario");
+        const errorNombre = document.getElementById("errorusuario");
+        //2. Escucha el evento de entrada
+        nombreUsuario.addEventListener('input', validarNombre);
+        //validaciones extra:
+        let largoNombre = /^.{5,15}/;
+        let caracteresErroneos = /[^A-Za-zñÑ0-9_]/;
+
+        //Función que valida el nombre de usuario
+        function validarNombre(event) {
+            if (!regEx.test(event.target.value)) {
+                //Esto siempre debe pasar
+                errorNombre.innerHTML = "<br>Nombre Usuario inválido"
+                errorNombre.style.color = "red";
+
+                // Creo elementos para los errores
+                const error1 = document.createElement('span');
+                error1.setAttribute('id', 'error1');
+                errorNombre.append(error1);
+                const error2 = document.createElement('span');
+                error2.setAttribute('id', 'error2');
+                errorNombre.append(error2);
+
+                if (!largoNombre.test(event.target.value)) {
+                    error1.innerHTML = "<br>Debe tener entre 5 y 15 caracteres";
+                    error1.style.color = "red";
+                } else {
+                    error1.innerHTML = "";
+                    error1.style.color = "black";
+
+                }
+                if (caracteresErroneos.test(event.target.value)) {
+                    error2.innerHTML = "<br>No puede tener nada que no sean letras, números o guión bajo";
+                    error2.style.color = "red";
+                } else {
+                    error2.innerHTML = "";
+                    error2.style.color = "black";
+
+                }
+            } else {
+                errorNombre.innerHTML = "Nombre de Usuario Correcto";
+                errorNombre.style.color = "green";
+            }
+
+        }
+
+    </script>
+</body>
+
+</html>

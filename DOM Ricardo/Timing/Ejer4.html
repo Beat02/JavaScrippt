@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <!--Metadatos-->
+    <meta charset="UTF-8">
+    <meta name="author" content="Beatriz R.">
+    <meta name="description" content="proyecto">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 1s ease-in-out;
+        }
+    </style>
+
+    <!-- Título -->
+    <title>Ejercicio 4 PDF Timing events</title>
+</head>
+
+<body>
+    <button type="button" id="boton">Haz click aquí</button>
+    <button type="button" id="parar">Parar</button>
+    <div id="inicio"></div>
+    <script>
+        /*
+        Realiza un pequeño script que cuando pulsemos un botón cree, no modifique, cada 2 segundos un elemento tipo <div> o tipo <span>
+        con un número aleatorio entre 0 y 10 y que excepto el 10 tenga dos cifras decimales. Dicho <div> debe aparecer en color rojo
+        si el número es < 5 y en color verde si es mayor. A ser posible que cuando aparezcan en pantalla aparezcan con una animación,
+        un fade in…*/
+        let intervalo;
+
+        const boton = document.getElementById("boton");
+        boton.addEventListener('click', generarSpan);
+
+        const botonFin = document.getElementById("parar");
+        botonFin.addEventListener('click', pararIntervalo)
+        const primerDiv = document.getElementById("inicio");
+        let contador = 0
+
+        function pararIntervalo() {
+            clearInterval(intervalo);
+        }
+
+        function generarSpan() {
+            intervalo = setInterval(() => {
+                let numeroRandom = Math.floor(Math.random() * 11);
+                numeroRandom = numeroRandom === 10 ? numeroRandom : numeroRandom.toFixed(2);
+
+                let spanNuevo = document.createElement('span');
+                spanNuevo.setAttribute('id', contador);
+                primerDiv.append(spanNuevo);
+                spanNuevo.classList.add("fade-in");
+                spanNuevo.innerHTML = "<br>" + numeroRandom;
+                if (numeroRandom < 5) {
+                    spanNuevo.style.color = "red";
+                } else {
+                    spanNuevo.style.color = "green";
+                }
+                contador++;
+
+            }, 2000);
+
+
+
+        }
+
+    </script>
+</body>
+
+</html>

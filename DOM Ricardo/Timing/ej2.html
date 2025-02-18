@@ -13,23 +13,28 @@
     <script>
         /*Realiza un programa que cada 20 segundos (mediante setInterval) solicite un número hasta que alguien le escriba la cadena “fin”.
         En ese momento, el programa debe mostrar la suma de todos los números.*/
+        let sumaTotal=0;
+        let numero1= parseInt(prompt("Dame un número y los iré sumando, si quieres parar escribe fin"));
+        sumaTotal=numero1+sumaTotal;
 
-        let numeroGlobal;
-        let arrayNumGlobal=[]
-        let intervalo=window.setInterval(eje2, 5000);
-        function eje2() {
-            numeroGlobal = prompt("Escribe un número. Si quieres terminar escribe 'fin'");
-            if (numeroGlobal !== 'fin') {
-                arrayNumGlobal.push(parseInt(numeroGlobal))
-            }
-            if (numeroGlobal === 'fin') {
-                window.clearInterval(intervalo)
-                console.log(arrayNumGlobal)
-            }
+        let intervalo=setInterval(bucle,5000);
 
+        function bucle(){
+            let numero= prompt("Dame un número y los iré sumando, si quieres parar escribe fin");
+            let numeroFinal;
+            if(numero!=="fin"){
+                numeroFinal=parseInt(numero);
+                sumaNumeros(numeroFinal);
+            }
+            else{
+                clearInterval(intervalo);
+                alert("La suma de todos los números introducidos es: " + sumaTotal)
+            }
+            
         }
-
-
+        function sumaNumeros(num) {
+            sumaTotal=num+sumaTotal;
+        }
 
 
     </script>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <!--Metadatos-->
+    <meta charset="UTF-8">
+    <meta name="author" content="Beatriz R.">
+    <meta name="description" content="proyecto">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Título -->
+    <title>Proyecto</title>
+</head>
+
+<body>
+    <script>
+        /*
+       
+        */
+        // 1. Una palabra de 4 letras
+        let regex1 = /^[a-zA-ZñÑ]{4}/;
+        console.log("Una palabra de 4 letras");
+        console.log(regex1.test("Bea") + " Bea");
+        console.log(regex1.test("Dado") + " Dado");
+
+        // 2. Una palabra de 4 letras siendo la primera mayúscula y el resto minúsculas
+        let regex2 = /^[A-ZÑ][a-zñ]{3}/;
+        console.log("Una palabra de 4 letras siendo la primera mayúscula y el resto minúsculas");
+        console.log(regex2.test("Beat") + " Beat");
+        console.log(regex2.test("BEAT") + " BEAT");
+
+        // 3. Una palabra en la que la tercera letra sea una vocal
+        let regex3 = /^[a-zA-ZñÑ]{2}[aAeEiIoOuU][a-zA-ZñÑ]*/;
+        console.log("Una palabra en la que la tercera letra sea una vocal");
+        console.log(regex3.test("Bea") + " Bea");
+        console.log(regex3.test("Mercado") + " Mercado");
+        console.log(regex3.test("riachuelo") + " riachuelo");
+
+        // 4. Una palabra que contenga como mucho un signo – entre alguna de sus letras
+        let regex4 = /^[A-Za-zÑñ\d]+[!@#$%^&*\-]?[A-Za-zÑñ\d]+$/;
+        console.log("Una palabra que contenga como mucho un signo – entre alguna de sus letras");
+        console.log(regex4.test("Bea*riz") + " Bea*riz");
+        console.log(regex4.test("Mercado") + " Mercado");
+        console.log(regex4.test("?hey") + " ?hey");
+        console.log(regex4.test("hey__cute") + " hey__cute");
+
+        // 5. Una palabra que contenga como mucho dos signos – entre alguna de sus letras
+        let regex5 = /^[A-Za-zÑñ\d]+[!@#$%^&*\-\_]{0,2}[A-Za-zÑñ\d]+$/;
+        console.log("Una palabra que contenga como mucho dos signos, entre alguna de sus letras");
+        console.log(regex5.test("Bea*riz") + " Bea*riz");
+        console.log(regex5.test("Mercado") + " Mercado");
+        console.log(regex5.test("?hey") + " ?hey");
+        console.log(regex5.test("hey__cute") + " hey__cute");
+
+        //  6. Un email
+        let regex6 = /^[a-zA-ZñÑ0-9]+@[a-zA-ZñÑ0-9]+[\.][a-zA-ZñÑ]{2,4}$/;
+        console.log("Un email");
+        console.log(regex6.test("Bea@gmail.es") + " Bea@gmail.es");
+        console.log(regex6.test("bea.gmail.com") + " bea.gmail.com");
+        console.log(regex6.test("riachuelo@hello.com.es") + " riachuelo@hello.com.es");
+
+        //7. Un número de teléfono que pueda llevar un + delante para el prefijo internacional
+        let regex7 = /^(\+([0-9]){0,4}(\s)?)?[0-9]{9}$/; //OJO con poner el $ al final!!
+        console.log("Un número de teléfono que pueda llevar un + delante para el prefijo internacional");
+        console.log(regex7.test("+34655321987") + " +34655321987");
+        console.log(regex7.test("654321987") + " 654321987");
+        console.log(regex7.test("+34 654321987") + " +34 654321987");
+        console.log(regex7.test("+34 65432198755") + " +34 65432198755");
+
+        // 8. Un número de teléfono de 9 cifras, antes elimina espacios en blanco
+        let espaciosBlancos = /\s/g; //Si quieres encontrar todos los espacios en blanco, usa la bandera global g
+        let reemplazar = "";
+        let regex8 = /^[0-9]{9}$/;
+        let numero = "681 963 852";
+
+        console.log("Un número de teléfono de 9 cifras, antes elimina espacios en blanco");
+        let numeroLimpio = numero.replace(espaciosBlancos, reemplazar);
+        console.log(regex8.test(numeroLimpio) + " " + numeroLimpio);
+
+        // 9. Un prefijo internacional que pueda llevar un + delante y como mucho tenga 3 cifras numéricas
+        let regex9=/^([\+]?[0-9]{1,3})?[0-9]{9}$/;
+        console.log("Un prefijo internacional que pueda llevar un + delante y como mucho tenga 3 cifras numéricas");
+        console.log(regex9.test("+34655321989") + " +34655321989");
+        console.log(regex9.test("654321989") + " 654321989");
+        console.log(regex9.test("+34 654321989") + " +34 654321989");
+
+        // 10. Hacer un patrón para fecha, y estábamos viendo cómo hacer que pille tanto (dd-mm-aaaa) como (d-m-aaaa)
+        let regex10=/^[0-3]?[0-9][-][0-1]?[0-9][-][0-9]{4}$/;
+
+        console.log("Hacer un patrón para fecha, y estábamos viendo cómo hacer que pille tanto (dd-mm-aaaa) como (d-m-aaaa)");
+        console.log(regex10.test("02-12-1992") + " 02-12-1992");
+        console.log(regex10.test("2-2-1992") + " 2-2-1992");
+
+
+
+
+    </script>
+
+</body>
+
+</html>

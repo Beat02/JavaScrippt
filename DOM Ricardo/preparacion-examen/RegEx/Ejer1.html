@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <!--Metadatos-->
+    <meta charset="UTF-8">
+    <meta name="author" content="Beatriz R.">
+    <meta name="description" content="proyecto">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Título -->
+    <title>Ejercicio 1 - Validar un número de teléfono</title>
+</head>
+
+<body>
+    <script>
+        // Crea una función en JavaScript que valide si un número de teléfono español es correcto.
+        /*
+        Debe comenzar con +34 o 0034 (opcional)
+        Debe contener 9 dígitos seguidos
+        🔹 Ejemplo de entradas válidas:
+        ✅ +34987654321
+        ✅ 0034987654321
+        ✅ 987654321
+
+        ❌ 34987654321 (falta el + o 00)
+        ❌ 98765432 (solo tiene 8 dígitos)*/
+        let regEx = /^(?:\+34|0034)?\d{9}$/; //regEx=/(\+34|0034)?\d{9}/;
+
+        function validarNumero(numero){
+            let numeroValido=regEx.test(numero);
+            return numeroValido;
+        }
+        let telefono1="0034681956663";
+        let telefono2="85586583";
+        console.log(validarNumero(telefono1));
+        console.log(validarNumero(telefono2));
+        
+    </script>
+</body>
+
+</html>

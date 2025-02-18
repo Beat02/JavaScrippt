@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <!--Metadatos-->
+    <meta charset="UTF-8">
+    <meta name="author" content="Beatriz R.">
+    <meta name="description" content="proyecto">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Ejercicio 3 - Validar una contraseña segura</title>
+</head>
+
+<body>
+
+    <body>
+        <form id="formulario">
+
+            <label for="contraseña">Contraseña:</label>
+            <input type="text" id="contraseña" name="contraseña" required>
+            <span id="errorcontraseña" style="color: red;"></span>
+            <br>
+            <button type="submit">Enviar</button>
+        </form>
+
+        <p id="resultado"></p>
+
+        <script src="script.js"></script>
+    </body>
+    <script>
+        /*
+        Ejercicio 3 - Validar una contraseña segura
+            📌 Crea una función que verifique si una contraseña es segura.
+            Requisitos:
+
+            Mínimo 8 caracteres
+            Al menos una mayúscula
+            Al menos una minúscula
+            Al menos un número
+            Al menos un carácter especial (!@#$%^&*)*/
+        // * en un lookahead (?=...) asegura que exista al menos una ocurrencia de lo que buscamos en alguna parte de la cadena, no importa dónde esté.
+        let regEx = /^(?=.*[a-zñ])(?=.*[A-ZÑ])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/;
+        // Otras comprobaciones:
+        let minimo = /^.{8,}/;
+        let minusculas = /^(?=.*[a-zñ])/;
+        let mayusculas = /(?=.*[A-ZÑ])/;
+
+
+        const inputContrasenha = document.getElementById("contraseña");
+        const errorPassword = document.getElementById("errorcontraseña");
+
+        inputContrasenha.addEventListener('input', validarPassword)
+
+        function validarPassword(event) {
+            let error1 = document.createElement('span');
+            let error2 = document.createElement('span');
+            let error3 = document.createElement('span');
+            let error4 = document.createElement('span');
+
+            error1.setAttribute('id', 'error1')
+            if (!regEx.test(event.target.value)) {
+                errorPassword.innerHTML = "Contraseña inválida";
+                if (!minimo.test(event.target.value)) {
+                    errorPassword.append(error1);
+                    error1.innerHTML = "<br>La contraseña debe tener mínimo 8 caracteres";
+                    error1.style.color = "red";
+                } else {
+                    error1.remove;
+                }
+                if (!minusculas.test(event.target.value)) {
+                    errorPassword.append(error2);
+                    error2.innerHTML = "<br>La contraseña debe tener mínimo 1 minúscula";
+                    error2.style.color = "red";
+                } else {
+                    error2.innerHTML = "";
+                }
+                if (!mayusculas.test(event.target.value)) {
+                    errorPassword.append(error3);
+                    error3.innerHTML = "<br>La contraseña debe tener mínimo 1 mayúscula";
+                    error3.style.color = "red";
+                } else {
+                    error3.remove;
+                }
+            }
+
+        }
+    </script>
+</body>
+
+</html>

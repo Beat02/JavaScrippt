@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <!--Metadatos-->
+    <meta charset="UTF-8">
+    <meta name="author" content="Beatriz R.">
+    <meta name="description" content="proyecto">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Título -->
+    <title>Proyecto</title>
+</head>
+
+<body>
+    <button type="button" id="boton">Haz click aquí</button>
+    <button type="button" id="parar">Parar</button>
+    <div id="inicio"></div>
+    <script>
+        /*
+        5. Realiza un pequeño script que cuando pulsemos un botón cree cada 3 segundos un botón con numeros en orden.
+         Si le da al botón, todos los botones que tengan numeros multiplos del botón dado, deberán eliminarse de la pantalla
+        */
+        const botonIncio = document.getElementById("boton");
+        const botonFinal = document.getElementById("parar");
+        const primerDiv = document.getElementById("inicio");
+
+        let intervalo;
+        let contador = 0;
+        let arrayNumeros = [];
+
+        botonIncio.addEventListener('click', generarBoton);
+        botonFinal.addEventListener('click', finBotones);
+        primerDiv.addEventListener('click', encontarBoton);
+
+        function encontarBoton(event) {
+            let numero = event.target.id;
+            console.log(numero);
+
+            let botonIndicado = document.getElementById(numero);
+            console.log(botonIndicado.getAttribute('id'));
+
+            let numeroParseado = parseInt(numero);
+
+            /*
+            Pero luego usabas document.getElementById(i) para obtener el botón. Esto no funciona porque i es el índice, no el valor de los botones que estamos creando
+            Así, en vez de usar el índice (i), ahora estamos usando el valor almacenado en el array (arrayNumeros[i]), que es el ID real que tiene cada botón.
+            */
+
+            for (let i = 0; i < arrayNumeros.length; i++) {
+                //esto es mejor opcion, porque una vez que empiezo a borrar botones, el length no se aplica a los números que hay, osea, puede tener un length de
+                // 9 pero que tengamos hasta el nº15
+                if (arrayNumeros[i] % numeroParseado === 0 && arrayNumeros[i] !== numeroParseado) {
+
+                    let botonBorrar = document.getElementById(arrayNumeros[i]);
+                    console.log(botonBorrar);
+                    botonBorrar.remove();
+                    let indice = arrayNumeros.indexOf(arrayNumeros[i]);
+                    arrayNumeros.splice(indice,1);
+
+                }
+            }
+            let index = arrayNumeros.indexOf(numeroParseado);
+            arrayNumeros.splice(index,1);
+            botonIndicado.remove();
+
+
+        }
+
+        function generarBoton() {
+            intervalo = setInterval(() => {
+                let botonIntervalo = document.createElement('button');
+                botonIntervalo.setAttribute('id', contador);
+                botonIntervalo.setAttribute('type', 'button');
+                botonIntervalo.innerHTML = contador;
+                primerDiv.append(botonIntervalo);
+                arrayNumeros.push(contador);
+                contador++;
+            }, 2000)
+
+        }
+
+        function finBotones() {
+            clearInterval(intervalo)
+        }
+
+
+    </script>
+</body>
+
+</html>

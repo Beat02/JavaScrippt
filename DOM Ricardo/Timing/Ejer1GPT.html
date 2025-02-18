@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <!--Metadatos-->
+    <meta charset="UTF-8">
+    <meta name="author" content="Beatriz R.">
+    <meta name="description" content="proyecto">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Proyecto</title>
+</head>
+
+<body>
+    <button type="button" id="mensaje">Mensaje</button>
+    <button type="button" id="intervalo">Intervalo</button>
+    <button type="button" id="parar">Parar Intervalo</button>
+    <div id="contenedor"></div>
+
+
+
+    <script>
+
+        let intervalo;
+        let contador=0;
+        const contenedor=document.getElementById("contenedor");
+        const botonMensaje=document.getElementById("mensaje");
+        const botonIntervalo=document.getElementById("intervalo");
+        const botonParar=document.getElementById("parar");
+        
+        botonMensaje.addEventListener('click',mensaje);
+        botonIntervalo.addEventListener('click',contadorPantalla);
+        botonParar.addEventListener('click',pararIntervalo);
+
+
+
+
+        function mensaje() {
+            setTimeout(()=>{
+                console.log("Han pasado tres segundo desde que le diste al primer botón")
+            },3000)
+        }
+        function contadorPantalla() {
+            intervalo= setInterval(() => {
+                 let numerosPantalla=document.createElement('span');
+                numerosPantalla.innerHTML=contador;
+                contenedor.append(numerosPantalla); 
+                console.log(contador);
+                contador++;
+
+
+            }, 1000)
+
+        }
+        function pararIntervalo(){
+            clearInterval(intervalo);
+        }
+        /*
+        Ejercicio 1: Diferencia entre setTimeout y setInterval
+            Crea una página con dos botones:
+
+            Uno que, al hacer clic, muestre un mensaje en consola después de 3 segundos usando setTimeout.
+            Otro que, al hacer clic, inicie un contador en consola que aumente cada segundo usando setInterval.
+            Extra: Agrega un tercer botón que detenga el contador con clearInterval.*/
+    </script>
+</body>
+
+</html>
