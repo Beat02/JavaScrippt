@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <!--Metadatos-->
+    <meta charset="UTF-8">
+    <meta name="author" content="Beatriz R.">
+    <meta name="description" content="Ejercicio 3: Modificación y Eliminación de Elementos con Temporizadores">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Ejercicio 3: Modificación y Eliminación de Elementos con Temporizadores</title>
+</head>
+
+<body>
+    <button type="button" id="iniciar">Comenzar</button>
+    <div id="contenedor">
+
+    </div>
+    <button type="button" id="fin">Fin</button>
+
+    <script>
+        /*
+        Ejercicio 3: Modificación y Eliminación de Elementos con Temporizadores
+            Usa el código del ejercicio anterior, pero ahora:
+
+            A los 10 segundos de haber sido creado, cada div debe cambiar de color automáticamente.
+            A los 15 segundos de haber sido creado, el div debe eliminarse del contenedor.
+        */
+
+        const boton = document.getElementById("iniciar");
+        const botonFin = document.getElementById("fin");
+        const contenedor = document.getElementById("contenedor");
+
+        let intervalo;
+        let intervalo2;
+        let intervalo3;
+        let contador = 1;
+        let contador2=1;
+        let contador3=1;
+
+        boton.addEventListener('click', crearDivs);
+        botonFin.addEventListener('click', finDivs);
+
+        function crearDivs() {
+
+            intervalo = setInterval(() => {
+                let color = colorAleatorio();
+                const nuevoDiv = document.createElement('div');
+                //añado una clase
+                nuevoDiv.setAttribute('id',contador2);
+                nuevoDiv.innerHTML = contador;
+                nuevoDiv.style.backgroundColor = color;
+                contenedor.append(nuevoDiv);
+                contador++;
+
+            }, 3000);
+
+            intervalo2 = setInterval(() => {
+
+                let cambiarDiv = document.getElementById(contador2);
+                console.log(cambiarDiv);
+                cambiarDiv.style.backgroundColor = colorAleatorio();
+                contador2++;
+
+            }, 10000);
+
+            intervalo3 = setInterval(() => {
+                let cambiarDiv = document.getElementById(contador3);
+                console.log(cambiarDiv);
+                cambiarDiv.remove();
+                contador3++;
+            }, 15000);
+
+
+        }
+
+        function finDivs() {
+            clearInterval(intervalo);
+            clearInterval(intervalo2);
+            clearInterval(intervalo3);
+
+        }
+
+        function colorAleatorio() {
+            //RGB
+            let rojo = Math.floor(Math.random() * 256);
+            let verde = Math.floor(Math.random() * 256);
+            let azul = Math.floor(Math.random() * 256);
+            let color = "RGB(" + rojo + " " + verde + " " + azul + ")";
+
+            return color;
+        }
+
+    </script>
+</body>
+
+</html>

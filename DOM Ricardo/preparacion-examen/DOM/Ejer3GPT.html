@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <!--Metadatos-->
+    <meta charset="UTF-8">
+    <meta name="author" content="Beatriz R.">
+    <meta name="description" content="proyecto">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Ejercicio 3: Modificar atributos y clases</title>
+</head>
+
+<body>
+    <div class="caja">
+        <button type="button" id="agregar">Agregar</button>
+        <br><br>
+        <button type="button" id="eliminar">Eliminar</button>
+
+
+    </div>
+    <script>
+        const contenedor = document.getElementsByClassName("caja")
+        const botonAgregar = document.getElementById("agregar");
+        const botonEliminar = document.getElementById("eliminar");
+
+        botonAgregar.addEventListener('click', () => {
+            contenedor[0].classList.add('resaltado');
+            console.log(contenedor[0].classList.contains('resaltado'));
+        })
+        botonEliminar.addEventListener('click', () => {
+            contenedor[0].classList.remove('resaltado');
+            console.log(contenedor[0].classList.contains('resaltado'));
+
+        })
+
+
+        /*
+        Ejercicio 3: Modificar atributos y clases
+        Crea un <div> con la clase "caja". Luego, haz un botón que, al hacer clic, le agregue la clase "resaltado",
+        y otro botón que la elimine.*/
+    </script>
+</body>
+
+</html>

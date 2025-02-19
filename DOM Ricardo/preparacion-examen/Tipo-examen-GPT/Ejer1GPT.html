@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <!--Metadatos-->
+    <meta charset="UTF-8">
+    <meta name="author" content="Beatriz R.">
+    <meta name="description" content="tipo-examen">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Ejercicio 1: Validación de Formulario con Expresiones Regulares</title>
+</head>
+
+<body>
+
+    <form id="formulario">
+
+        <label for="usuario">Nombre de usuario: </label>
+        <input type="text" id="usuario" name="usuario" required>
+        <span id="errorUsuario" style="color: red;"></span>
+        <br>
+        <br>
+        <label for="contraseña">Contraseña: </label>
+        <input type="text" id="contraseña" name="contraseña" required>
+        <span id="errorContraseña" style="color: red;"></span>
+        <br>
+        <br>
+        <label for="telefono">Número de teléfono:</label>
+        <input type="text" id="telefono" name="telefono" required>
+        <span id="errorTelefono" style="color: red;"></span>
+        <br>
+        <br>
+        <label for="fecha">Fecha de nacimiento:</label>
+        <input type="text" id="fecha" name="fecha" required>
+        <span id="errorFecha" style="color: red;"></span>
+        <br>
+        <br>
+        <button type="submit">Enviar</button>
+    </form>
+
+    <p id="resultado"></p>
+
+    <script>
+        /*
+        Ejercicio 1: Validación de Formulario con Expresiones Regulares
+            Crea un formulario con los siguientes campos:
+
+                - Nombre de usuario (solo letras, números y _ , debe empezar con una letra y tener entre 5 y 15 caracteres).
+                - Contraseña (mínimo 8 caracteres, al menos una mayúscula, una minúscula, un número y un carácter especial).
+                - Número de teléfono (debe aceptar formatos españoles, como +34 612345678 o 612 34 56 78).
+                - Fecha de nacimiento (DD/MM/AAAA o DD-MM-AAAA).
+                
+            Cada campo debe validarse en tiempo real mientras el usuario escribe.
+            
+            Si hay un error, muestra un mensaje al lado del campo indicando qué está mal.*/
+
+        //montar regex:
+        let regexUsuario = /^[a-zA-ZñÑ]\w{4,14}$/;
+        let regexPassword = /^(?=.*[A-ZÑ])(?=.*[a-zñ])(?=.*[0-9])(?=.*[!@#\$\?%\^&\*_-]).{8,}$/;
+        let regexTelf = /^(\+34\s?)?(\d\s?){9}$/;
+        let regexFecha = /^([0-3]?[0-9])[\/-]([0-1]?[0-9])[\/-]([0-2][0-9]{3})$/;
+
+        let soloCaracteres = /[^a-zA-ZñÑ0-9_]/;
+        let primeraLetra = /^[a-zA-ZñÑ]/;
+
+        // nodos:
+        const nombre = document.getElementById("usuario");
+        const password = document.getElementById("contraseña");
+        const telefono = document.getElementById("telefono");
+        const fecha = document.getElementById("fecha");
+        // nodos span
+        const errorUsuario = document.getElementById("errorUsuario");
+        const errorPassword = document.getElementById("errorContraseña");
+        const errorTelefono = document.getElementById("errorTelefono");
+        const errorFecha = document.getElementById("errorFecha");
+
+
+        nombre.addEventListener('input', comprobarNombre);
+        password.addEventListener('input', comprobarPassword);
+        telefono.addEventListener('input', comprobarTelf);
+        fecha.addEventListener('input', comprobarFecha);
+
+        // Funciones para validar:
+        function comprobarNombre(event) {
+
+            const nodoExtra = document.createElement('span');
+            const nodoExtra1 = document.createElement('span');
+            const nodoExtra2 = document.createElement('span');
+
+            let nombreValor = event.target.value;
+            if (!regexUsuario.test(nombreValor)) {
+                errorUsuario.innerHTML = "Nombre de usuario invalido" + "<br>";
+                errorUsuario.style.color = "red";
+                if (!primeraLetra.test(nombreValor)) {
+
+                    errorUsuario.append(nodoExtra);
+                    nodoExtra.innerHTML = "El primer caracter debe ser una letra" + "<br>";
+                } else {
+                    nodoExtra.innerHTML = "";
+                }
+                if (nombreValor.length < 5 || nombreValor.length > 15) {
+
+                    errorUsuario.append(nodoExtra1);
+                    nodoExtra1.innerHTML = "Debe tener entre 5 y 15 caracteres" + "<br>";
+                } else {
+                    nodoExtra1.innerHTML = "";
+                }
+                if (soloCaracteres.test(nombreValor)) {
+
+                    errorUsuario.append(nodoExtra2);
+                    nodoExtra2.innerHTML = "Solo puede tener letras, números y _";
+                } else {
+                    nodoExtra2.innerHTML = "";
+                }
+
+            } else {
+                errorUsuario.innerHTML = "Nombre de usuario válido";
+                errorUsuario.style.color = "green";
+            }
+
+        }
+
+        function comprobarPassword(event) {
+            //- Contraseña (mínimo 8 caracteres, al menos una mayúscula, una minúscula, un número y un carácter especial).
+            // regexPassword = /^(?=.*[A-ZÑ])(?=.*[a-zñ])(?=.*[0-9])(?=.*[!@#\$%\^&\*-_]).{8,}$/;
+            let passwordValor = event.target.value;
+
+            const nodoExtra3 = document.createElement('span');
+            const nodoExtra4 = document.createElement('span');
+            const nodoExtra5 = document.createElement('span');
+            const nodoExtra6 = document.createElement('span');
+            const nodoExtra7 = document.createElement('span');
+
+
+            let regexMayus = /(?=.*[A-ZÑ])/;
+            let regexMinus = /(?=.*[a-zñ])/;
+            let regexNum = /(?=.*[0-9])/;
+
+            if (!regexPassword.test(passwordValor)) {
+                errorPassword.innerHTML = "Contraseña invalida" + "<br>";
+                errorPassword.style.color = "red";
+                if (!soloCaracteres.test(passwordValor)) {
+
+                    errorPassword.append(nodoExtra3);
+                    nodoExtra3.innerHTML = "Debe tener al menos 1 caracter especial" + "<br>";
+                } else {
+                    nodoExtra3.innerHTML = "";
+                }
+                if (!regexMayus.test(passwordValor)) {
+
+                    errorPassword.append(nodoExtra4);
+                    nodoExtra4.innerHTML = "Debe tener al menos 1 letra mayúscula" + "<br>";
+                } else {
+                    nodoExtra4.innerHTML = "";
+                }
+                if (!regexMinus.test(passwordValor)) {
+
+                    errorPassword.append(nodoExtra5);
+                    nodoExtra5.innerHTML = "Debe tener al menos 1 letra minúscula" + "<br>";
+                } else {
+                    nodoExtra5.innerHTML = "";
+                } if (!regexNum.test(passwordValor)) {
+
+                    errorPassword.append(nodoExtra6);
+                    nodoExtra6.innerHTML = "Debe tener al menos 1 número" + "<br>";
+                } else {
+                    nodoExtra6.innerHTML = "";
+                }
+                if (passwordValor.length < 8) {
+
+                    errorPassword.append(nodoExtra7);
+                    nodoExtra7.innerHTML = "Debe tener al menos 8 caracteres" + "<br>";
+                } else {
+                    nodoExtra7.innerHTML = "";
+                }
+
+
+            } else {
+                errorPassword.innerHTML = "Contraseña válida";
+                errorPassword.style.color = "green";
+            }
+
+        }
+
+        function comprobarTelf(event) {
+            let telfValor = event.target.value;
+            let arrayPartes = telfValor.split('+');
+
+            let soloNumero = arrayPartes.length > 1 ? arrayPartes[1].trim() : telfValor.trim();
+            // Número de teléfono (debe aceptar formatos españoles, como +34 612345678 o 612 34 56 78).
+            // let regexTelf = /^(\+34\s?)?(\d\s?){9}/;
+            const nodoExtra8 = document.createElement('span');
+            const nodoExtra9 = document.createElement('span');
+            let regexPrefijoMal = /^(\+(?!34)\d*)/;
+
+
+            if (!regexTelf.test(telfValor)) {
+                errorTelefono.innerHTML = "Teléfono inválido" + "<br>";
+                errorTelefono.style.color = "red";
+                if (regexPrefijoMal.test(telfValor)) {
+                    errorTelefono.append(nodoExtra8);
+                    nodoExtra8.innerHTML = "Si lleva prefijo, solo puede ser +34" + "<br>";
+                } else {
+                    nodoExtra8.innerHTML = "";
+                }
+                if (soloNumero.length !== 9) {
+                    errorTelefono.append(nodoExtra9);
+                    nodoExtra9.innerHTML = "Después del prefijo debe tener 9 dígitos" + "<br>";
+                } else {
+                    nodoExtra9.innerHTML = "";
+                }
+
+            } else {
+                errorTelefono.innerHTML = "Teléfono válido";
+                nodoExtra8.innerHTML = "";
+                nodoExtra9.innerHTML = "";
+                errorTelefono.style.color = "green";
+            }
+        }
+
+        function comprobarFecha(event) {
+            let fechaValor = event.target.value;
+            // Fecha de nacimiento (DD/MM/AAAA o DD-MM-AAAA).
+            // let regexFecha = /^([0-3]?[0-9])[\/-]([0-1]?[0-9])[\/-]([0-2][0-9]{3})$/;
+            const nodoExtra10 = document.createElement('span');
+            const nodoExtra11 = document.createElement('span');
+            // Gestionar fecha
+            let arrayFecha = fechaValor.split(/\/|-/); //usamos una expresión regular para que funcione el split!!
+
+            if (!regexFecha.test(fechaValor)) {
+                errorFecha.innerHTML = "Fecha inválida" + "<br>";
+                errorFecha.style.color = "red";
+
+
+            } else if (regexFecha.test(fechaValor)) {
+                let dia = parseInt(arrayFecha[0]);
+                let mes = parseInt(arrayFecha[1]) - 1;
+                let anho = parseInt(arrayFecha[2]);
+
+                let fecha = new Date(anho, mes, dia);
+                console.log(fecha.getMonth());
+                console.log(mes);
+                console.log(fecha.getDate());
+                console.log(dia);
+                console.log(fecha.getFullYear());
+                console.log(anho);
+
+                if (fecha.getDate() !== dia || fecha.getMonth() !== mes || fecha.getFullYear() !== anho) {
+                    errorFecha.innerHTML = "Esta fecha no existe" + "<br>";
+                    errorFecha.style.color = "red";
+                } else {
+                    errorFecha.innerHTML = "Fecha válida";
+                    errorFecha.style.color = "green";
+                    fechaExiste = true;
+                }
+
+            }
+
+        }
+    </script>
+</body>
+
+</html>

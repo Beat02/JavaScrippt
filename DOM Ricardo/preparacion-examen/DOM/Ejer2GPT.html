@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <!--Metadatos-->
+    <meta charset="UTF-8">
+    <meta name="author" content="Beatriz R.">
+    <meta name="description" content="proyecto">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Ejercicio 2: Crear y eliminar elementos</title>
+</head>
+
+<body>
+    <h1>Lista:</h1>
+    <br>
+    <button type="button" id="boton">Agregar elemento</button>
+    <br>
+    <ul id="lista">
+
+    </ul>
+    <button type="button" id="eliminar">Eliminar elemento</button>
+    <script>
+        const lista=document.getElementById("lista");
+        const boton=document.getElementById("boton");
+        const botonEliminar=document.getElementById("eliminar");
+
+        boton.addEventListener('click',agregarElemento);
+        botonEliminar.addEventListener('click',eliminarElemento);
+
+
+        function agregarElemento(){
+            const lista1=document.createElement('li');
+            lista1.innerText="Nuevo ítem";
+            lista.append(lista1);
+        }
+
+        function eliminarElemento(){
+            const listaArray=document.querySelectorAll('li');
+            let largo=listaArray.length;
+            listaArray[(largo-1)].remove();
+
+        }
+        /*
+        Ejercicio 2: Crear y eliminar elementos
+            Crea un botón que, al hacer clic, agregue un nuevo elemento <li> con texto "Nuevo ítem" a una lista <ul>.
+            Luego, añade otro botón para eliminar el último <li> de la lista.*/
+    </script>
+</body>
+
+</html>

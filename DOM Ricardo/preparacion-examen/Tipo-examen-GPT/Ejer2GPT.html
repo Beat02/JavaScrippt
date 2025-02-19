@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <!--Metadatos-->
+    <meta charset="UTF-8">
+    <meta name="author" content="Beatriz R.">
+    <meta name="description" content="Ejercicio 2: Temporizadores y Creación de Elementos">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Ejercicio 2: Temporizadores y Creación de Elementos</title>
+</head>
+
+<body>
+
+    <button type="button" id="iniciar">Comenzar</button>
+    <div id="contenedor">
+
+    </div>
+    <button type="button" id="fin">Fin</button>
+
+    <script>
+        const boton = document.getElementById("iniciar");
+        const botonFin = document.getElementById("fin");
+        const contenedor = document.getElementById("contenedor");
+
+        let intervalo;
+        let contador = 1;
+
+        boton.addEventListener('click', crearDivs);
+        botonFin.addEventListener('click', finDivs);
+
+        function crearDivs() {
+            intervalo = setInterval(() => {
+                let color = colorAleatorio();
+                console.log(color);
+                const nuevoDiv = document.createElement('div');
+                nuevoDiv.innerHTML = contador;
+                nuevoDiv.style.backgroundColor = color;
+                console.log(nuevoDiv.style.backgroundColor);
+                contenedor.append(nuevoDiv);
+                contador++;
+
+            }, 3000)
+
+
+        }
+
+        function finDivs() {
+            clearInterval(intervalo);
+
+        }
+
+        function colorAleatorio() {
+            //RGB
+            let rojo = Math.floor(Math.random() * 256);
+            let verde = Math.floor(Math.random() * 256);
+            let azul = Math.floor(Math.random() * 256);
+            let color = "RGB("+rojo + " " + verde + " " + azul+ ")";
+
+            return color;
+        }
+
+        /*
+        Ejercicio 2: Temporizadores y Creación de Elementos
+            Crea un botón que, al hacer clic, inicie un temporizador que cada 3 segundos cree un nuevo div dentro de un contenedor.
+            Cada div debe tener un fondo de color aleatorio y un número dentro, que empiece en 1 e incremente con cada nuevo div.
+            Cuando el usuario presione otro botón, debe detenerse la creación de nuevos divs.
+        */
+        //boton
+        // crear divs
+        //temporizador 1
+
+    </script>
+</body>
+
+</html>

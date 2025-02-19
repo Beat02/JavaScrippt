@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <!--Metadatos-->
+    <meta charset="UTF-8">
+    <meta name="author" content="Beatriz R.">
+    <meta name="description" content="proyecto">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Ejercicio 1: Modificar el contenido de un párrafo</title>
+</head>
+
+<body>
+    <p id="actualizar">Ejercicio 1: Modificar el contenido de un párrafo<br>
+        Crea un botón que, al hacer clic, cambie el texto de un párrafo a "Texto actualizado".</p>
+        <button type="button" id="boton">Actualizar</button>
+    <script>
+        const nodo=document.getElementById("actualizar");
+        const boton=document.getElementById("boton");
+
+        boton.addEventListener('click',()=>{
+            nodo.innerText="Texto actualizado";
+        })
+
+        /*Ejercicio 1: Modificar el contenido de un párrafo
+           Crea un botón que, al hacer clic, cambie el texto de un párrafo a "Texto actualizado".
+           */
+    </script>
+
+</body>
+
+</html>

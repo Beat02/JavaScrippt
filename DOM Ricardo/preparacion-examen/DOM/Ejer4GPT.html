@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <!--Metadatos-->
+    <meta charset="UTF-8">
+    <meta name="author" content="Beatriz R.">
+    <meta name="description" content="proyecto">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Ejercicio 4: Detectar cambios en un input</title>
+</head>
+
+<body>
+
+    <label for="texto"> Introduce un texto:</label>
+    <input type="texto" id="texto" name="texto" required>
+
+    <p id="resultado"></p>
+
+    <script>
+
+        const input=document.getElementById("texto");
+        const resultado=document.getElementById("resultado");
+
+        input.addEventListener('input',mostrarValor);
+
+        function mostrarValor(event){
+            let texto=event.target.value;
+            resultado.innerHTML=texto;
+        }
+        /*
+        Ejercicio 4: Detectar cambios en un input
+            Crea un <input> de texto y un <p>. Cada vez que el usuario escriba en el input, el párrafo debe mostrar
+            lo que el usuario está escribiendo en tiempo real.*/
+    </script>
+</body>
+
+</html>

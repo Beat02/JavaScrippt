@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <!--Metadatos-->
+    <meta charset="UTF-8">
+    <meta name="author" content="Beatriz R.">
+    <meta name="description" content="proyecto">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        #contenedor {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+    </style>
+    <title>Proyecto</title>
+</head>
+
+<body>
+    <h3>Ejercicio 3: Reloj en pantalla con setInterval<br>
+        Crea un reloj en tiempo real que muestre la hora actual y se actualice cada segundo usando setInterval().<br>
+
+        Extra: Agrega un botón para detener el reloj con clearInterval().</h3>
+    <div id="contenedor">
+
+        <p id="hora"></p>
+        <p id="minutos"></p>
+        <p id="segundos"></p>
+
+
+    </div>
+
+    <button type="button" id="parar">Parar reloj</button>
+
+    <script>
+        let fecha = new Date();
+        let hora = fecha.getHours();
+        let minutos = fecha.getMinutes();
+        let segundos = fecha.getSeconds();
+        console.log(hora);
+
+        const nodoHoras = document.getElementById("hora");
+        const nodoMinutos = document.getElementById("minutos");
+        const nodoSegundos = document.getElementById("segundos");
+        const botonFin=document.getElementById("parar");
+
+        nodoHoras.innerHTML = hora + " : ";
+        nodoMinutos.innerHTML = minutos + " : ";
+        nodoSegundos.innerHTML = segundos;
+
+        botonFin.addEventListener('click',pararReloj);
+
+        
+            let intervalo= setInterval(() => {
+                if (segundos < 59) {
+                    segundos++;
+                    nodoSegundos.innerHTML = segundos;
+                } else {
+                    segundos = 0;
+                    nodoSegundos.innerHTML = segundos;
+                    if (minutos < 59) {
+                        minutos++;
+                        nodoMinutos.innerHTML = minutos + " : ";
+                    } else {
+                        minutos=0;
+                        nodoMinutos.innerHTML = minutos + " : ";
+                        if (hora < 23) {
+                            hora++;
+                            nodoHoras.innerHTML = hora + " : ";
+                        } else {
+                            hora = 0;
+                            nodoHoras.innerHTML = hora + " : ";
+                        }
+                    }
+                }
+
+            }, 1000);
+
+            function pararReloj(){
+                clearInterval(intervalo);
+            }
+
+        
+
+
+    </script>
+</body>
+
+</html>

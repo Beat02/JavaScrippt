@@ -8,13 +8,52 @@
     <meta name="description" content="proyecto">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <title>Proyecto</title>
 </head>
 
 <body>
-<!--     TODO: empezar el ejercicio
- -->    <script>
+    <h3>Ingrese el número de segundos y, al presionar el botón,
+        después de ese tiempo se mostrará un mensaje en pantalla</h3>
+
+    <label for="tiempo">Segundos:</label>
+    <input type="tiempo" id="tiempo" name="tiempo" required>
+    <button type="button" id="empezar">Empezar</button>
+
+    <button type="button" id="parar">Parar</button>
+
+
+
+    <p id="resultado"></p>
+
+    <script>
+        const segundosInput = document.getElementById("tiempo");
+        const boton = document.getElementById("empezar");
+        const botonFin = document.getElementById("parar");
+        let temporizador;
+
+
+        boton.addEventListener('click', enviarMensaje);
+        botonFin.addEventListener('click',evitarMensaje);
+
+        function enviarMensaje() {
+            let tiempoValor = (parseInt(segundosInput.value) * 1000);
+            console.log(tiempoValor);
+            temporizador = setTimeout(() => {
+                alert("Hecho!!");
+
+            }, tiempoValor)
+
+        }
+
+        function evitarMensaje(){
+            clearInterval(temporizador);
+            console.log("Mensaje evitado");
+        }
+
+
+
+
         /*
         Ejercicio 2: Temporizador con setTimeout
             Haz un temporizador donde el usuario ingrese en un input el número de segundos y, al presionar un botón,

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <!--Metadatos-->
+    <meta charset="UTF-8">
+    <meta name="author" content="Beatriz R.">
+    <meta name="description" content="proyecto">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- estilo -->
+    <style>
+        #contenedor {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 10px;
+        }
+
+        #rosa {
+            background-color: #ff84c4;
+        }
+
+        #verde {
+            background-color: #00be2c;
+        }
+
+        #blanco {
+            background-color: white;
+        }
+    </style>
+    <title>Proyecto</title>
+</head>
+
+<body id="blanco">
+    <div id="contenedor">
+        <h1>Glinda & Elphaba color palette</h1>
+        <br>
+        <button type="button" id="cambiarColor">Ver colores</button>
+        <br>
+        <button type="button" id="parar">Fin</button>
+    </div>
+    <script>
+        let contador = 1;
+        const cuerpo = document.getElementById("blanco");
+        const botonIncio = document.getElementById("cambiarColor");
+        const botonFin = document.getElementById("parar");
+
+
+        let intervalo;
+
+        botonIncio.addEventListener('click', cambiaFondo);
+        botonFin.addEventListener('click', pararIntervalo);
+
+
+
+
+        function cambiaFondo() {
+            intervalo = setInterval(() => {
+                if (contador % 2 === 0) {
+                    cuerpo.setAttribute('id', 'verde');
+                } else {
+                    cuerpo.setAttribute('id', 'rosa');
+                }
+                contador++;
+
+            }, 2000)
+
+        }
+
+        function pararIntervalo() {
+            clearInterval(intervalo);
+            contador = 1;
+            cuerpo.setAttribute('id', 'blanco');
+        }
+        /*
+        Ejercicio 4: Cambio de color automático
+            Crea una página con un botón que, al hacer clic, haga que el fondo de la página cambie de color cada 2 segundos usando setInterval().
+
+            Extra: Agrega un segundo botón para detener el cambio de color con clearInterval().*/
+    </script>
+</body>
+
+</html>
