@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <!--Metadatos-->
+    <meta charset="UTF-8">
+    <meta name="author" content="Beatriz R.">
+    <meta name="description" content="proyecto">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Proyecto</title>
+</head>
+
+<body>
+    <div id="contenedor">
+        <label for="numero">Añadir:</label>
+        <input type="number" id="numero" name="numero" required>
+        <span id="errornumero" style="color: red;"></span>
+
+        <button type="button" id="add">AÑADIR</button>
+        <button type="button" id="fin">FIN</button>
+
+
+    </div>
+
+
+    <script>
+
+        const contenedor = document.getElementById("contenedor");
+        const boton = document.getElementById("add");
+        const botonFin = document.getElementById("fin");
+        const input = document.getElementById("numero");
+        const error = document.getElementById("errornumero");
+        let arrayNumeros = [];
+        let numeroValidado;
+
+        boton.addEventListener('click', addDiv);
+        botonFin.addEventListener('click', media);
+        input.addEventListener('input', validar);
+
+
+        let regex = /^([0-9]|(10))$/;
+
+        function validar(event) {
+            if (!regex.test(event.target.value)) {
+                error.innerHTML = "Debes introducir un número del 0 al 10";
+                numeroValidado = false;
+
+            } else {
+                error.innerHTML = "";
+                numeroValidado = true;
+            }
+
+
+        }
+
+        function addDiv() {
+            if (numeroValidado) {
+                let valor = parseInt(input.value);
+                console.log(valor);
+                arrayNumeros.push(valor);
+                const inputExtra = document.createElement('input');
+                contenedor.append(inputExtra);
+
+            } else {
+                alert("Debes introducir un número del 0 al 10");
+            }
+
+        }
+
+        function media() {
+            let sumaTotal=0;
+            for(let i=0;i<arrayNumeros.length;i++){
+                let numero=arrayNumeros[i];
+                sumaTotal+=numero;
+                console.log(sumaTotal);
+            }
+            let media=sumaTotal/arrayNumeros.length;
+            alert("La media es: "+media);
+
+        }
+        /*
+        (2 ptos) Crea un programa con un elemento tipo <input>, un botón con el texto “Añadir” y un botón con el texto “Fin”.
+            De forma que cuando se pulse el botón “Añadir” recoja el valor del elemento tipo <input> que debe ser un numérico entero
+            entre 0 y 10 (comprobar que así sea y devuelva un alert indicando en caso de que el valor sea incorrecto) y si el valor
+            es correcto generará otro elemento tipo <input> de forma dinámica. (1 pto) Cuando se pulse el botón “Fin” debe devolver
+            la media de los valores anteriores mediante un elemento tipo <div> o una alerta por pantalla. (1 pto) Supondremos que una
+            vez verificado un elemento <input> no se cambiará, luego no hará falta verificarlo nuevamente.
+
+        La media se calcula sumando TODOS los valores y después dividiendo entre el número de valores. El ejercicio tendrá
+        una calificación de 0 si la media no es correcta.
+        */
+    </script>
+</body>
+
+</html>

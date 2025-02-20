@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <!--Metadatos-->
+    <meta charset="UTF-8">
+    <meta name="author" content="Beatriz R.">
+    <meta name="description" content="proyecto">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Proyecto</title>
+</head>
+
+<body>
+
+    <label for="input1">Correo electrónico:</label>
+    <input type="text" id="input1" name="input1" required>
+    <!--     <span id="errorinput1" style="color: red;"></span> -->
+    <label for="input2">Número de teléfono:</label>
+    <input type="text" id="input2" name="input2" required>
+    <!--     <span id="errorinput2" style="color: red;"></span> -->
+    <br>
+    <button type="button" id="boton">Ejecutar</button>
+
+    <div id="resultado"></div>
+
+
+
+
+    <script>
+
+        let regexNum = /^[\d]+[\.,]?[0-9]*$/;
+        let regexTexto = /[a-zA-ZñÑ]\s*/;
+        let regexFecha = /^([0-3][0-9])[\/-]([0-1][0-9])[\/-]([0-2][0-9][0-9][0-9])$/;
+
+        const input1 = document.getElementById("input1");
+        const input2 = document.getElementById("input2");
+        const boton = document.getElementById("boton");
+        const resultado = document.getElementById("resultado");
+
+        boton.addEventListener('click', verificarInput);
+
+        function verificarInput() {
+            let valor1 = input1.value;
+            let valor2 = input2.value;
+
+            if (regexNum.test(valor1) && regexNum.test(valor2)) {
+                let regexComa = /\,+/;
+
+                if (regexComa.test(valor1)) {
+                    valor1 = valor1.replace(regexComa, ".");
+                } else if (regexComa.test(valor2)) {
+                    valor2 = valor2.replace(regexComa, ".");
+                }
+
+                let suma = parseFloat(valor1) + parseFloat(valor2);
+
+                resultado.innerHTML = "El resultado de la suma de ambos números es: " + suma;
+
+            } else if (regexTexto.test(valor1) && regexTexto.test(valor2)) {
+                let fraseCompleta = valor1 + " " + valor2;
+                let largoCadena = valor1.length + valor2.length + 1;
+
+                resultado.innerHTML = 'La cadena: "' + fraseCompleta + '" tiene una longitud de: ' + largoCadena;
+
+            } else if (regexFecha.test(valor1) && regexFecha.test(valor2)) {
+                /*
+                c. si son dos fechas en formato “dd-mm-aaaa” o “dd/mm/aaaa” el div mostrará el mensaje siguiente:
+                    “Entre estas fechas existen “ días entre las fechas “de diferencia” (1 pto)
+                */
+               let fecha1=valor1.split(/[-\/]/);
+               let fecha2=valor2.split(/[-\/]/);
+              
+               let dia1=parseInt(fecha1[0]);
+               let dia2=parseInt(fecha2[0]);
+
+               let mes1=parseInt(fecha1[1]-1);
+               let mes2=parseInt(fecha2[1]-1);
+
+               let anho1=parseInt(fecha1[2]);
+               let anho2=parseInt(fecha2[2]);
+
+               let fechaCalendario1=new Date(anho1,mes1,dia1);
+               let fechaCalendario2=new Date(anho2,mes2,dia2);
+               
+               let diferencia=Math.abs(fechaCalendario1-fechaCalendario2);
+               console.log(diferencia);
+               let diferenciaDias=diferencia/(1000 * 60 * 60 * 24);
+               console.log(diferenciaDias);
+
+               resultado.innerHTML="Entre estas fechas existen "+diferenciaDias+" días de diferencia";
+
+
+
+
+            } else {
+
+            }
+
+
+
+
+        }
+
+
+
+
+
+        /*
+        (3 ptos) Crea dos elementos tipo <input>, un div vacío en el que se mostrarán los resultados de las operaciones y un
+        botón en el que se lea “Ejecutar”, de forma que cuando se pulse dicho botón verifique mediante expresiones regulares el
+        tipo de texto introducido. Después en función del tipo de texto realizará una función diferente:
+            
+         
+            c. si son dos fechas en formato “dd-mm-aaaa” o “dd/mm/aaaa” el div mostrará el mensaje siguiente:
+            “Entre estas fechas existen “ días entre las fechas “de diferencia” (1 pto)
+            d. si los campos son de diferente tipo debe poner en el div: “El campo 1 es de tipo “tipo del campo 1“
+            y el campo 2 es del tipo “tipo del campo2”. (0.5 ptos)
+        */
+    </script>
+
+</body>
+
+</html>
